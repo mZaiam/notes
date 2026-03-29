@@ -2,12 +2,15 @@ project:
   type: website
 
 website:
-  title: "notes"
+  title: "mZaiam"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - text: Deep Learning
+        menu:
+          - href: deep_learning/mlp.qmd
+            text: Neural Networks (NNs)
 
 format:
   html:
@@ -16,6 +19,3 @@ format:
       - brand
     css: styles.css
     toc: true
-
-
-
