@@ -1,16 +1,20 @@
 project:
   type: website
 
+crossref:
+  fig-prefix: "Fig."
+  eq-prefix: "Eq."
+
 website:
   title: "mZaiam"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - text: Deep Learning
+      - text: Deep Learning (DL)
         menu:
-          - href: deep_learning/mlp.qmd
-            text: Neural Networks (NNs)
+          - href: deep_learning/mlp/mlp.qmd
+            text: Multilayer Perceptron (MLP)
 
 format:
   html:
