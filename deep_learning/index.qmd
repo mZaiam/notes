@@ -1,0 +1,11 @@
+---
+title: "Deep Learning (DL)"
+description: These notes provide a general view on Deep Learning (DL).
+listing:
+  contents: 
+    - "mlp/mlp.qmd"
+  type: grid
+  grid-columns: 2       
+  grid-item-border: true 
+  grid-item-align: left 
+---

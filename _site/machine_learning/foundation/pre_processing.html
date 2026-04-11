@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="The first step of a Machine Learning (ML) pipeline is pre-processing the data. Here, some of these techniques are going to be presented.">
 
-<title>mZaiam</title>
+<title>Pre-Processing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,48 +21,29 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./machine_learning/index.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-46858c2c8c16e82321d3cea5e177c50c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../deep_learning/index.html" rel="next">
+<link href="../../machine_learning/foundation/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-46858c2c8c16e82321d3cea5e177c50c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -91,7 +73,7 @@ div.csl-indent {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -103,7 +85,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../machine_learning/foundation/index.html">Foundation</a></li><li class="breadcrumb-item"><a href="../../machine_learning/foundation/pre_processing.html">Preprocessing</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -125,13 +107,13 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./machine_learning/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../machine_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Machine Learning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -140,17 +122,17 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./machine_learning/pipeline/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <a href="../../machine_learning/foundation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Foundation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./machine_learning/pipeline/pre_processing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-Processing</span></a>
+  <a href="../../machine_learning/foundation/pre_processing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Preprocessing</span></a>
   </div>
 </li>
       </ul>
@@ -159,7 +141,7 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./deep_learning/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../deep_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Learning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -168,7 +150,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
+  <a href="../../deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multilayer Perceptron</span></a>
   </div>
 </li>
@@ -184,19 +166,24 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#socials" id="toc-socials" class="nav-link active" data-scroll-target="#socials">Socials</a></li>
-  <li><a href="#publications" id="toc-publications" class="nav-link" data-scroll-target="#publications">Publications</a></li>
+  <li><a href="#theory" id="toc-theory" class="nav-link active" data-scroll-target="#theory">Theory</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../machine_learning/foundation/index.html">Foundation</a></li><li class="breadcrumb-item"><a href="../../machine_learning/foundation/pre_processing.html">Preprocessing</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">mZaiam</h1>
+<h1 class="title">Pre-Processing</h1>
 </div>
 
+<div>
+  <div class="description">
+    The first step of a Machine Learning (ML) pipeline is pre-processing the data. Here, some of these techniques are going to be presented.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -211,25 +198,14 @@ div.csl-indent {
 </header>
 
 
-<p>My name is Matheus Zaia Monteiro and I’m from Brazil. I’m a Bachelor in Science and Technology at ILUM School of Science, an institution linked to CNPEM. I’m currently a PhD student in Computer Science and Computational Math at ICMC-USP. This website contains some of my notes in areas I’m interested in, such as: Machine Learning, Deep Learning, Applied Math and applications of these areas in other scientific fields.</p>
-<section id="socials" class="level3">
-<h3 class="anchored" data-anchor-id="socials">Socials</h3>
-<p>Feel free to reach out or check out my code repositories:</p>
-<ul>
-<li><i class="bi bi-github"></i> <a href="https://github.com/mZaiam">GitHub</a></li>
-<li><i class="bi bi-linkedin"></i> <a href="https://www.linkedin.com/in/matheus-zaia-monteiro-793a432b4/">LinkedIn</a></li>
-<li><i class="bi bi-envelope"></i> <a href="mailto:matheus.z.monteiro@gmail.com">Email</a></li>
-</ul>
+<section id="theory" class="level2">
+<h2 class="anchored" data-anchor-id="theory">Theory</h2>
+<p>Before training a Machine Learning (ML) model, one</p>
 </section>
-<section id="publications" class="level3">
-<h3 class="anchored" data-anchor-id="publications">Publications</h3>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<section id="code" class="level2">
+<h2 class="anchored" data-anchor-id="code">Code</h2>
 
 
-<div id="ref-publication:anfispy" class="csl-entry" role="listitem">
-Monteiro, Matheus Zaia, and Vinicius Francisco Wasques. 2026. <span>“ANFISpy: A Python Package for Neuro-Fuzzy Models.”</span> <em>Neural Computing and Applications</em> 38 (4): 59.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -635,10 +611,13 @@ Monteiro, Matheus Zaia, and Vinicius Francisco Wasques. 2026. <span>“ANFISpy: 
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../../machine_learning/foundation/index.html" class="pagination-link" aria-label="Foundation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Foundation</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./machine_learning/index.html" class="pagination-link" aria-label="Machine Learning">
-        <span class="nav-page-text">Machine Learning</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../deep_learning/index.html" class="pagination-link" aria-label="Deep Learning">
+        <span class="nav-page-text">Deep Learning</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

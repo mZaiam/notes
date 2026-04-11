@@ -1,0 +1,10 @@
+---
+title: "Pipeline"
+description: "How to structure a general Machine Learning pipeline, including: data pre-processing, selecting and evaluating models."
+listing:
+  contents: "*.qmd" 
+  type: grid        
+  grid-columns: 2       
+  grid-item-border: true 
+  grid-item-align: left
+---

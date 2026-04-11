@@ -6,15 +6,29 @@ crossref:
   eq-prefix: "Eq."
 
 website:
-  title: "mZaiam"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - text: Deep Learning (DL)
-        menu:
-          - href: deep_learning/mlp/mlp.qmd
-            text: Multilayer Perceptron (MLP)
+  bread-crumbs: true 
+  page-navigation: true
+
+  sidebar:
+    style: "docked"
+    contents:
+      - text: "Home"
+        file: index.qmd
+        
+      - section: "Machine Learning"
+        file: machine_learning/index.qmd 
+        contents:
+          - section: "Pipeline"
+            file: machine_learning/pipeline/index.qmd
+            contents:
+              - text: "Pre-Processing"
+                file: machine_learning/pipeline/pre_processing.qmd
+           
+      - section: "Deep Learning"
+        file: deep_learning/index.qmd
+        contents:
+          - text: "Multilayer Perceptron"
+            file: deep_learning/mlp/mlp.qmd
 
 format:
   html:

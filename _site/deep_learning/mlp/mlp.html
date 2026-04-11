@@ -8,7 +8,7 @@
 
 <meta name="description" content="Here, the basis of Neural Networks will be presented, focusing on Multilayer Perceptrons (MLPs).">
 
-<title>Multilayer Perceptron (MLP) – mZaiam</title>
+<title>Multilayer Perceptron (MLP)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,6 +86,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../deep_learning/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -96,13 +97,13 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-5b45ba4dc22f2c8322ac49c58c7d0e27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-46858c2c8c16e82321d3cea5e177c50c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -158,63 +159,107 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">mZaiam</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-deep-learning-(dl" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Deep Learning (DL)</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-deep-learning-(dl">    
-        <li>
-    <a class="dropdown-item" href="../../deep_learning/mlp/mlp.html">
- <span class="dropdown-text">Multilayer Perceptron (MLP)</span></a>
-  </li>  
-    </ul>
-  </li>
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../deep_learning/index.html">Deep Learning</a></li><li class="breadcrumb-item"><a href="../../deep_learning/mlp/mlp.html">Multilayer Perceptron</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../machine_learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../machine_learning/pipeline/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pipeline</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/pipeline/pre_processing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-Processing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../deep_learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Multilayer Perceptron</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#theory" id="toc-theory" class="nav-link active" data-scroll-target="#theory">Theory</a></li>
+  <li><a href="#theory" id="toc-theory" class="nav-link active" data-scroll-target="#theory">Theory</a>
+  <ul class="collapse">
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="mlp-preview.html"><i class="bi bi-journal-code"></i>mlp.ipynb</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../deep_learning/index.html">Deep Learning</a></li><li class="breadcrumb-item"><a href="../../deep_learning/mlp/mlp.html">Multilayer Perceptron</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Multilayer Perceptron (MLP)</h1>
 </div>
@@ -299,9 +344,8 @@ Figure&nbsp;2: Diagram of a MLP with <span class="math inline">\(n=3\)</span> in
 <p>To train a MLP, one needs a dataset <span class="math inline">\(\mathcal D = \{\boldsymbol x_i, \boldsymbol y_i\}_{i=1}^N\)</span> of observations – this approach is called Supervised Learning. With that, given a loss function <span class="math inline">\(\mathcal L : \mathcal Y^2 \to \mathbb R\)</span> that measures how close the prediction <span class="math inline">\(\boldsymbol{\hat{y}}_i\)</span> is to the observation <span class="math inline">\(\boldsymbol y\)</span>, one updates the learnable parameters of the model – the <span class="math inline">\(\boldsymbol W\)</span> and <span class="math inline">\(\boldsymbol b\)</span> from <a href="#eq-2" class="quarto-xref">Eq.&nbsp;2</a> using backpropagation. This is an algorithm of the form: <span id="eq-4"><span class="math display">\[
 \boldsymbol \Theta^{(i + 1)} = \boldsymbol \Theta^{(i)} - \eta  \nabla_{\boldsymbol \Theta^{(i)}} \mathcal L.
 \tag{4}\]</span></span> That is, in a sequence of iterations, the learnable parameters of the model in the <span class="math inline">\(i\)</span>-iteration <span class="math inline">\(\boldsymbol \Theta^{(i)}\)</span> are updated using the the gradient of the loss function with respect to the learnable parameters of the MLP <span class="math inline">\(\eta  \nabla_{\boldsymbol \Theta^{(i)}} \mathcal L\)</span>, considering a step size of <span class="math inline">\(\eta \in \mathbb R^+\)</span>.</p>
-</section>
-<section id="code" class="level2">
-<h2 class="anchored" data-anchor-id="code">Code</h2>
+<section id="code" class="level3">
+<h3 class="anchored" data-anchor-id="code">Code</h3>
 <div class="quarto-embed-nb-cell">
 <p>Here, a simple MLP will be trained in a classification task using the MNIST dataset – which contains images of hand-written digits. Importing the libraries.</p>
 <div id="cell-2" class="cell">
@@ -496,6 +540,7 @@ weighted avg     0.9656    0.9656    0.9655     10000
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -906,6 +951,15 @@ Prince, Simon JD. 2023. <em>Understanding Deep Learning</em>. MIT press.
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../deep_learning/index.html" class="pagination-link" aria-label="Deep Learning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Deep Learning</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

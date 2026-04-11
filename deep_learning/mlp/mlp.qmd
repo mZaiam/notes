@@ -62,6 +62,6 @@ $$
 $$ {#eq-4}
 That is, in a sequence of iterations, the learnable parameters of the model in the $i$-iteration $\boldsymbol \Theta^{(i)}$ are updated using the the gradient of the loss function with respect to the learnable parameters of the MLP $\eta  \nabla_{\boldsymbol \Theta^{(i)}} \mathcal L$, considering a step size of $\eta \in \mathbb R^+$.
 
-## Code
+### Code
 
 {{< embed mlp.ipynb >}}
