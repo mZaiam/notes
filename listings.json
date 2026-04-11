@@ -1,0 +1,20 @@
+[
+  {
+    "listing": "/deep_learning/index.html",
+    "items": [
+      "/deep_learning/mlp/mlp.html"
+    ]
+  },
+  {
+    "listing": "/machine_learning/pipeline/index.html",
+    "items": [
+      "/machine_learning/pipeline/pre_processing.html"
+    ]
+  },
+  {
+    "listing": "/machine_learning/index.html",
+    "items": [
+      "/machine_learning/pipeline/index.html"
+    ]
+  }
+]
