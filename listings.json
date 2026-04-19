@@ -1,14 +1,15 @@
 [
   {
-    "listing": "/deep_learning/index.html",
+    "listing": "/machine_learning/pipeline/index.html",
     "items": [
-      "/deep_learning/mlp/mlp.html"
+      "/machine_learning/pipeline/pre_processing/pre_processing.html",
+      "/machine_learning/pipeline/model_selection/model_selection.html"
     ]
   },
   {
-    "listing": "/machine_learning/pipeline/index.html",
+    "listing": "/deep_learning/index.html",
     "items": [
-      "/machine_learning/pipeline/pre_processing.html"
+      "/deep_learning/mlp/mlp.html"
     ]
   },
   {
