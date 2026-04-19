@@ -46,7 +46,7 @@ b_m
 $$ {#eq-3}
 Note that the activation function $\sigma : \mathbb R^m \to \mathbb R^m$ is now applied element-wise in the $\boldsymbol{Wx} + \boldsymbol{b}$ vector. 
 
-In MLPs, layers of perceptrons are grouped sequentially in order to approximate a mapping from the input space $\mathcal X$ to the output space $\mathcal Y$, with the intermediate layers of the model being called hidden layers. That is, given a dataset $\mathcal D = \{\boldsymbol x_i, \boldsymbol y_i\}_{i=1}^N$ with $N$ observations, the input vector $\boldsymbol x_i \in \mathcal X$ is processed by the MLP layers until the final layer, which should yield a vector $\boldsymbol{\hat{y}}_i \approx \boldsymbol y_i \in \mathcal Y$. @fig-mlp depicts the diagram of a MLP.
+In MLPs, layers of perceptrons are grouped sequentially in order to approximate a mapping from the input space $\mathcal X$ to the output space $\mathcal Y$, with the intermediate layers of the model being called hidden layers. That is, given a dataset $\mathcal D = \{(\boldsymbol x_i, \boldsymbol y_i)\}_{i=1}^N$ with $N$ observations, the input vector $\boldsymbol x_i \in \mathcal X$ is processed by the MLP layers until the final layer, which should yield a vector $\boldsymbol{\hat{y}}_i \approx \boldsymbol y_i \in \mathcal Y$. @fig-mlp depicts the diagram of a MLP.
 
 ![Diagram of a MLP with $n=3$ inputs, two hidden layers with $4$ neurons and a single output neuron.](mlp_assets/mlp.png){#fig-mlp width=60% fig-align="center"}
 

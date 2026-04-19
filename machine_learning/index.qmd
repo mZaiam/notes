@@ -1,11 +1,12 @@
 ---
-title: "Machine Learning (ML)"
-description: "These notes provide a general view on Machine Learning (ML) with tabular data." 
+title: "Machine Learning"
+description: "These notes provide a general view on Machine Learning with tabular data." 
 listing:
   contents: 
     - "pipeline/index.qmd"
   type: grid
   grid-columns: 1        
   grid-item-border: true 
-  grid-item-align: left  
+  grid-item-align: left 
+  sort: false 
 ---

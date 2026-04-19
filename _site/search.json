@@ -10,6 +10,68 @@
     ]
   },
   {
+    "objectID": "machine_learning/pipeline/vif.html",
+    "href": "machine_learning/pipeline/vif.html",
+    "title": "",
+    "section": "",
+    "text": "In this code, VIF will be used to remove features that can be represented via linear combination of other features. Importing libraries.\n\nimport numpy as np\nimport polars as pl\nimport statsmodels.api as sm\nfrom statsmodels.stats.outliers_influence import variance_inflation_factor\n\nGenerating data, and creating a linear combination of features with extra noise.\n\nn_samples = 100\n\nx1 = np.random.normal(2, 1, n_samples)\nx2 = np.random.normal(1, 1, n_samples)\nx3 = np.random.normal(-1, 1, n_samples)\nx4 = np.random.normal(-2, 1, n_samples)\n\nx5 = 2 * x1 + 3 * x2 - x3 + x4 + np.random.normal(0, 0.01, n_samples)\n\ndf = pl.DataFrame({\"x1\": x1, \"x2\": x2, \"x3\": x3, \"x4\": x4, \"x5\": x5})\nprint(df)\n\nshape: (100, 5)\n┌──────────┬──────────┬───────────┬───────────┬───────────┐\n│ x1       ┆ x2       ┆ x3        ┆ x4        ┆ x5        │\n│ ---      ┆ ---      ┆ ---       ┆ ---       ┆ ---       │\n│ f64      ┆ f64      ┆ f64       ┆ f64       ┆ f64       │\n╞══════════╪══════════╪═══════════╪═══════════╪═══════════╡\n│ 1.127813 ┆ 1.976019 ┆ -0.306735 ┆ -2.932537 ┆ 5.553077  │\n│ 1.702715 ┆ 2.837258 ┆ 0.608874  ┆ -3.093993 ┆ 8.240383  │\n│ 3.728344 ┆ 1.754147 ┆ -0.640377 ┆ -1.966818 ┆ 11.409613 │\n│ 0.130101 ┆ 2.07627  ┆ -2.519377 ┆ -1.094331 ┆ 7.905766  │\n│ 1.842719 ┆ 0.689719 ┆ -1.809076 ┆ -2.46972  ┆ 5.091085  │\n│ …        ┆ …        ┆ …         ┆ …         ┆ …         │\n│ 2.346223 ┆ 0.987793 ┆ 0.792093  ┆ -2.469477 ┆ 4.412669  │\n│ 3.270795 ┆ 0.981068 ┆ -1.740227 ┆ -2.858559 ┆ 8.373868  │\n│ 2.448963 ┆ 1.937447 ┆ -1.56691  ┆ -1.530378 ┆ 10.756647 │\n│ 1.616927 ┆ 3.011794 ┆ -1.378437 ┆ -0.693779 ┆ 12.944466 │\n│ 1.235787 ┆ 2.634723 ┆ -0.22323  ┆ -0.927663 ┆ 9.676474  │\n└──────────┴──────────┴───────────┴───────────┴───────────┘\n\n\nCreating a simple VIF function.\n\ndf_with_const = df.with_columns(pl.lit(1).alias(\"const\"))\nX_matrix = df_with_const.to_numpy()\n\nfor i, col in enumerate(df_with_const.columns):\n    if col != \"const\":\n        vif = variance_inflation_factor(X_matrix, i)\n        print(f\"{col}: {vif:.2f}\")\n\nx1: 49692.18\nx2: 75753.11\nx3: 10711.37\nx4: 9551.55\nx5: 121103.62\n\n\nAs the results show, feature x5 has the highest VIF value, it would be the first feature to be dropped. Note that the other features also have high values, because the generation of the linearly dependent feature also make other features dependent on it."
+  },
+  {
+    "objectID": "machine_learning/pipeline/pre_processing.html",
+    "href": "machine_learning/pipeline/pre_processing.html",
+    "title": "Pre-Processing",
+    "section": "",
+    "text": "Before feeding the the data to a model, it is usually necessary to pre-process it. This is necessary due to the mathematical formulation of these models, where some of them might require data to follow specific patterns. Here, the following pre-processing strategies are going to be presented: normalization, encoding and feature selection.",
+    "crumbs": [
+      "Machine Learning",
+      "Pipeline",
+      "Pre-Processing"
+    ]
+  },
+  {
+    "objectID": "machine_learning/pipeline/pre_processing.html#normalization",
+    "href": "machine_learning/pipeline/pre_processing.html#normalization",
+    "title": "Pre-Processing",
+    "section": "Normalization",
+    "text": "Normalization\nNormalization is a class of transformations that make features present more uniform statistics. The first approach for normalizing data is the absolute maximum normalization. This technique takes the a set of features \\(\\boldsymbol X \\in \\mathbb R^{N\\times n}\\), where \\(N\\) is the number of observations and \\(n\\) is the number of features, and applies the following transformation: \\[\n\\boldsymbol{\\tilde X} = \\frac{\\boldsymbol{X}}{\\max\\mid\\boldsymbol{X}\\mid},\n\\tag{1}\\] where \\(\\boldsymbol{\\tilde X}\\) is the normalized set of features. This normalization scales the data between \\(-1\\) and \\(1\\), while preserving sparsity. Note that the maximum is taken feature-wise, and so is the division.\nAnother type of normalization is the \\(\\min-\\max\\) normalization, which scales the data between \\(0\\) and \\(1\\), where the minimum value of the original data is mapped to \\(0\\), and the maximum to \\(1\\). It is given by: \\[\n\\boldsymbol{\\tilde X} = \\frac{\\boldsymbol{X} - \\min(\\boldsymbol{X})}{\\max(\\boldsymbol{X}) - \\min(\\boldsymbol{X})}.\n\\tag{2}\\] Note that unlike absolute maximum normalization, \\(\\min-\\max\\) normalization does not preserve sparsity.\nFinally, standard normalization scales the data to so that each feature has a standard deviation of \\(1\\) and a mean of \\(0\\). The transformation is given by: \\[\n\\boldsymbol{\\tilde X} = \\frac{\\boldsymbol{X} - \\boldsymbol{\\mu}_{\\boldsymbol{X}}}{\\boldsymbol{\\sigma}_{\\boldsymbol{X}}},\n\\tag{3}\\] where \\(\\boldsymbol{\\mu}_{\\boldsymbol{X}}\\) are the mean values of the features and \\(\\boldsymbol{\\sigma}_{\\boldsymbol{X}}\\) are the standard deviations.\n\nCode: Normalization\n\nHere, synthetic data is going to be normalized, in order to compare the different transformations explained. Importing packages.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, StandardScaler\n\nGenerating and printing data minimum and maximum.\n\nfeature_1 = np.random.normal(500000, 50000, 100)\nfeature_2 = np.random.normal(3, 1, 100)\n\nX = np.column_stack((feature_1, feature_2))\n\nprint(f\"Minimum: {X.min(axis=0)}\")\nprint(f\"Maximum: {X.max(axis=0)}\")\n\nMinimum: [3.44361495e+05 7.88805078e-02]\nMaximum: [6.15555239e+05 5.18227783e+00]\n\n\nApplying absolute maximum absolute normalization.\n\nmax_abs_scaler = MaxAbsScaler()\nX_maxabs = max_abs_scaler.fit_transform(X)\n\nprint(f\"Minimum: {X_maxabs.min(axis=0)}\")\nprint(f\"Maximum: {X_maxabs.max(axis=0)}\")\n\nMinimum: [0.55943232 0.0152212 ]\nMaximum: [1. 1.]\n\n\nApplying min-max normalization.\n\nmin_max_scaler = MinMaxScaler()\nX_minmax = min_max_scaler.fit_transform(X)\n\nprint(f\"Minimum: {X_minmax.min(axis=0)}\")\nprint(f\"Maximum: {X_minmax.max(axis=0)}\")\n\nMinimum: [0. 0.]\nMaximum: [1. 1.]\n\n\nApplying standard normalization.\n\nstd_scaler = StandardScaler()\nX_std = std_scaler.fit_transform(X)\n\nprint(f\"Mean: {X_std.mean(axis=0)}\")\nprint(f\"Std:  {X_std.std(axis=0)}\")\n\nMean: [ 3.74367204e-15 -5.90638649e-16]\nStd:  [1. 1.]\n\n\nPlotting the data with different normalizations.\n\nfig, axes = plt.subplots(2, 2, figsize=(10, 10))\naxes = axes.ravel()\n\naxes[0].scatter(X[:, 0], X[:, 1], alpha=0.7, color='red')\naxes[0].set_title(\"Original Data\")\naxes[0].set_xlabel(\"Feature 1\")\naxes[0].set_ylabel(\"Feature 2\")\n\naxes[1].scatter(X_maxabs[:, 0], X_maxabs[:, 1], alpha=0.7, color='green')\naxes[1].set_title(\"Maximum Absolute Normalization\")\naxes[1].set_xlabel(\"Feature 1\")\naxes[1].set_ylabel(\"Feature 2\")\n\naxes[2].scatter(X_minmax[:, 0], X_minmax[:, 1], alpha=0.7, color='green')\naxes[2].set_title(\"Min-Max Normalization\")\naxes[2].set_xlabel(\"Feature 1\")\naxes[2].set_ylabel(\"Feature 2\")\n\naxes[3].scatter(X_std[:, 0], X_std[:, 1], alpha=0.7, color='blue')\naxes[3].set_title(\"Standard Normalization\")\naxes[3].set_xlabel(\"Feature 1\")\naxes[3].set_ylabel(\"Feature 2\")\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nSource: normalization.ipynb",
+    "crumbs": [
+      "Machine Learning",
+      "Pipeline",
+      "Pre-Processing"
+    ]
+  },
+  {
+    "objectID": "machine_learning/pipeline/pre_processing.html#encoding",
+    "href": "machine_learning/pipeline/pre_processing.html#encoding",
+    "title": "Pre-Processing",
+    "section": "Encoding",
+    "text": "Encoding\nAnother important part of pre-processing is encoding features that are not numerical. This envolves finding good representations for features that might be stored as strings, for example. When there is some sense of order in the feature, the ordinal encoder is used. It converts the \\(m\\) original classes into integers, keeping the order. On the other hand, if there is no order, the data is passed through a one-hot encoder, which converts the original \\(m\\) classes into \\(m\\) new features, where the columns are sparse, only containing \\(1\\) when the observations belongs to the specific class.\n\nCode: Encoding\n\nHere, examples of ordinal and one-hot encoding are going to be presented. Importing the libraries.\n\nimport polars as pl\nimport numpy as np\nfrom sklearn.preprocessing import OneHotEncoder, OrdinalEncoder\n\nGenerating a toy-dataset.\n\ndata = {\n    'ID': [1, 2, 3, 4, 5],\n    'Color': ['Red', 'Blue', 'Green', 'Blue', 'Red'],\n    'Size': ['Small', 'Large', 'Medium', 'Small', 'Medium'],\n    'Price': [10, 20, 15, 12, 18]\n}\n\ndf = pl.DataFrame(data)\nprint(df)\n\nshape: (5, 4)\n┌─────┬───────┬────────┬───────┐\n│ ID  ┆ Color ┆ Size   ┆ Price │\n│ --- ┆ ---   ┆ ---    ┆ ---   │\n│ i64 ┆ str   ┆ str    ┆ i64   │\n╞═════╪═══════╪════════╪═══════╡\n│ 1   ┆ Red   ┆ Small  ┆ 10    │\n│ 2   ┆ Blue  ┆ Large  ┆ 20    │\n│ 3   ┆ Green ┆ Medium ┆ 15    │\n│ 4   ┆ Blue  ┆ Small  ┆ 12    │\n│ 5   ┆ Red   ┆ Medium ┆ 18    │\n└─────┴───────┴────────┴───────┘\n\n\nAs the Color feature has no order in its values, one-hot encoding is going to be used. As for the Size feature, values assume order, so ordinal encoding is needed.\n\nencoder_ohe = OneHotEncoder(sparse_output=False)\nohe_encoded = encoder_ohe.fit_transform(df.select(\"Color\").to_numpy())\n\nohe_df = pl.DataFrame(\n    ohe_encoded,\n    schema=[f\"color_{c}\" for c in encoder_ohe.categories_[0]]\n)\n\norder = [[\"Small\", \"Medium\", \"Large\"]]\nencoder_ord = OrdinalEncoder(categories=order)\nexp_encoded = encoder_ord.fit_transform(df.select(\"Size\").to_numpy())\n\nord_df = pl.concat([df, ohe_df], how=\"horizontal\").with_columns(\n    pl.Series(\"Size_ordinal_encoding\", exp_encoded.flatten())\n)\n\nprint(ord_df)\n\nshape: (5, 8)\n┌─────┬───────┬────────┬───────┬────────────┬─────────────┬───────────┬───────────────────────┐\n│ ID  ┆ Color ┆ Size   ┆ Price ┆ color_Blue ┆ color_Green ┆ color_Red ┆ Size_ordinal_encoding │\n│ --- ┆ ---   ┆ ---    ┆ ---   ┆ ---        ┆ ---         ┆ ---       ┆ ---                   │\n│ i64 ┆ str   ┆ str    ┆ i64   ┆ f64        ┆ f64         ┆ f64       ┆ f64                   │\n╞═════╪═══════╪════════╪═══════╪════════════╪═════════════╪═══════════╪═══════════════════════╡\n│ 1   ┆ Red   ┆ Small  ┆ 10    ┆ 0.0        ┆ 0.0         ┆ 1.0       ┆ 0.0                   │\n│ 2   ┆ Blue  ┆ Large  ┆ 20    ┆ 1.0        ┆ 0.0         ┆ 0.0       ┆ 2.0                   │\n│ 3   ┆ Green ┆ Medium ┆ 15    ┆ 0.0        ┆ 1.0         ┆ 0.0       ┆ 1.0                   │\n│ 4   ┆ Blue  ┆ Small  ┆ 12    ┆ 1.0        ┆ 0.0         ┆ 0.0       ┆ 0.0                   │\n│ 5   ┆ Red   ┆ Medium ┆ 18    ┆ 0.0        ┆ 0.0         ┆ 1.0       ┆ 1.0                   │\n└─────┴───────┴────────┴───────┴────────────┴─────────────┴───────────┴───────────────────────┘\n\n\nSource: encoding.ipynb",
+    "crumbs": [
+      "Machine Learning",
+      "Pipeline",
+      "Pre-Processing"
+    ]
+  },
+  {
+    "objectID": "machine_learning/pipeline/pre_processing.html#feature-selection",
+    "href": "machine_learning/pipeline/pre_processing.html#feature-selection",
+    "title": "Pre-Processing",
+    "section": "Feature Selection",
+    "text": "Feature Selection\nIn some cases, the dataset has numerous features, resulting in complex and computationally expensive models. Therefore, it is interesting to select a small subset of features to decrease the computational cost of the trained model. This selection is important to avoid the curse of dimensionality, in which the increase of features in the model worsens its performance.\nThe first strategy is to eliminate features by variance. When a feature does not vary throughout observations, it does not add new information to the model, therefore, it can be excluded. Similarly, one can define a variance threshold for eliminating features.\nA more advanced approach is to use the Variance Inflation Factor (VIF) algorithm. It removes features based on their multicollinearity with other features. That is, if one feature is a linear combination of other ones, it is removed. For each feature \\(x_j \\in \\boldsymbol{X}\\), the VIF trains a linear regression with \\(x_j\\) as a target. The coefficient of determination \\(R^2\\) of the final model is used to calculate the VIF coefficient: \\[\n\\text{VIF}(x_j) = \\frac{1}{1-R_j^2}.\n\\tag{4}\\] If this coefficient is equal to \\(1\\), there is no multicollinearity, while higher values indicate correlation. With that, given a threshold – generally \\(5\\) or \\(10\\) –, features can be removed.\n\nCode: Feature Selection\n\nIn this code, VIF will be used to remove features that can be represented via linear combination of other features. Importing libraries.\n\nimport numpy as np\nimport polars as pl\nimport statsmodels.api as sm\nfrom statsmodels.stats.outliers_influence import variance_inflation_factor\n\nGenerating data, and creating a linear combination of features with extra noise.\n\nn_samples = 100\n\nx1 = np.random.normal(2, 1, n_samples)\nx2 = np.random.normal(1, 1, n_samples)\nx3 = np.random.normal(-1, 1, n_samples)\nx4 = np.random.normal(-2, 1, n_samples)\n\nx5 = 2 * x1 + 3 * x2 - x3 + x4 + np.random.normal(0, 0.01, n_samples)\n\ndf = pl.DataFrame({\"x1\": x1, \"x2\": x2, \"x3\": x3, \"x4\": x4, \"x5\": x5})\nprint(df)\n\nshape: (100, 5)\n┌──────────┬──────────┬───────────┬───────────┬───────────┐\n│ x1       ┆ x2       ┆ x3        ┆ x4        ┆ x5        │\n│ ---      ┆ ---      ┆ ---       ┆ ---       ┆ ---       │\n│ f64      ┆ f64      ┆ f64       ┆ f64       ┆ f64       │\n╞══════════╪══════════╪═══════════╪═══════════╪═══════════╡\n│ 1.127813 ┆ 1.976019 ┆ -0.306735 ┆ -2.932537 ┆ 5.553077  │\n│ 1.702715 ┆ 2.837258 ┆ 0.608874  ┆ -3.093993 ┆ 8.240383  │\n│ 3.728344 ┆ 1.754147 ┆ -0.640377 ┆ -1.966818 ┆ 11.409613 │\n│ 0.130101 ┆ 2.07627  ┆ -2.519377 ┆ -1.094331 ┆ 7.905766  │\n│ 1.842719 ┆ 0.689719 ┆ -1.809076 ┆ -2.46972  ┆ 5.091085  │\n│ …        ┆ …        ┆ …         ┆ …         ┆ …         │\n│ 2.346223 ┆ 0.987793 ┆ 0.792093  ┆ -2.469477 ┆ 4.412669  │\n│ 3.270795 ┆ 0.981068 ┆ -1.740227 ┆ -2.858559 ┆ 8.373868  │\n│ 2.448963 ┆ 1.937447 ┆ -1.56691  ┆ -1.530378 ┆ 10.756647 │\n│ 1.616927 ┆ 3.011794 ┆ -1.378437 ┆ -0.693779 ┆ 12.944466 │\n│ 1.235787 ┆ 2.634723 ┆ -0.22323  ┆ -0.927663 ┆ 9.676474  │\n└──────────┴──────────┴───────────┴───────────┴───────────┘\n\n\nCreating a simple VIF function.\n\ndf_with_const = df.with_columns(pl.lit(1).alias(\"const\"))\nX_matrix = df_with_const.to_numpy()\n\nfor i, col in enumerate(df_with_const.columns):\n    if col != \"const\":\n        vif = variance_inflation_factor(X_matrix, i)\n        print(f\"{col}: {vif:.2f}\")\n\nx1: 49692.18\nx2: 75753.11\nx3: 10711.37\nx4: 9551.55\nx5: 121103.62\n\n\nAs the results show, feature x5 has the highest VIF value, it would be the first feature to be dropped. Note that the other features also have high values, because the generation of the linearly dependent feature also make other features dependent on it.\nSource: vif.ipynb",
+    "crumbs": [
+      "Machine Learning",
+      "Pipeline",
+      "Pre-Processing"
+    ]
+  },
+  {
+    "objectID": "machine_learning/pipeline/normalization.html",
+    "href": "machine_learning/pipeline/normalization.html",
+    "title": "",
+    "section": "",
+    "text": "Here, synthetic data is going to be normalized, in order to compare the different transformations explained. Importing packages.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, StandardScaler\n\nGenerating and printing data minimum and maximum.\n\nfeature_1 = np.random.normal(500000, 50000, 100)\nfeature_2 = np.random.normal(3, 1, 100)\n\nX = np.column_stack((feature_1, feature_2))\n\nprint(f\"Minimum: {X.min(axis=0)}\")\nprint(f\"Maximum: {X.max(axis=0)}\")\n\nMinimum: [3.44361495e+05 7.88805078e-02]\nMaximum: [6.15555239e+05 5.18227783e+00]\n\n\nApplying absolute maximum absolute normalization.\n\nmax_abs_scaler = MaxAbsScaler()\nX_maxabs = max_abs_scaler.fit_transform(X)\n\nprint(f\"Minimum: {X_maxabs.min(axis=0)}\")\nprint(f\"Maximum: {X_maxabs.max(axis=0)}\")\n\nMinimum: [0.55943232 0.0152212 ]\nMaximum: [1. 1.]\n\n\nApplying min-max normalization.\n\nmin_max_scaler = MinMaxScaler()\nX_minmax = min_max_scaler.fit_transform(X)\n\nprint(f\"Minimum: {X_minmax.min(axis=0)}\")\nprint(f\"Maximum: {X_minmax.max(axis=0)}\")\n\nMinimum: [0. 0.]\nMaximum: [1. 1.]\n\n\nApplying standard normalization.\n\nstd_scaler = StandardScaler()\nX_std = std_scaler.fit_transform(X)\n\nprint(f\"Mean: {X_std.mean(axis=0)}\")\nprint(f\"Std:  {X_std.std(axis=0)}\")\n\nMean: [ 3.74367204e-15 -5.90638649e-16]\nStd:  [1. 1.]\n\n\nPlotting the data with different normalizations.\n\nfig, axes = plt.subplots(2, 2, figsize=(10, 10))\naxes = axes.ravel()\n\naxes[0].scatter(X[:, 0], X[:, 1], alpha=0.7, color='red')\naxes[0].set_title(\"Original Data\")\naxes[0].set_xlabel(\"Feature 1\")\naxes[0].set_ylabel(\"Feature 2\")\n\naxes[1].scatter(X_maxabs[:, 0], X_maxabs[:, 1], alpha=0.7, color='green')\naxes[1].set_title(\"Maximum Absolute Normalization\")\naxes[1].set_xlabel(\"Feature 1\")\naxes[1].set_ylabel(\"Feature 2\")\n\naxes[2].scatter(X_minmax[:, 0], X_minmax[:, 1], alpha=0.7, color='green')\naxes[2].set_title(\"Min-Max Normalization\")\naxes[2].set_xlabel(\"Feature 1\")\naxes[2].set_ylabel(\"Feature 2\")\n\naxes[3].scatter(X_std[:, 0], X_std[:, 1], alpha=0.7, color='blue')\naxes[3].set_title(\"Standard Normalization\")\naxes[3].set_xlabel(\"Feature 1\")\naxes[3].set_ylabel(\"Feature 2\")\n\nplt.tight_layout()\nplt.show()"
+  },
+  {
     "objectID": "deep_learning/mlp/mlp.html",
     "href": "deep_learning/mlp/mlp.html",
     "title": "Multilayer Perceptron (MLP)",
@@ -32,95 +94,6 @@
     ]
   },
   {
-    "objectID": "deep_learning/mlp/mlp.html#code",
-    "href": "deep_learning/mlp/mlp.html#code",
-    "title": "Multilayer Perceptron (MLP)",
-    "section": "Code",
-    "text": "Code\n\nHere, a simple MLP will be trained in a classification task using the MNIST dataset – which contains images of hand-written digits. Importing the libraries.\n\nimport torch\nimport torch.nn as nn\nimport torch.optim as optim\nfrom torchvision import datasets, transforms\nfrom torch.utils.data import DataLoader\n\nfrom sklearn.metrics import classification_report, confusion_matrix\nimport seaborn as sns\nimport numpy as np\n\nimport matplotlib.pyplot as plt\n\nSetting the device.\n\ndevice = torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\nprint(f\"Using device: {device}\")\n\nUsing device: cuda\n\n\nNormalizing and creating the dataloaders.\n\ntransform = transforms.Compose([\n    transforms.ToTensor(),\n    transforms.Normalize((0.1307,), (0.3081,)),\n    transforms.Lambda(lambda x: torch.flatten(x))\n])\n\ntrain_dataset = datasets.MNIST('./data', train=True, download=True, transform=transform)\ntest_dataset = datasets.MNIST('./data', train=False, transform=transform)\n\ntrain_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)\ntest_loader = DataLoader(test_dataset, batch_size=1000, shuffle=False)\n\nCreating and instantiating the MLP. A model with one hidden layer containing 128 neurons and ReLU activations will be used.\n\nclass MLP(nn.Module):\n    def __init__(\n            self,\n            input_size=784,\n            hidden_size=128,\n            output_size=10\n        ):\n        super(MLP, self).__init__()\n\n        self.classifier = nn.Sequential(\n            nn.Linear(input_size, hidden_size),\n            nn.ReLU(),\n            nn.Linear(hidden_size, hidden_size),\n            nn.ReLU(),\n            nn.Linear(hidden_size, output_size)\n        )\n\n    def forward(self, x):\n        return self.classifier(x)\n\n    def fit(\n            self,\n            device,\n            train_loader,\n            optimizer,\n            criterion,\n            epochs\n        ):\n        self.train()\n        self.train_loss = []\n\n        for epoch in range(1, epochs + 1):\n            epoch_loss = 0.0\n\n            for data, target in train_loader:\n                data, target = data.to(device), target.to(device)\n\n                optimizer.zero_grad()\n                output = self(data)\n                loss = criterion(output, target)\n                loss.backward()\n                optimizer.step()\n\n                epoch_loss += loss.item()\n\n            avg_loss = epoch_loss / len(train_loader)\n            self.train_loss.append(avg_loss)\n            print(f\"Epoch [{epoch}/{epochs}] | Average Loss: {avg_loss:.6f}\")\n\nmodel = MLP().to(device)\n\nparams = sum(p.numel() for p in model.parameters() if p.requires_grad)\nprint(f\"Number of params: {params}\")\n\nNumber of params: 118282\n\n\nMaking the training loop.\n\ncriterion = nn.CrossEntropyLoss()\noptimizer = optim.SGD(model.parameters(), lr=0.01)\n\nmodel.fit(device, train_loader, optimizer, criterion, epochs=10)\n\nEpoch [1/10] | Average Loss: 0.825505\nEpoch [2/10] | Average Loss: 0.316130\nEpoch [3/10] | Average Loss: 0.261313\nEpoch [4/10] | Average Loss: 0.223332\nEpoch [5/10] | Average Loss: 0.193474\nEpoch [6/10] | Average Loss: 0.170477\nEpoch [7/10] | Average Loss: 0.152012\nEpoch [8/10] | Average Loss: 0.136417\nEpoch [9/10] | Average Loss: 0.123799\nEpoch [10/10] | Average Loss: 0.112818\n\n\nPlotting the training curve.\n\nplt.plot(model.train_loss)\nplt.xlabel(\"Epoch\")\nplt.ylabel(\"Cross-Entropy Loss\")\nplt.show()\n\n\n\n\n\n\n\n\nCalculating the metrics.\n\nmodel.eval()\nall_preds = []\nall_targets = []\n\nwith torch.no_grad():\n    for data, target in test_loader:\n        data, target = data.to(device), target.to(device)\n        output = model(data)\n        preds = output.argmax(dim=1)\n\n        all_preds.extend(preds.cpu().numpy())\n        all_targets.extend(target.cpu().numpy())\n\nprint(classification_report(all_targets, all_preds, digits=4))\n\n              precision    recall  f1-score   support\n\n           0     0.9660    0.9867    0.9763       980\n           1     0.9756    0.9850    0.9803      1135\n           2     0.9691    0.9738    0.9715      1032\n           3     0.9542    0.9703    0.9622      1010\n           4     0.9595    0.9654    0.9624       982\n           5     0.9638    0.9552    0.9595       892\n           6     0.9629    0.9749    0.9689       958\n           7     0.9666    0.9582    0.9624      1028\n           8     0.9755    0.9384    0.9566       974\n           9     0.9617    0.9445    0.9530      1009\n\n    accuracy                         0.9656     10000\n   macro avg     0.9655    0.9652    0.9653     10000\nweighted avg     0.9656    0.9656    0.9655     10000\n\n\n\nPlotting the confusion matrix.\n\ncm = confusion_matrix(all_targets, all_preds)\n\nplt.figure(figsize=(7, 7))\nsns.heatmap(\n    cm,\n    annot=True,\n    fmt='d',\n    cmap='Blues',\n    cbar=False,\n    xticklabels=range(10),\n    yticklabels=range(10)\n)\nplt.xlabel(\"Predicted Label\")\nplt.ylabel(\"True Label\")\nplt.show()\n\n\n\n\n\n\n\n\nSource: mlp.ipynb"
-  },
-  {
-    "objectID": "machine_learning/pre_processing/pre_processing.html",
-    "href": "machine_learning/pre_processing/pre_processing.html",
-    "title": "Pre-Processing",
-    "section": "",
-    "text": "Before training a Machine Learning (ML) model, one",
-    "crumbs": [
-      "Machine Learning (ML)",
-      "Foundation",
-      "Pre-Processing"
-    ]
-  },
-  {
-    "objectID": "machine_learning/pre_processing/pre_processing.html#theory",
-    "href": "machine_learning/pre_processing/pre_processing.html#theory",
-    "title": "Pre-Processing",
-    "section": "",
-    "text": "Before training a Machine Learning (ML) model, one",
-    "crumbs": [
-      "Machine Learning (ML)",
-      "Foundation",
-      "Pre-Processing"
-    ]
-  },
-  {
-    "objectID": "machine_learning/pre_processing/pre_processing.html#code",
-    "href": "machine_learning/pre_processing/pre_processing.html#code",
-    "title": "Pre-Processing",
-    "section": "Code",
-    "text": "Code",
-    "crumbs": [
-      "Machine Learning (ML)",
-      "Foundation",
-      "Pre-Processing"
-    ]
-  },
-  {
-    "objectID": "machine_learning/machine_learning.html",
-    "href": "machine_learning/machine_learning.html",
-    "title": "Machine Learning (ML)",
-    "section": "",
-    "text": "These notes present an overall view of Machine Learning (ML).\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPre-Processing\n\n\nThe first step of a Machine Learning (ML) pipeline is pre-processing the data. Here, some of these techniques are going to be presented.\n\n\n\n\n\n\n\n\nNo matching items",
-    "crumbs": [
-      "Machine Learning (ML)"
-    ]
-  },
-  {
-    "objectID": "machine_learning/foundation/pre_processing.html",
-    "href": "machine_learning/foundation/pre_processing.html",
-    "title": "Pre-Processing",
-    "section": "",
-    "text": "Before training a Machine Learning (ML) model, one",
-    "crumbs": [
-      "Machine Learning",
-      "Foundation",
-      "Preprocessing"
-    ]
-  },
-  {
-    "objectID": "machine_learning/foundation/pre_processing.html#theory",
-    "href": "machine_learning/foundation/pre_processing.html#theory",
-    "title": "Pre-Processing",
-    "section": "",
-    "text": "Before training a Machine Learning (ML) model, one",
-    "crumbs": [
-      "Machine Learning",
-      "Foundation",
-      "Preprocessing"
-    ]
-  },
-  {
-    "objectID": "machine_learning/foundation/pre_processing.html#code",
-    "href": "machine_learning/foundation/pre_processing.html#code",
-    "title": "Pre-Processing",
-    "section": "Code",
-    "text": "Code",
-    "crumbs": [
-      "Machine Learning",
-      "Foundation",
-      "Preprocessing"
-    ]
-  },
-  {
     "objectID": "deep_learning/index.html",
     "href": "deep_learning/index.html",
     "title": "Deep Learning (DL)",
@@ -131,43 +104,63 @@
     ]
   },
   {
-    "objectID": "machine_learning/index.html",
-    "href": "machine_learning/index.html",
-    "title": "Machine Learning (ML)",
+    "objectID": "machine_learning/pipeline/encoding.html",
+    "href": "machine_learning/pipeline/encoding.html",
+    "title": "",
     "section": "",
-    "text": "Pipeline\n\n\nHow to structure a general Machine Learning pipeline, including: data pre-processing, selecting and evaluating models.\n\n\n\n\n\n\n\n\n\n\nNo matching items",
-    "crumbs": [
-      "Machine Learning"
-    ]
-  },
-  {
-    "objectID": "machine_learning/foundation/index.html",
-    "href": "machine_learning/foundation/index.html",
-    "title": "Foundation",
-    "section": "",
-    "text": "Pre-Processing\n\n\nThe first step of a Machine Learning (ML) pipeline is pre-processing the data. Here, some of these techniques are going to be presented.\n\n\n\n\n\n\n\n\n\n\nNo matching items",
-    "crumbs": [
-      "Machine Learning",
-      "Foundation"
-    ]
+    "text": "Here, examples of ordinal and one-hot encoding are going to be presented. Importing the libraries.\n\nimport polars as pl\nimport numpy as np\nfrom sklearn.preprocessing import OneHotEncoder, OrdinalEncoder\n\nGenerating a toy-dataset.\n\ndata = {\n    'ID': [1, 2, 3, 4, 5],\n    'Color': ['Red', 'Blue', 'Green', 'Blue', 'Red'],\n    'Size': ['Small', 'Large', 'Medium', 'Small', 'Medium'],\n    'Price': [10, 20, 15, 12, 18]\n}\n\ndf = pl.DataFrame(data)\nprint(df)\n\nshape: (5, 4)\n┌─────┬───────┬────────┬───────┐\n│ ID  ┆ Color ┆ Size   ┆ Price │\n│ --- ┆ ---   ┆ ---    ┆ ---   │\n│ i64 ┆ str   ┆ str    ┆ i64   │\n╞═════╪═══════╪════════╪═══════╡\n│ 1   ┆ Red   ┆ Small  ┆ 10    │\n│ 2   ┆ Blue  ┆ Large  ┆ 20    │\n│ 3   ┆ Green ┆ Medium ┆ 15    │\n│ 4   ┆ Blue  ┆ Small  ┆ 12    │\n│ 5   ┆ Red   ┆ Medium ┆ 18    │\n└─────┴───────┴────────┴───────┘\n\n\nAs the Color feature has no order in its values, one-hot encoding is going to be used. As for the Size feature, values assume order, so ordinal encoding is needed.\n\nencoder_ohe = OneHotEncoder(sparse_output=False)\nohe_encoded = encoder_ohe.fit_transform(df.select(\"Color\").to_numpy())\n\nohe_df = pl.DataFrame(\n    ohe_encoded,\n    schema=[f\"color_{c}\" for c in encoder_ohe.categories_[0]]\n)\n\norder = [[\"Small\", \"Medium\", \"Large\"]]\nencoder_ord = OrdinalEncoder(categories=order)\nexp_encoded = encoder_ord.fit_transform(df.select(\"Size\").to_numpy())\n\nord_df = pl.concat([df, ohe_df], how=\"horizontal\").with_columns(\n    pl.Series(\"Size_ordinal_encoding\", exp_encoded.flatten())\n)\n\nprint(ord_df)\n\nshape: (5, 8)\n┌─────┬───────┬────────┬───────┬────────────┬─────────────┬───────────┬───────────────────────┐\n│ ID  ┆ Color ┆ Size   ┆ Price ┆ color_Blue ┆ color_Green ┆ color_Red ┆ Size_ordinal_encoding │\n│ --- ┆ ---   ┆ ---    ┆ ---   ┆ ---        ┆ ---         ┆ ---       ┆ ---                   │\n│ i64 ┆ str   ┆ str    ┆ i64   ┆ f64        ┆ f64         ┆ f64       ┆ f64                   │\n╞═════╪═══════╪════════╪═══════╪════════════╪═════════════╪═══════════╪═══════════════════════╡\n│ 1   ┆ Red   ┆ Small  ┆ 10    ┆ 0.0        ┆ 0.0         ┆ 1.0       ┆ 0.0                   │\n│ 2   ┆ Blue  ┆ Large  ┆ 20    ┆ 1.0        ┆ 0.0         ┆ 0.0       ┆ 2.0                   │\n│ 3   ┆ Green ┆ Medium ┆ 15    ┆ 0.0        ┆ 1.0         ┆ 0.0       ┆ 1.0                   │\n│ 4   ┆ Blue  ┆ Small  ┆ 12    ┆ 1.0        ┆ 0.0         ┆ 0.0       ┆ 0.0                   │\n│ 5   ┆ Red   ┆ Medium ┆ 18    ┆ 0.0        ┆ 0.0         ┆ 1.0       ┆ 1.0                   │\n└─────┴───────┴────────┴───────┴────────────┴─────────────┴───────────┴───────────────────────┘"
   },
   {
     "objectID": "machine_learning/pipeline/index.html",
     "href": "machine_learning/pipeline/index.html",
     "title": "Pipeline",
     "section": "",
-    "text": "Pre-Processing\n\n\nThe first step of a Machine Learning (ML) pipeline is pre-processing the data. Here, some of these techniques are going to be presented.\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "text": "Pre-Processing\n\n\nThe first step of a Machine Learning pipeline is pre-processing the data. Here, some of these techniques are going to be presented.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModel Selection\n\n\nDuring a Machine Learning pipeline, the goal is to select the best possible model to deploy. For that, model selection techniques are needed.\n\n\n\n\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Machine Learning",
       "Pipeline"
     ]
   },
   {
-    "objectID": "machine_learning/pipeline/pre_processing.html",
-    "href": "machine_learning/pipeline/pre_processing.html",
+    "objectID": "machine_learning/index.html",
+    "href": "machine_learning/index.html",
+    "title": "Machine Learning",
+    "section": "",
+    "text": "Pipeline\n\n\nThe structure of a general Machine Learning pipeline, including: data pre-processing, selecting and evaluating models.\n\n\n\n\n\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Machine Learning"
+    ]
+  },
+  {
+    "objectID": "machine_learning/pipeline/model_selection/model_selection.html",
+    "href": "machine_learning/pipeline/model_selection/model_selection.html",
+    "title": "Model Selection",
+    "section": "",
+    "text": "One of the most important steps in a Machine Learning (ML) pipeline is to select the best available model to deploy in the desired task. This is closely related to hyperparameter tuning (HP-tuning), which is the process of finding the best hyperparameters (HPs) of the model for the given problem. These problems involve estimating the performance of a model on unseen data – data that was not available at training time (Raschka 2018). For clarity, the following sub-problems are going to be defined:",
+    "crumbs": [
+      "Machine Learning",
+      "Pipeline",
+      "Model Selection"
+    ]
+  },
+  {
+    "objectID": "machine_learning/pipeline/model_selection/model_selection.html#holdout-method",
+    "href": "machine_learning/pipeline/model_selection/model_selection.html#holdout-method",
+    "title": "Model Selection",
+    "section": "Holdout Method",
+    "text": "Holdout Method\nThe most used method for model evaluation is the holdout method. This involves splitting the dataset \\(\\mathcal D = \\{(\\boldsymbol x_i, \\boldsymbol y_i)\\}_{i=1}^N\\) with \\(N\\) observations into two disjoint splits, called train \\(\\mathcal D_{\\text{Train}}\\) and test \\(\\mathcal D_{\\text{Test}}\\) split. The train split is used for training the model, while the test set is used only to evaluate the model performance. Generally, the test split contains about \\(10-30\\%\\) of the total amount of data. This method is visually depicted in Fig. 1.\n\n\n\n\n\n\nFigure 1: Diagram of the holdout method.\n\n\n\nThe test set effectively simulates the behavior of the model when seeing data that was not in training. If the model generalized well, it should maintain a similar performance as it did on the training split. Note that this assumes that both splits were sampled from the same distribution, therefore, the model was able to learn patterns that are representative for that dataset. If new data is provided to the model, which possesses completely different statistics than the training data, the model is going to perform worse than expected – this is known as the Out-Of Distribution (OOD) problem.\nA variant of the holdout method is the stratified holdout method, which is important for classification problems. In this setup, the splits can not be randomly sampled from the original dataset, as the splits need to have the same class frequencies as the original data. For that, stratified holdout makes the sampling obey this condition, which leads to the train and test split presenting approximately the same class proportions as the initial dataset. This is depicted in Fig. 2.\n\n\n\n\n\n\nFigure 2: Diagram of the stratified holdout method. The darker colors represent the number of observations of the class \\(c_1\\) and the lighter ones of the class \\(c_2\\).\n\n\n\nThe actual metrics used for model evaluation are introduced in Model Evaluation. Note that the Pre-Processing step is always performed after the data splits have been made. When data is normalized using statistics derived from the entire dataset, splitting the observations into training and testing sets leads to data leakage. This occurs because the test set utilizes statistics calculated from the training set, potentially causing biased estimations. The best practice is to first perform the holdout method, then apply pre-processing algorithms – such as feature selection or normalization – using only the training set statistics, and finally apply the resulting transformations to the test set.",
+    "crumbs": [
+      "Machine Learning",
+      "Pipeline",
+      "Model Selection"
+    ]
+  },
+  {
+    "objectID": "machine_learning/pipeline/pre_processing/pre_processing.html",
+    "href": "machine_learning/pipeline/pre_processing/pre_processing.html",
     "title": "Pre-Processing",
     "section": "",
-    "text": "Before feeding the the data to a model, it is usually necessary to pre-process it. This is necessary due to the mathematical formulation of these models, where some of them might require data to follow specific patterns. Here, the following pre-processing strategies are going to be presented: normalization, encoding and feature selection.",
+    "text": "Before feeding the data to a model, it is usually necessary to pre-process it. This is necessary due to the mathematical formulation of these models, where some of them might require data to follow specific patterns. Here, the following pre-processing strategies are going to be presented: normalization, encoding and feature selection.",
     "crumbs": [
       "Machine Learning",
       "Pipeline",
@@ -175,32 +168,8 @@
     ]
   },
   {
-    "objectID": "machine_learning/pipeline/pre_processing.html#theory",
-    "href": "machine_learning/pipeline/pre_processing.html#theory",
-    "title": "Pre-Processing",
-    "section": "",
-    "text": "Before training a Machine Learning (ML) model, one",
-    "crumbs": [
-      "Machine Learning",
-      "Pipeline",
-      "Pre-Processing"
-    ]
-  },
-  {
-    "objectID": "machine_learning/pipeline/pre_processing.html#code",
-    "href": "machine_learning/pipeline/pre_processing.html#code",
-    "title": "Pre-Processing",
-    "section": "Code",
-    "text": "Code",
-    "crumbs": [
-      "Machine Learning",
-      "Pipeline",
-      "Pre-Processing"
-    ]
-  },
-  {
-    "objectID": "machine_learning/pipeline/pre_processing.html#normalization",
-    "href": "machine_learning/pipeline/pre_processing.html#normalization",
+    "objectID": "machine_learning/pipeline/pre_processing/pre_processing.html#normalization",
+    "href": "machine_learning/pipeline/pre_processing/pre_processing.html#normalization",
     "title": "Pre-Processing",
     "section": "Normalization",
     "text": "Normalization\nNormalization is a class of transformations that make features present more uniform statistics. The first approach for normalizing data is the absolute maximum normalization. This technique takes the a set of features \\(\\boldsymbol X \\in \\mathbb R^{N\\times n}\\), where \\(N\\) is the number of observations and \\(n\\) is the number of features, and applies the following transformation: \\[\n\\boldsymbol{\\tilde X} = \\frac{\\boldsymbol{X}}{\\max\\mid\\boldsymbol{X}\\mid},\n\\tag{1}\\] where \\(\\boldsymbol{\\tilde X}\\) is the normalized set of features. This normalization scales the data between \\(-1\\) and \\(1\\), while preserving sparsity. Note that the maximum is taken feature-wise, and so is the division.\nAnother type of normalization is the \\(\\min-\\max\\) normalization, which scales the data between \\(0\\) and \\(1\\), where the minimum value of the original data is mapped to \\(0\\), and the maximum to \\(1\\). It is given by: \\[\n\\boldsymbol{\\tilde X} = \\frac{\\boldsymbol{X} - \\min(\\boldsymbol{X})}{\\max(\\boldsymbol{X}) - \\min(\\boldsymbol{X})}.\n\\tag{2}\\] Note that unlike absolute maximum normalization, \\(\\min-\\max\\) normalization does not preserve sparsity.\nFinally, standard normalization scales the data to so that each feature has a standard deviation of \\(1\\) and a mean of \\(0\\). The transformation is given by: \\[\n\\boldsymbol{\\tilde X} = \\frac{\\boldsymbol{X} - \\boldsymbol{\\mu}_{\\boldsymbol{X}}}{\\boldsymbol{\\sigma}_{\\boldsymbol{X}}},\n\\tag{3}\\] where \\(\\boldsymbol{\\mu}_{\\boldsymbol{X}}\\) are the mean values of the features and \\(\\boldsymbol{\\sigma}_{\\boldsymbol{X}}\\) are the standard deviations.\n\nCode: Normalization\n\nHere, synthetic data is going to be normalized, in order to compare the different transformations explained. Importing packages.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, StandardScaler\n\nGenerating and printing data minimum and maximum.\n\nfeature_1 = np.random.normal(500000, 50000, 100)\nfeature_2 = np.random.normal(3, 1, 100)\n\nX = np.column_stack((feature_1, feature_2))\n\nprint(f\"Minimum: {X.min(axis=0)}\")\nprint(f\"Maximum: {X.max(axis=0)}\")\n\nMinimum: [3.44361495e+05 7.88805078e-02]\nMaximum: [6.15555239e+05 5.18227783e+00]\n\n\nApplying absolute maximum absolute normalization.\n\nmax_abs_scaler = MaxAbsScaler()\nX_maxabs = max_abs_scaler.fit_transform(X)\n\nprint(f\"Minimum: {X_maxabs.min(axis=0)}\")\nprint(f\"Maximum: {X_maxabs.max(axis=0)}\")\n\nMinimum: [0.55943232 0.0152212 ]\nMaximum: [1. 1.]\n\n\nApplying min-max normalization.\n\nmin_max_scaler = MinMaxScaler()\nX_minmax = min_max_scaler.fit_transform(X)\n\nprint(f\"Minimum: {X_minmax.min(axis=0)}\")\nprint(f\"Maximum: {X_minmax.max(axis=0)}\")\n\nMinimum: [0. 0.]\nMaximum: [1. 1.]\n\n\nApplying standard normalization.\n\nstd_scaler = StandardScaler()\nX_std = std_scaler.fit_transform(X)\n\nprint(f\"Mean: {X_std.mean(axis=0)}\")\nprint(f\"Std:  {X_std.std(axis=0)}\")\n\nMean: [ 3.74367204e-15 -5.90638649e-16]\nStd:  [1. 1.]\n\n\nPlotting the data with different normalizations.\n\nfig, axes = plt.subplots(2, 2, figsize=(10, 10))\naxes = axes.ravel()\n\naxes[0].scatter(X[:, 0], X[:, 1], alpha=0.7, color='red')\naxes[0].set_title(\"Original Data\")\naxes[0].set_xlabel(\"Feature 1\")\naxes[0].set_ylabel(\"Feature 2\")\n\naxes[1].scatter(X_maxabs[:, 0], X_maxabs[:, 1], alpha=0.7, color='green')\naxes[1].set_title(\"Maximum Absolute Normalization\")\naxes[1].set_xlabel(\"Feature 1\")\naxes[1].set_ylabel(\"Feature 2\")\n\naxes[2].scatter(X_minmax[:, 0], X_minmax[:, 1], alpha=0.7, color='green')\naxes[2].set_title(\"Min-Max Normalization\")\naxes[2].set_xlabel(\"Feature 1\")\naxes[2].set_ylabel(\"Feature 2\")\n\naxes[3].scatter(X_std[:, 0], X_std[:, 1], alpha=0.7, color='blue')\naxes[3].set_title(\"Standard Normalization\")\naxes[3].set_xlabel(\"Feature 1\")\naxes[3].set_ylabel(\"Feature 2\")\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nSource: normalization.ipynb",
@@ -211,15 +180,8 @@
     ]
   },
   {
-    "objectID": "machine_learning/pipeline/normalization.html",
-    "href": "machine_learning/pipeline/normalization.html",
-    "title": "",
-    "section": "",
-    "text": "Here, synthetic data is going to be normalized, in order to compare the different transformations explained. Importing packages.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom sklearn.preprocessing import MaxAbsScaler, MinMaxScaler, StandardScaler\n\nGenerating and printing data minimum and maximum.\n\nfeature_1 = np.random.normal(500000, 50000, 100)\nfeature_2 = np.random.normal(3, 1, 100)\n\nX = np.column_stack((feature_1, feature_2))\n\nprint(f\"Minimum: {X.min(axis=0)}\")\nprint(f\"Maximum: {X.max(axis=0)}\")\n\nMinimum: [3.44361495e+05 7.88805078e-02]\nMaximum: [6.15555239e+05 5.18227783e+00]\n\n\nApplying absolute maximum absolute normalization.\n\nmax_abs_scaler = MaxAbsScaler()\nX_maxabs = max_abs_scaler.fit_transform(X)\n\nprint(f\"Minimum: {X_maxabs.min(axis=0)}\")\nprint(f\"Maximum: {X_maxabs.max(axis=0)}\")\n\nMinimum: [0.55943232 0.0152212 ]\nMaximum: [1. 1.]\n\n\nApplying min-max normalization.\n\nmin_max_scaler = MinMaxScaler()\nX_minmax = min_max_scaler.fit_transform(X)\n\nprint(f\"Minimum: {X_minmax.min(axis=0)}\")\nprint(f\"Maximum: {X_minmax.max(axis=0)}\")\n\nMinimum: [0. 0.]\nMaximum: [1. 1.]\n\n\nApplying standard normalization.\n\nstd_scaler = StandardScaler()\nX_std = std_scaler.fit_transform(X)\n\nprint(f\"Mean: {X_std.mean(axis=0)}\")\nprint(f\"Std:  {X_std.std(axis=0)}\")\n\nMean: [ 3.74367204e-15 -5.90638649e-16]\nStd:  [1. 1.]\n\n\nPlotting the data with different normalizations.\n\nfig, axes = plt.subplots(2, 2, figsize=(10, 10))\naxes = axes.ravel()\n\naxes[0].scatter(X[:, 0], X[:, 1], alpha=0.7, color='red')\naxes[0].set_title(\"Original Data\")\naxes[0].set_xlabel(\"Feature 1\")\naxes[0].set_ylabel(\"Feature 2\")\n\naxes[1].scatter(X_maxabs[:, 0], X_maxabs[:, 1], alpha=0.7, color='green')\naxes[1].set_title(\"Maximum Absolute Normalization\")\naxes[1].set_xlabel(\"Feature 1\")\naxes[1].set_ylabel(\"Feature 2\")\n\naxes[2].scatter(X_minmax[:, 0], X_minmax[:, 1], alpha=0.7, color='green')\naxes[2].set_title(\"Min-Max Normalization\")\naxes[2].set_xlabel(\"Feature 1\")\naxes[2].set_ylabel(\"Feature 2\")\n\naxes[3].scatter(X_std[:, 0], X_std[:, 1], alpha=0.7, color='blue')\naxes[3].set_title(\"Standard Normalization\")\naxes[3].set_xlabel(\"Feature 1\")\naxes[3].set_ylabel(\"Feature 2\")\n\nplt.tight_layout()\nplt.show()"
-  },
-  {
-    "objectID": "machine_learning/pipeline/pre_processing.html#encoding",
-    "href": "machine_learning/pipeline/pre_processing.html#encoding",
+    "objectID": "machine_learning/pipeline/pre_processing/pre_processing.html#encoding",
+    "href": "machine_learning/pipeline/pre_processing/pre_processing.html#encoding",
     "title": "Pre-Processing",
     "section": "Encoding",
     "text": "Encoding\nAnother important part of pre-processing is encoding features that are not numerical. This envolves finding good representations for features that might be stored as strings, for example. When there is some sense of order in the feature, the ordinal encoder is used. It converts the \\(m\\) original classes into integers, keeping the order. On the other hand, if there is no order, the data is passed through a one-hot encoder, which converts the original \\(m\\) classes into \\(m\\) new features, where the columns are sparse, only containing \\(1\\) when the observations belongs to the specific class.\n\nCode: Encoding\n\nHere, examples of ordinal and one-hot encoding are going to be presented. Importing the libraries.\n\nimport polars as pl\nimport numpy as np\nfrom sklearn.preprocessing import OneHotEncoder, OrdinalEncoder\n\nGenerating a toy-dataset.\n\ndata = {\n    'ID': [1, 2, 3, 4, 5],\n    'Color': ['Red', 'Blue', 'Green', 'Blue', 'Red'],\n    'Size': ['Small', 'Large', 'Medium', 'Small', 'Medium'],\n    'Price': [10, 20, 15, 12, 18]\n}\n\ndf = pl.DataFrame(data)\nprint(df)\n\nshape: (5, 4)\n┌─────┬───────┬────────┬───────┐\n│ ID  ┆ Color ┆ Size   ┆ Price │\n│ --- ┆ ---   ┆ ---    ┆ ---   │\n│ i64 ┆ str   ┆ str    ┆ i64   │\n╞═════╪═══════╪════════╪═══════╡\n│ 1   ┆ Red   ┆ Small  ┆ 10    │\n│ 2   ┆ Blue  ┆ Large  ┆ 20    │\n│ 3   ┆ Green ┆ Medium ┆ 15    │\n│ 4   ┆ Blue  ┆ Small  ┆ 12    │\n│ 5   ┆ Red   ┆ Medium ┆ 18    │\n└─────┴───────┴────────┴───────┘\n\n\nAs the Color feature has no order in its values, one-hot encoding is going to be used. As for the Size feature, values assume order, so ordinal encoding is needed.\n\nencoder_ohe = OneHotEncoder(sparse_output=False)\nohe_encoded = encoder_ohe.fit_transform(df.select(\"Color\").to_numpy())\n\nohe_df = pl.DataFrame(\n    ohe_encoded,\n    schema=[f\"color_{c}\" for c in encoder_ohe.categories_[0]]\n)\n\norder = [[\"Small\", \"Medium\", \"Large\"]]\nencoder_ord = OrdinalEncoder(categories=order)\nexp_encoded = encoder_ord.fit_transform(df.select(\"Size\").to_numpy())\n\nord_df = pl.concat([df, ohe_df], how=\"horizontal\").with_columns(\n    pl.Series(\"Size_ordinal_encoding\", exp_encoded.flatten())\n)\n\nprint(ord_df)\n\nshape: (5, 8)\n┌─────┬───────┬────────┬───────┬────────────┬─────────────┬───────────┬───────────────────────┐\n│ ID  ┆ Color ┆ Size   ┆ Price ┆ color_Blue ┆ color_Green ┆ color_Red ┆ Size_ordinal_encoding │\n│ --- ┆ ---   ┆ ---    ┆ ---   ┆ ---        ┆ ---         ┆ ---       ┆ ---                   │\n│ i64 ┆ str   ┆ str    ┆ i64   ┆ f64        ┆ f64         ┆ f64       ┆ f64                   │\n╞═════╪═══════╪════════╪═══════╪════════════╪═════════════╪═══════════╪═══════════════════════╡\n│ 1   ┆ Red   ┆ Small  ┆ 10    ┆ 0.0        ┆ 0.0         ┆ 1.0       ┆ 0.0                   │\n│ 2   ┆ Blue  ┆ Large  ┆ 20    ┆ 1.0        ┆ 0.0         ┆ 0.0       ┆ 2.0                   │\n│ 3   ┆ Green ┆ Medium ┆ 15    ┆ 0.0        ┆ 1.0         ┆ 0.0       ┆ 1.0                   │\n│ 4   ┆ Blue  ┆ Small  ┆ 12    ┆ 1.0        ┆ 0.0         ┆ 0.0       ┆ 0.0                   │\n│ 5   ┆ Red   ┆ Medium ┆ 18    ┆ 0.0        ┆ 0.0         ┆ 1.0       ┆ 1.0                   │\n└─────┴───────┴────────┴───────┴────────────┴─────────────┴───────────┴───────────────────────┘\n\n\nSource: encoding.ipynb",
@@ -230,15 +192,8 @@
     ]
   },
   {
-    "objectID": "machine_learning/pipeline/encoding.html",
-    "href": "machine_learning/pipeline/encoding.html",
-    "title": "",
-    "section": "",
-    "text": "Here, examples of ordinal and one-hot encoding are going to be presented. Importing the libraries.\n\nimport polars as pl\nimport numpy as np\nfrom sklearn.preprocessing import OneHotEncoder, OrdinalEncoder\n\nGenerating a toy-dataset.\n\ndata = {\n    'ID': [1, 2, 3, 4, 5],\n    'Color': ['Red', 'Blue', 'Green', 'Blue', 'Red'],\n    'Size': ['Small', 'Large', 'Medium', 'Small', 'Medium'],\n    'Price': [10, 20, 15, 12, 18]\n}\n\ndf = pl.DataFrame(data)\nprint(df)\n\nshape: (5, 4)\n┌─────┬───────┬────────┬───────┐\n│ ID  ┆ Color ┆ Size   ┆ Price │\n│ --- ┆ ---   ┆ ---    ┆ ---   │\n│ i64 ┆ str   ┆ str    ┆ i64   │\n╞═════╪═══════╪════════╪═══════╡\n│ 1   ┆ Red   ┆ Small  ┆ 10    │\n│ 2   ┆ Blue  ┆ Large  ┆ 20    │\n│ 3   ┆ Green ┆ Medium ┆ 15    │\n│ 4   ┆ Blue  ┆ Small  ┆ 12    │\n│ 5   ┆ Red   ┆ Medium ┆ 18    │\n└─────┴───────┴────────┴───────┘\n\n\nAs the Color feature has no order in its values, one-hot encoding is going to be used. As for the Size feature, values assume order, so ordinal encoding is needed.\n\nencoder_ohe = OneHotEncoder(sparse_output=False)\nohe_encoded = encoder_ohe.fit_transform(df.select(\"Color\").to_numpy())\n\nohe_df = pl.DataFrame(\n    ohe_encoded,\n    schema=[f\"color_{c}\" for c in encoder_ohe.categories_[0]]\n)\n\norder = [[\"Small\", \"Medium\", \"Large\"]]\nencoder_ord = OrdinalEncoder(categories=order)\nexp_encoded = encoder_ord.fit_transform(df.select(\"Size\").to_numpy())\n\nord_df = pl.concat([df, ohe_df], how=\"horizontal\").with_columns(\n    pl.Series(\"Size_ordinal_encoding\", exp_encoded.flatten())\n)\n\nprint(ord_df)\n\nshape: (5, 8)\n┌─────┬───────┬────────┬───────┬────────────┬─────────────┬───────────┬───────────────────────┐\n│ ID  ┆ Color ┆ Size   ┆ Price ┆ color_Blue ┆ color_Green ┆ color_Red ┆ Size_ordinal_encoding │\n│ --- ┆ ---   ┆ ---    ┆ ---   ┆ ---        ┆ ---         ┆ ---       ┆ ---                   │\n│ i64 ┆ str   ┆ str    ┆ i64   ┆ f64        ┆ f64         ┆ f64       ┆ f64                   │\n╞═════╪═══════╪════════╪═══════╪════════════╪═════════════╪═══════════╪═══════════════════════╡\n│ 1   ┆ Red   ┆ Small  ┆ 10    ┆ 0.0        ┆ 0.0         ┆ 1.0       ┆ 0.0                   │\n│ 2   ┆ Blue  ┆ Large  ┆ 20    ┆ 1.0        ┆ 0.0         ┆ 0.0       ┆ 2.0                   │\n│ 3   ┆ Green ┆ Medium ┆ 15    ┆ 0.0        ┆ 1.0         ┆ 0.0       ┆ 1.0                   │\n│ 4   ┆ Blue  ┆ Small  ┆ 12    ┆ 1.0        ┆ 0.0         ┆ 0.0       ┆ 0.0                   │\n│ 5   ┆ Red   ┆ Medium ┆ 18    ┆ 0.0        ┆ 0.0         ┆ 1.0       ┆ 1.0                   │\n└─────┴───────┴────────┴───────┴────────────┴─────────────┴───────────┴───────────────────────┘"
-  },
-  {
-    "objectID": "machine_learning/pipeline/pre_processing.html#feature-selection",
-    "href": "machine_learning/pipeline/pre_processing.html#feature-selection",
+    "objectID": "machine_learning/pipeline/pre_processing/pre_processing.html#feature-selection",
+    "href": "machine_learning/pipeline/pre_processing/pre_processing.html#feature-selection",
     "title": "Pre-Processing",
     "section": "Feature Selection",
     "text": "Feature Selection\nIn some cases, the dataset has numerous features, resulting in complex and computationally expensive models. Therefore, it is interesting to select a small subset of features to decrease the computational cost of the trained model. This selection is important to avoid the curse of dimensionality, in which the increase of features in the model worsens its performance.\nThe first strategy is to eliminate features by variance. When a feature does not vary throughout observations, it does not add new information to the model, therefore, it can be excluded. Similarly, one can define a variance threshold for eliminating features.\nA more advanced approach is to use the Variance Inflation Factor (VIF) algorithm. It removes features based on their multicollinearity with other features. That is, if one feature is a linear combination of other ones, it is removed. For each feature \\(x_j \\in \\boldsymbol{X}\\), the VIF trains a linear regression with \\(x_j\\) as a target. The coefficient of determination \\(R^2\\) of the final model is used to calculate the VIF coefficient: \\[\n\\text{VIF}(x_j) = \\frac{1}{1-R_j^2}.\n\\tag{4}\\] If this coefficient is equal to \\(1\\), there is no multicollinearity, while higher values indicate correlation. With that, given a threshold – generally \\(5\\) or \\(10\\) –, features can be removed.\n\nCode: Feature Selection\n\nIn this code, VIF will be used to remove features that can be represented via linear combination of other features. Importing libraries.\n\nimport numpy as np\nimport polars as pl\nimport statsmodels.api as sm\nfrom statsmodels.stats.outliers_influence import variance_inflation_factor\n\nGenerating data, and creating a linear combination of features with extra noise.\n\nn_samples = 100\n\nx1 = np.random.normal(2, 1, n_samples)\nx2 = np.random.normal(1, 1, n_samples)\nx3 = np.random.normal(-1, 1, n_samples)\nx4 = np.random.normal(-2, 1, n_samples)\n\nx5 = 2 * x1 + 3 * x2 - x3 + x4 + np.random.normal(0, 0.01, n_samples)\n\ndf = pl.DataFrame({\"x1\": x1, \"x2\": x2, \"x3\": x3, \"x4\": x4, \"x5\": x5})\nprint(df)\n\nshape: (100, 5)\n┌──────────┬──────────┬───────────┬───────────┬───────────┐\n│ x1       ┆ x2       ┆ x3        ┆ x4        ┆ x5        │\n│ ---      ┆ ---      ┆ ---       ┆ ---       ┆ ---       │\n│ f64      ┆ f64      ┆ f64       ┆ f64       ┆ f64       │\n╞══════════╪══════════╪═══════════╪═══════════╪═══════════╡\n│ 1.127813 ┆ 1.976019 ┆ -0.306735 ┆ -2.932537 ┆ 5.553077  │\n│ 1.702715 ┆ 2.837258 ┆ 0.608874  ┆ -3.093993 ┆ 8.240383  │\n│ 3.728344 ┆ 1.754147 ┆ -0.640377 ┆ -1.966818 ┆ 11.409613 │\n│ 0.130101 ┆ 2.07627  ┆ -2.519377 ┆ -1.094331 ┆ 7.905766  │\n│ 1.842719 ┆ 0.689719 ┆ -1.809076 ┆ -2.46972  ┆ 5.091085  │\n│ …        ┆ …        ┆ …         ┆ …         ┆ …         │\n│ 2.346223 ┆ 0.987793 ┆ 0.792093  ┆ -2.469477 ┆ 4.412669  │\n│ 3.270795 ┆ 0.981068 ┆ -1.740227 ┆ -2.858559 ┆ 8.373868  │\n│ 2.448963 ┆ 1.937447 ┆ -1.56691  ┆ -1.530378 ┆ 10.756647 │\n│ 1.616927 ┆ 3.011794 ┆ -1.378437 ┆ -0.693779 ┆ 12.944466 │\n│ 1.235787 ┆ 2.634723 ┆ -0.22323  ┆ -0.927663 ┆ 9.676474  │\n└──────────┴──────────┴───────────┴───────────┴───────────┘\n\n\nCreating a simple VIF function.\n\ndf_with_const = df.with_columns(pl.lit(1).alias(\"const\"))\nX_matrix = df_with_const.to_numpy()\n\nfor i, col in enumerate(df_with_const.columns):\n    if col != \"const\":\n        vif = variance_inflation_factor(X_matrix, i)\n        print(f\"{col}: {vif:.2f}\")\n\nx1: 49692.18\nx2: 75753.11\nx3: 10711.37\nx4: 9551.55\nx5: 121103.62\n\n\nAs the results show, feature x5 has the highest VIF value, it would be the first feature to be dropped. Note that the other features also have high values, because the generation of the linearly dependent feature also make other features dependent on it.\nSource: vif.ipynb",
@@ -249,10 +204,15 @@
     ]
   },
   {
-    "objectID": "machine_learning/pipeline/vif.html",
-    "href": "machine_learning/pipeline/vif.html",
-    "title": "",
-    "section": "",
-    "text": "In this code, VIF will be used to remove features that can be represented via linear combination of other features. Importing libraries.\n\nimport numpy as np\nimport polars as pl\nimport statsmodels.api as sm\nfrom statsmodels.stats.outliers_influence import variance_inflation_factor\n\nGenerating data, and creating a linear combination of features with extra noise.\n\nn_samples = 100\n\nx1 = np.random.normal(2, 1, n_samples)\nx2 = np.random.normal(1, 1, n_samples)\nx3 = np.random.normal(-1, 1, n_samples)\nx4 = np.random.normal(-2, 1, n_samples)\n\nx5 = 2 * x1 + 3 * x2 - x3 + x4 + np.random.normal(0, 0.01, n_samples)\n\ndf = pl.DataFrame({\"x1\": x1, \"x2\": x2, \"x3\": x3, \"x4\": x4, \"x5\": x5})\nprint(df)\n\nshape: (100, 5)\n┌──────────┬──────────┬───────────┬───────────┬───────────┐\n│ x1       ┆ x2       ┆ x3        ┆ x4        ┆ x5        │\n│ ---      ┆ ---      ┆ ---       ┆ ---       ┆ ---       │\n│ f64      ┆ f64      ┆ f64       ┆ f64       ┆ f64       │\n╞══════════╪══════════╪═══════════╪═══════════╪═══════════╡\n│ 1.127813 ┆ 1.976019 ┆ -0.306735 ┆ -2.932537 ┆ 5.553077  │\n│ 1.702715 ┆ 2.837258 ┆ 0.608874  ┆ -3.093993 ┆ 8.240383  │\n│ 3.728344 ┆ 1.754147 ┆ -0.640377 ┆ -1.966818 ┆ 11.409613 │\n│ 0.130101 ┆ 2.07627  ┆ -2.519377 ┆ -1.094331 ┆ 7.905766  │\n│ 1.842719 ┆ 0.689719 ┆ -1.809076 ┆ -2.46972  ┆ 5.091085  │\n│ …        ┆ …        ┆ …         ┆ …         ┆ …         │\n│ 2.346223 ┆ 0.987793 ┆ 0.792093  ┆ -2.469477 ┆ 4.412669  │\n│ 3.270795 ┆ 0.981068 ┆ -1.740227 ┆ -2.858559 ┆ 8.373868  │\n│ 2.448963 ┆ 1.937447 ┆ -1.56691  ┆ -1.530378 ┆ 10.756647 │\n│ 1.616927 ┆ 3.011794 ┆ -1.378437 ┆ -0.693779 ┆ 12.944466 │\n│ 1.235787 ┆ 2.634723 ┆ -0.22323  ┆ -0.927663 ┆ 9.676474  │\n└──────────┴──────────┴───────────┴───────────┴───────────┘\n\n\nCreating a simple VIF function.\n\ndf_with_const = df.with_columns(pl.lit(1).alias(\"const\"))\nX_matrix = df_with_const.to_numpy()\n\nfor i, col in enumerate(df_with_const.columns):\n    if col != \"const\":\n        vif = variance_inflation_factor(X_matrix, i)\n        print(f\"{col}: {vif:.2f}\")\n\nx1: 49692.18\nx2: 75753.11\nx3: 10711.37\nx4: 9551.55\nx5: 121103.62\n\n\nAs the results show, feature x5 has the highest VIF value, it would be the first feature to be dropped. Note that the other features also have high values, because the generation of the linearly dependent feature also make other features dependent on it."
+    "objectID": "machine_learning/pipeline/model_selection/model_selection.html#k-fold-cross-validation",
+    "href": "machine_learning/pipeline/model_selection/model_selection.html#k-fold-cross-validation",
+    "title": "Model Selection",
+    "section": "\\(k\\)-fold Cross-Validation",
+    "text": "\\(k\\)-fold Cross-Validation\nAnother sub-problem in an ML pipeline is model selection, which involves choosing the optimal set of Hyperparameters (HPs) for a given model. A naive approach is using the holdout method to select the best-performing model. However, a key issue with this approach is that the performance on the test set may be biased by the specific split performed. Furthermore, there is no separate test set to evaluate model performance on unseen data, as the test set must be reserved for selecting the optimal HPs.\nTo address these issues, \\(k\\)-fold Cross-Validation (CV) is employed. First, the method applies the holdout technique to create a training and testing split. Then, using the training set, it generates \\(k\\) disjoint sets \\(\\mathcal D_i \\subset \\mathcal D_{\\text{Train}}\\), such that: \\[\n\\bigcup_{i=1}^k \\mathcal D_i = D_{\\text{Train}}.\n\\tag{1}\\] Subsequently, the \\(k\\)-fold CV trains the model multiple times, once for each HP configuration. For each iteration, the model is trained on \\(k-1\\) sets, using the remaining set as the validation set – analogous to the test set. Finally, the model yields \\(k\\) performance values, and the mean of these values is used to estimate the model’s true performance. This average performance is then used to select the best possible HP configuration from a predetermined search space.\nNote that by utilizing different splits, \\(k\\)-fold CV effectively reduces split bias. Typically, \\(k=10\\) is used for this method, although the choice depends on factors such as dataset size, computational cost, and other considerations. Visually, the CV process is depicted in Fig. 3.\n\n\n\n\n\n\nFigure 3: Diagram of the \\(k\\)-fold CV with \\(k=4\\).\n\n\n\n\nCode\n\nHere, a simple Machine Learning pipeline will be conducted using the \\(k\\)-NN model. Importing packages.\n\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split, GridSearchCV, KFold\nfrom sklearn.neighbors import KNeighborsClassifier\n\nLoading the Iris dataset.\n\niris = load_iris()\nX, y = iris.data, iris.target\n\nprint(f\"Dataset shape: {X.shape}\")\nprint(f\"Classes: {iris.target_names}\")\n\nDataset shape: (150, 4)\nClasses: ['setosa' 'versicolor' 'virginica']\n\n\nPerforming the train and test split, with 70/30 ratio.\n\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=100)\n\nCreating a hyperparameter search space.\n\nparam_grid = {'n_neighbors': [1, 3, 5, 7, 9, 11, 13, 15]}\n\nSetting a \\(5\\)-fold Cross-Validation.\n\ncv = KFold(n_splits=5, shuffle=True, random_state=100)\n\nFitting and finding the best value of \\(k\\).\n\ngrid_search = GridSearchCV(\n    estimator=KNeighborsClassifier(),\n    param_grid=param_grid,\n    cv=cv,\n    scoring='accuracy'\n)\n\ngrid_search.fit(X_train, y_train)\n\nprint(f\"Best k: {grid_search.best_params_['n_neighbors']}\")\nprint(f\"Validation Accuracy: {grid_search.best_score_:.4f}\")\n\nBest k: 3\nValidation Accuracy: 0.9714\n\n\nEvaluating in the test set.\n\nbest_knn = grid_search.best_estimator_\nfinal_test_accuracy = best_knn.score(X_test, y_test)\n\nprint(f\"Test Accuracy: {final_test_accuracy:.4f}\")\n\nTest Accuracy: 0.9778\n\n\nSource: model_selection.ipynb",
+    "crumbs": [
+      "Machine Learning",
+      "Pipeline",
+      "Model Selection"
+    ]
   }
 ]

@@ -214,7 +214,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../machine_learning/pipeline/pre_processing.html" class="sidebar-item-text sidebar-link">
+  <a href="../../machine_learning/pipeline/pre_processing.qmd" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-Processing</span></a>
   </div>
 </li>
@@ -324,7 +324,7 @@ b_2 \\
 b_m
 \end{bmatrix} \right).
 \tag{3}\]</span></span> Note that the activation function <span class="math inline">\(\sigma : \mathbb R^m \to \mathbb R^m\)</span> is now applied element-wise in the <span class="math inline">\(\boldsymbol{Wx} + \boldsymbol{b}\)</span> vector.</p>
-<p>In MLPs, layers of perceptrons are grouped sequentially in order to approximate a mapping from the input space <span class="math inline">\(\mathcal X\)</span> to the output space <span class="math inline">\(\mathcal Y\)</span>, with the intermediate layers of the model being called hidden layers. That is, given a dataset <span class="math inline">\(\mathcal D = \{\boldsymbol x_i, \boldsymbol y_i\}_{i=1}^N\)</span> with <span class="math inline">\(N\)</span> observations, the input vector <span class="math inline">\(\boldsymbol x_i \in \mathcal X\)</span> is processed by the MLP layers until the final layer, which should yield a vector <span class="math inline">\(\boldsymbol{\hat{y}}_i \approx \boldsymbol y_i \in \mathcal Y\)</span>. <a href="#fig-mlp" class="quarto-xref">Fig.&nbsp;2</a> depicts the diagram of a MLP.</p>
+<p>In MLPs, layers of perceptrons are grouped sequentially in order to approximate a mapping from the input space <span class="math inline">\(\mathcal X\)</span> to the output space <span class="math inline">\(\mathcal Y\)</span>, with the intermediate layers of the model being called hidden layers. That is, given a dataset <span class="math inline">\(\mathcal D = \{(\boldsymbol x_i, \boldsymbol y_i)\}_{i=1}^N\)</span> with <span class="math inline">\(N\)</span> observations, the input vector <span class="math inline">\(\boldsymbol x_i \in \mathcal X\)</span> is processed by the MLP layers until the final layer, which should yield a vector <span class="math inline">\(\boldsymbol{\hat{y}}_i \approx \boldsymbol y_i \in \mathcal Y\)</span>. <a href="#fig-mlp" class="quarto-xref">Fig.&nbsp;2</a> depicts the diagram of a MLP.</p>
 <div id="fig-mlp" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mlp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

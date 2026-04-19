@@ -22,7 +22,9 @@ website:
             file: machine_learning/pipeline/index.qmd
             contents:
               - text: "Pre-Processing"
-                file: machine_learning/pipeline/pre_processing.qmd
+                file: machine_learning/pipeline/pre_processing/pre_processing.qmd
+              - text: "Model Selection"
+                file: machine_learning/pipeline/model_selection/model_selection.qmd
            
       - section: "Deep Learning"
         file: deep_learning/index.qmd

@@ -1,10 +1,10 @@
 ---
 title: "Pre-Processing"
-description: "The first step of a Machine Learning (ML) pipeline is pre-processing the data. Here, some of these techniques are going to be presented."
-bibliography: ../../references.bib
+description: "The first step of a Machine Learning pipeline is pre-processing the data. Here, some of these techniques are going to be presented."
+bibliography: ../../../references.bib
 ---
 
-Before feeding the the data to a model, it is usually necessary to pre-process it. This is necessary due to the mathematical formulation of these models, where some of them might require data to follow specific patterns. Here, the following pre-processing strategies are going to be presented: normalization, encoding and feature selection.
+Before feeding the data to a model, it is usually necessary to pre-process it. This is necessary due to the mathematical formulation of these models, where some of them might require data to follow specific patterns. Here, the following pre-processing strategies are going to be presented: normalization, encoding and feature selection. 
 
 ## Normalization
 

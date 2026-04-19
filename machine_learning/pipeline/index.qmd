@@ -1,10 +1,13 @@
 ---
 title: "Pipeline"
-description: "How to structure a general Machine Learning pipeline, including: data pre-processing, selecting and evaluating models."
+description: "The structure of a general Machine Learning pipeline, including: data pre-processing, selecting and evaluating models."
 listing:
-  contents: "*.qmd" 
+  contents: 
+    - "pre_processing/pre_processing.qmd" 
+    - "model_selection/model_selection.qmd"
   type: grid        
-  grid-columns: 2       
+  grid-columns: 1
   grid-item-border: true 
   grid-item-align: left
+  sort: false
 ---
