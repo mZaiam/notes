@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="During a Machine Learning pipeline, the goal is to select the best possible model to deploy. For that, model selection techniques are needed.">
 
-<title>Model Selection</title>
+<title>model_selection</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,49 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../">
-<link href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html" rel="next">
-<link href="../../../machine_learning/pipeline/pre_processing/pre_processing.html" rel="prev">
-<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-46858c2c8c16e82321d3cea5e177c50c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap-46858c2c8c16e82321d3cea5e177c50c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -157,7 +134,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../../../styles.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -169,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/index.html">Pipeline</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/model_selection/model_selection.html">Model Selection</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -191,13 +168,13 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../machine_learning/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../machine_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Machine Learning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -206,28 +183,28 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../machine_learning/pipeline/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../machine_learning/pipeline/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pipeline</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../machine_learning/pipeline/pre_processing/pre_processing.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../machine_learning/pipeline/pre_processing/pre_processing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-Processing</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../machine_learning/pipeline/model_selection/model_selection.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../../machine_learning/pipeline/model_selection/model_selection.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Model Selection</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../machine_learning/pipeline/model_evaluation/model_evaluation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Model Evaluation</span></a>
   </div>
 </li>
@@ -235,7 +212,7 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../machine_learning/supervised_learning/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../machine_learning/supervised_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Supervised Learning</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -244,7 +221,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../machine_learning/supervised_learning/linear_models/linear_models.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../machine_learning/supervised_learning/linear_models/linear_models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Linear Models</span></a>
   </div>
 </li>
@@ -254,7 +231,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../../deep_learning/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../../../../deep_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Learning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -263,7 +240,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../../deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multilayer Perceptron</span></a>
   </div>
 </li>
@@ -274,99 +251,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#holdout-method" id="toc-holdout-method" class="nav-link active" data-scroll-target="#holdout-method">Holdout Method</a></li>
-  <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation"><span class="math inline">\(k\)</span>-fold Cross-Validation</a>
-  <ul class="collapse">
-  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
-  </ul></li>
-  </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="model_selection_assets/model_selection-preview.html"><i class="bi bi-journal-code"></i>model_selection.ipynb</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/index.html">Pipeline</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/model_selection/model_selection.html">Model Selection</a></li></ol></nav>
-<div class="quarto-title">
-<h1 class="title">Model Selection</h1>
-</div>
-
-<div>
-  <div class="description">
-    During a Machine Learning pipeline, the goal is to select the best possible model to deploy. For that, model selection techniques are needed.
-  </div>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<p>One of the most important steps in a Machine Learning (ML) pipeline is to select the best available model to deploy in the desired task. This is closely related to hyperparameter tuning (HP-tuning), which is the process of finding the best hyperparameters (HPs) of the model for the given problem. These problems involve estimating the performance of a model on unseen data – data that was not available at training time <span class="citation" data-cites="ml:raschka">(<a href="#ref-ml:raschka" role="doc-biblioref">Raschka 2018</a>)</span>. For clarity, the following sub-problems are going to be defined:</p>
-<ul>
-<li>Model evaluation: the process of estimating how well a model generalizes on unseen data;</li>
-<li>Model selection: the process of choosing the best hyperparameters for a given model;</li>
-<li>Model comparison: comparing the performance of different models.</li>
-</ul>
-<section id="holdout-method" class="level2">
-<h2 class="anchored" data-anchor-id="holdout-method">Holdout Method</h2>
-<p>The most used method for model evaluation is the holdout method. This involves splitting the dataset <span class="math inline">\(\mathcal D = \{(\boldsymbol x_i, \boldsymbol y_i)\}_{i=1}^N\)</span> with <span class="math inline">\(N\)</span> observations into two disjoint splits, called train <span class="math inline">\(\mathcal D_{\text{Train}}\)</span> and test <span class="math inline">\(\mathcal D_{\text{Test}}\)</span> split. The train split is used for training the model, while the test set is used only to evaluate the model performance. Generally, the test split contains about <span class="math inline">\(10-30\%\)</span> of the total amount of data. This method is visually depicted in <a href="#fig-holdout" class="quarto-xref">Fig.&nbsp;1</a>.</p>
-<div id="fig-holdout" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-holdout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="model_selection_assets/holdout.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holdout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Diagram of the holdout method.
-</figcaption>
-</figure>
-</div>
-<p>The test set effectively simulates the behavior of the model when seeing data that was not in training. If the model generalized well, it should maintain a similar performance as it did on the training split. Note that this assumes that both splits were sampled from the same distribution, therefore, the model was able to learn patterns that are representative for that dataset. If new data is provided to the model, which possesses completely different statistics than the training data, the model is going to perform worse than expected – this is known as the Out-Of Distribution (OOD) problem.</p>
-<p>A variant of the holdout method is the stratified holdout method, which is important for classification problems. In this setup, the splits can not be randomly sampled from the original dataset, as the splits need to have the same class frequencies as the original data. For that, stratified holdout makes the sampling obey this condition, which leads to the train and test split presenting approximately the same class proportions as the initial dataset. This is depicted in <a href="#fig-holdout_stratified" class="quarto-xref">Fig.&nbsp;2</a>.</p>
-<div id="fig-holdout_stratified" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-holdout_stratified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="model_selection_assets/holdout_stratified.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holdout_stratified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Diagram of the stratified holdout method. The darker colors represent the number of observations of the class <span class="math inline">\(c_1\)</span> and the lighter ones of the class <span class="math inline">\(c_2\)</span>.
-</figcaption>
-</figure>
-</div>
-<p>The actual metrics used for model evaluation are introduced in <a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html">Model Evaluation</a>. Note that the <a href="../../../machine_learning/pipeline/pre_processing/pre_processing.html">Pre-Processing</a> step is always performed after the data splits have been made. When data is normalized using statistics derived from the entire dataset, splitting the observations into training and testing sets leads to data leakage. This occurs because the test set utilizes statistics calculated from the training set, potentially causing biased estimations. The best practice is to first perform the holdout method, then apply pre-processing algorithms – such as feature selection or normalization – using only the training set statistics, and finally apply the resulting transformations to the test set.</p>
-</section>
-<section id="k-fold-cross-validation" class="level2">
-<h2 class="anchored" data-anchor-id="k-fold-cross-validation"><span class="math inline">\(k\)</span>-fold Cross-Validation</h2>
-<p>Another sub-problem in an ML pipeline is model selection, which involves choosing the optimal set of HPs for a given model. A naive approach is using the holdout method to select the best-performing model. However, a key issue with this approach is that the performance on the test set may be biased by the specific split performed. Furthermore, there is no separate test set to evaluate model performance on unseen data, as the test set must be reserved for selecting the optimal HPs.</p>
-<p>To address these issues, <span class="math inline">\(k\)</span>-fold Cross-Validation (CV) is employed. First, the method applies the holdout technique to create a training and testing split. Then, using the training set, it generates <span class="math inline">\(k\)</span> disjoint sets <span class="math inline">\(\mathcal D_i \subset \mathcal D_{\text{Train}}\)</span>, such that: <span id="eq-1"><span class="math display">\[
-\bigcup_{i=1}^k \mathcal D_i = D_{\text{Train}}.
-\tag{1}\]</span></span> Subsequently, the <span class="math inline">\(k\)</span>-fold CV trains the model multiple times, once for each HP configuration. For each iteration, the model is trained on <span class="math inline">\(k-1\)</span> sets, using the remaining set as the validation set – analogous to the test set. Finally, the model yields <span class="math inline">\(k\)</span> performance values, and the mean of these values is used to estimate the model’s true performance. This average performance is then used to select the best possible HP configuration from a predetermined search space.</p>
-<p>Note that by utilizing different splits, <span class="math inline">\(k\)</span>-fold CV effectively reduces split bias. Typically, <span class="math inline">\(k=10\)</span> is used for this method, although the choice depends on factors such as dataset size, computational cost, and other considerations. Visually, the CV process is depicted in <a href="#fig-cv" class="quarto-xref">Fig.&nbsp;3</a>.</p>
-<div id="fig-cv" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="model_selection_assets/cv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Diagram of the <span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k=4\)</span>.
-</figcaption>
-</figure>
-</div>
-<section id="code" class="level3">
-<h3 class="anchored" data-anchor-id="code">Code</h3>
-<div class="quarto-embed-nb-cell">
 <p>Here, a simple Machine Learning pipeline will be conducted using the <span class="math inline">\(k\)</span>-NN model. Importing packages.</p>
 <div id="cell-2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
@@ -425,18 +318,10 @@ Validation Accuracy: 0.9714</code></pre>
 <pre><code>Test Accuracy: 0.9778</code></pre>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-1" href="model_selection_assets/model_selection-preview.html#cell-0">Source: model_selection.ipynb</a></div>
 
 
 
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-ml:raschka" class="csl-entry" role="listitem">
-Raschka, Sebastian. 2018. <span>“Model Evaluation, Model Selection, and Algorithm Selection in Machine Learning.”</span> <em>arXiv Preprint arXiv:1811.12808</em>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -837,18 +722,6 @@ Raschka, Sebastian. 2018. <span>“Model Evaluation, Model Selection, and Algori
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../../../machine_learning/pipeline/pre_processing/pre_processing.html" class="pagination-link" aria-label="Pre-Processing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pre-Processing</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html" class="pagination-link" aria-label="Model Evaluation">
-        <span class="nav-page-text">Model Evaluation</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

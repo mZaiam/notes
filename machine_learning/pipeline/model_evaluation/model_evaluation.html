@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="During a Machine Learning pipeline, the goal is to select the best possible model to deploy. For that, model selection techniques are needed.">
+<meta name="description" content="The last step in a Machine Learning pipeline is the evaluation of the generalization of the models. Here, some notable metrics are presented, both for classification and regression tasks.">
 
-<title>Model Selection</title>
+<title>Model Evaluation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,27 +56,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -86,8 +66,8 @@ div.csl-indent {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html" rel="next">
-<link href="../../../machine_learning/pipeline/pre_processing/pre_processing.html" rel="prev">
+<link href="../../../machine_learning/supervised_learning/index.html" rel="next">
+<link href="../../../machine_learning/pipeline/model_selection/model_selection.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -169,7 +149,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/index.html">Pipeline</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/model_selection/model_selection.html">Model Selection</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/index.html">Pipeline</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html">Model Evaluation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -221,13 +201,13 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../machine_learning/pipeline/model_selection/model_selection.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../machine_learning/pipeline/model_selection/model_selection.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Model Selection</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Model Evaluation</span></a>
   </div>
 </li>
@@ -279,25 +259,28 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#holdout-method" id="toc-holdout-method" class="nav-link active" data-scroll-target="#holdout-method">Holdout Method</a></li>
-  <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation"><span class="math inline">\(k\)</span>-fold Cross-Validation</a>
+  <li><a href="#regression" id="toc-regression" class="nav-link active" data-scroll-target="#regression">Regression</a>
   <ul class="collapse">
-  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  <li><a href="#code-regression" id="toc-code-regression" class="nav-link" data-scroll-target="#code-regression">Code: Regression</a></li>
+  </ul></li>
+  <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification">Classification</a>
+  <ul class="collapse">
+  <li><a href="#code-classification" id="toc-code-classification" class="nav-link" data-scroll-target="#code-classification">Code: Classification</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="model_selection_assets/model_selection-preview.html"><i class="bi bi-journal-code"></i>model_selection.ipynb</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="model_evaluation_assets/classification_metrics-preview.html"><i class="bi bi-journal-code"></i>classification_metrics.ipynb</a></li><li><a href="model_evaluation_assets/regression_metrics-preview.html"><i class="bi bi-journal-code"></i>regression_metrics.ipynb</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/index.html">Pipeline</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/model_selection/model_selection.html">Model Selection</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/index.html">Pipeline</a></li><li class="breadcrumb-item"><a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html">Model Evaluation</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Model Selection</h1>
+<h1 class="title">Model Evaluation</h1>
 </div>
 
 <div>
   <div class="description">
-    During a Machine Learning pipeline, the goal is to select the best possible model to deploy. For that, model selection techniques are needed.
+    The last step in a Machine Learning pipeline is the evaluation of the generalization of the models. Here, some notable metrics are presented, both for classification and regression tasks.
   </div>
 </div>
 
@@ -314,129 +297,173 @@ window.Quarto = {
 </header>
 
 
-<p>One of the most important steps in a Machine Learning (ML) pipeline is to select the best available model to deploy in the desired task. This is closely related to hyperparameter tuning (HP-tuning), which is the process of finding the best hyperparameters (HPs) of the model for the given problem. These problems involve estimating the performance of a model on unseen data – data that was not available at training time <span class="citation" data-cites="ml:raschka">(<a href="#ref-ml:raschka" role="doc-biblioref">Raschka 2018</a>)</span>. For clarity, the following sub-problems are going to be defined:</p>
-<ul>
-<li>Model evaluation: the process of estimating how well a model generalizes on unseen data;</li>
-<li>Model selection: the process of choosing the best hyperparameters for a given model;</li>
-<li>Model comparison: comparing the performance of different models.</li>
-</ul>
-<section id="holdout-method" class="level2">
-<h2 class="anchored" data-anchor-id="holdout-method">Holdout Method</h2>
-<p>The most used method for model evaluation is the holdout method. This involves splitting the dataset <span class="math inline">\(\mathcal D = \{(\boldsymbol x_i, \boldsymbol y_i)\}_{i=1}^N\)</span> with <span class="math inline">\(N\)</span> observations into two disjoint splits, called train <span class="math inline">\(\mathcal D_{\text{Train}}\)</span> and test <span class="math inline">\(\mathcal D_{\text{Test}}\)</span> split. The train split is used for training the model, while the test set is used only to evaluate the model performance. Generally, the test split contains about <span class="math inline">\(10-30\%\)</span> of the total amount of data. This method is visually depicted in <a href="#fig-holdout" class="quarto-xref">Fig.&nbsp;1</a>.</p>
-<div id="fig-holdout" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-holdout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="model_selection_assets/holdout.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holdout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Diagram of the holdout method.
-</figcaption>
-</figure>
-</div>
-<p>The test set effectively simulates the behavior of the model when seeing data that was not in training. If the model generalized well, it should maintain a similar performance as it did on the training split. Note that this assumes that both splits were sampled from the same distribution, therefore, the model was able to learn patterns that are representative for that dataset. If new data is provided to the model, which possesses completely different statistics than the training data, the model is going to perform worse than expected – this is known as the Out-Of Distribution (OOD) problem.</p>
-<p>A variant of the holdout method is the stratified holdout method, which is important for classification problems. In this setup, the splits can not be randomly sampled from the original dataset, as the splits need to have the same class frequencies as the original data. For that, stratified holdout makes the sampling obey this condition, which leads to the train and test split presenting approximately the same class proportions as the initial dataset. This is depicted in <a href="#fig-holdout_stratified" class="quarto-xref">Fig.&nbsp;2</a>.</p>
-<div id="fig-holdout_stratified" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-holdout_stratified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="model_selection_assets/holdout_stratified.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holdout_stratified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Diagram of the stratified holdout method. The darker colors represent the number of observations of the class <span class="math inline">\(c_1\)</span> and the lighter ones of the class <span class="math inline">\(c_2\)</span>.
-</figcaption>
-</figure>
-</div>
-<p>The actual metrics used for model evaluation are introduced in <a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html">Model Evaluation</a>. Note that the <a href="../../../machine_learning/pipeline/pre_processing/pre_processing.html">Pre-Processing</a> step is always performed after the data splits have been made. When data is normalized using statistics derived from the entire dataset, splitting the observations into training and testing sets leads to data leakage. This occurs because the test set utilizes statistics calculated from the training set, potentially causing biased estimations. The best practice is to first perform the holdout method, then apply pre-processing algorithms – such as feature selection or normalization – using only the training set statistics, and finally apply the resulting transformations to the test set.</p>
-</section>
-<section id="k-fold-cross-validation" class="level2">
-<h2 class="anchored" data-anchor-id="k-fold-cross-validation"><span class="math inline">\(k\)</span>-fold Cross-Validation</h2>
-<p>Another sub-problem in an ML pipeline is model selection, which involves choosing the optimal set of HPs for a given model. A naive approach is using the holdout method to select the best-performing model. However, a key issue with this approach is that the performance on the test set may be biased by the specific split performed. Furthermore, there is no separate test set to evaluate model performance on unseen data, as the test set must be reserved for selecting the optimal HPs.</p>
-<p>To address these issues, <span class="math inline">\(k\)</span>-fold Cross-Validation (CV) is employed. First, the method applies the holdout technique to create a training and testing split. Then, using the training set, it generates <span class="math inline">\(k\)</span> disjoint sets <span class="math inline">\(\mathcal D_i \subset \mathcal D_{\text{Train}}\)</span>, such that: <span id="eq-1"><span class="math display">\[
-\bigcup_{i=1}^k \mathcal D_i = D_{\text{Train}}.
-\tag{1}\]</span></span> Subsequently, the <span class="math inline">\(k\)</span>-fold CV trains the model multiple times, once for each HP configuration. For each iteration, the model is trained on <span class="math inline">\(k-1\)</span> sets, using the remaining set as the validation set – analogous to the test set. Finally, the model yields <span class="math inline">\(k\)</span> performance values, and the mean of these values is used to estimate the model’s true performance. This average performance is then used to select the best possible HP configuration from a predetermined search space.</p>
-<p>Note that by utilizing different splits, <span class="math inline">\(k\)</span>-fold CV effectively reduces split bias. Typically, <span class="math inline">\(k=10\)</span> is used for this method, although the choice depends on factors such as dataset size, computational cost, and other considerations. Visually, the CV process is depicted in <a href="#fig-cv" class="quarto-xref">Fig.&nbsp;3</a>.</p>
-<div id="fig-cv" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="model_selection_assets/cv.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Diagram of the <span class="math inline">\(k\)</span>-fold CV with <span class="math inline">\(k=4\)</span>.
-</figcaption>
-</figure>
-</div>
-<section id="code" class="level3">
-<h3 class="anchored" data-anchor-id="code">Code</h3>
+<p>After the procedure explained in <a href="../../../machine_learning/pipeline/model_selection/model_selection.html">Model Selection</a>, the test split is reserved for evaluating the generalization of the chosen model in unseen data. For that, functions that are usually called metrics – not necessarily in the mathematical sense – are used. These functions measure how close the model predictions are with respect to the ground-truth values in the test set. As each metric measures different aspects of the predictions, they should be used within the context of each problem.</p>
+<section id="regression" class="level2">
+<h2 class="anchored" data-anchor-id="regression">Regression</h2>
+<p>In a regression task, the targets are continuous values in <span class="math inline">\(\mathbb R\)</span>. A very common metric for these problems is the Mean Absolute Error (MAE), which is given by: <span id="eq-1"><span class="math display">\[
+\text{MAE} (\boldsymbol y, \boldsymbol{\hat y}) = \frac{1}{N} \sum_{i=1}^N |y_i - \hat{y}_i|,
+\tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol y \in \mathbb R^N\)</span> is the target vector, <span class="math inline">\(\boldsymbol{\hat y} \in \mathbb R^N\)</span> is the predicted vector and <span class="math inline">\(N\)</span> is the number of observations in the test set. The MAE is not substantially affected by outliers, as the errors are calculated linearly, and is measured in the same units as the target.</p>
+<p>Another metric for regression is the Mean Squared Error (MSE). It is given by: <span id="eq-2"><span class="math display">\[
+\text{MSE} (\boldsymbol y, \boldsymbol{\hat y}) = \frac{1}{N} \sum_{i=1}^N (y_i - \hat{y}_i)^2.
+\tag{2}\]</span></span> In contrast to the MAE, the MSE is measured in squared target units, and is more sensitive to outliers – as the error terms are squared. Closely related to the MSE, the Root Mean Squared Error (RMSE) is given by: <span id="eq-3"><span class="math display">\[
+\text{RMSE} (\boldsymbol y, \boldsymbol{\hat y}) = \sqrt{\frac{1}{N} \sum_{i=1}^N (y_i - \hat{y}_i)^2}.
+\tag{3}\]</span></span> It is measured in target units, being more interpretable than MSE.</p>
+<section id="code-regression" class="level3">
+<h3 class="anchored" data-anchor-id="code-regression">Code: Regression</h3>
 <div class="quarto-embed-nb-cell">
-<p>Here, a simple Machine Learning pipeline will be conducted using the <span class="math inline">\(k\)</span>-NN model. Importing packages.</p>
+<p>To demonstrate the regression metrics, a simple linear regression model will be trained. Importing the libraries:</p>
 <div id="cell-2" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, GridSearchCV, KFold</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_regression</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error, mean_squared_error</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Loading the Iris dataset.</p>
-<div id="cell-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="52f2742d-7cc8-4cdf-fc19-e8d5ba1bece2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> load_iris()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> iris.data, iris.target</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dataset shape: </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Classes: </span><span class="sc">{</span>iris<span class="sc">.</span>target_names<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Dataset shape: (150, 4)
-Classes: ['setosa' 'versicolor' 'virginica']</code></pre>
+<p>Making a simple regression dataset.</p>
+<div id="cell-4" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_regression(n_samples<span class="op">=</span><span class="dv">200</span>, n_features<span class="op">=</span><span class="dv">1</span>, noise<span class="op">=</span><span class="dv">15</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<p>Performing the train and test split, with 70/30 ratio.</p>
+<p>Fitting the model.</p>
 <div id="cell-6" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Creating a hyperparameter search space.</p>
-<div id="cell-8" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">'n_neighbors'</span>: [<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">13</span>, <span class="dv">15</span>]}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Setting a <span class="math inline">\(5\)</span>-fold Cross-Validation.</p>
-<div id="cell-10" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cv <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Fitting and finding the best value of <span class="math inline">\(k\)</span>.</p>
-<div id="cell-12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="17b45d1b-2a79-4ccc-e12f-21c45a23bb20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>grid_search <span class="op">=</span> GridSearchCV(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    estimator<span class="op">=</span>KNeighborsClassifier(),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    param_grid<span class="op">=</span>param_grid,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>cv,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">'accuracy'</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>grid_search.fit(X_train, y_train)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best k: </span><span class="sc">{</span>grid_search<span class="sc">.</span>best_params_[<span class="st">'n_neighbors'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Validation Accuracy: </span><span class="sc">{</span>grid_search<span class="sc">.</span>best_score_<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Calculating and printing the metrics.</p>
+<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="b5517b1f-6ce2-4967-f5a1-951fae2506b3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mae <span class="op">=</span> mean_absolute_error(y_test, y_pred)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> np.sqrt(mse)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"--- Regression Metrics ---"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAE:  </span><span class="sc">{</span>mae<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE:  </span><span class="sc">{</span>mse<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Best k: 3
-Validation Accuracy: 0.9714</code></pre>
+<pre><code>--- Regression Metrics ---
+MAE:  12.6289
+MSE:  261.5702
+RMSE: 16.1731</code></pre>
 </div>
 </div>
-<p>Evaluating in the test set.</p>
-<div id="cell-14" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="dbff73d6-3b84-43b2-e7e7-15b2db1235d4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>best_knn <span class="op">=</span> grid_search.best_estimator_</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>final_test_accuracy <span class="op">=</span> best_knn.score(X_test, y_test)</span>
+<p>Visualizing the predictions.</p>
+<div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:465}}" data-outputid="c86fdca3-9b9a-45c7-f20e-6480430c2821">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(X_test, y_test, color<span class="op">=</span><span class="st">'blue'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="vs">r'</span><span class="dv">$</span><span class="vs">y</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.plot(X_test, y_pred, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="vs">r'</span><span class="dv">$</span><span class="er">\</span><span class="vs">hat{y}</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$x$"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"$y$"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_evaluation_files/figure-html/model_evaluation_assets-regression_metrics-cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-1" href="model_evaluation_assets/regression_metrics-preview.html#cell-0">Source: regression_metrics.ipynb</a></div>
+</section>
+</section>
+<section id="classification" class="level2">
+<h2 class="anchored" data-anchor-id="classification">Classification</h2>
+<p>In a classification task, the targets are in a discrete set <span class="math inline">\(\{c_i\}^{C}_{i=1}\)</span>, where <span class="math inline">\(C\)</span> denotes the number of classes. A very important object in classification is the confusion matrix. It contains all pairs of predicted and ground-truth targets, which helps the comprehension from the metrics. A confusion matrix for a single class is depicted in <a href="#fig-confusion" class="quarto-xref">Fig.&nbsp;1</a>.</p>
+<div id="fig-confusion" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-confusion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="model_evaluation_assets/confusion.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confusion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Diagram of a confusion matrix for a single class.
+</figcaption>
+</figure>
+</div>
+<p>To derive the metrics, components found within the confusion matrix are used. Let <span class="math inline">\(\text{TP}_i\)</span> be the number of true positives, <span class="math inline">\(\text{TN}_i\)</span> be the number of true negatives, <span class="math inline">\(\text{FP}_i\)</span> be the number of false positives, and <span class="math inline">\(\text{FN}_i\)</span> be the number of false negatives for class <span class="math inline">\(i\)</span>, which contains <span class="math inline">\(N_i\)</span> observations.</p>
+<p>The first metric for classification is the accuracy, given by: <span id="eq-4"><span class="math display">\[
+\text{Accuracy}_i (\boldsymbol y, \boldsymbol{\hat y}) = \frac{\text{TP}_i + \text{TN}_i}{N_i},
+\tag{4}\]</span></span> It measures the number of predictions that were correct. Although it is easy to interpret, accuracy is susceptible to class imbalance – when classes have different proportions in the dataset. In these cases, classes with higher number of samples dominate the overall accuracy value.</p>
+<p>To address the limitations of accuracy in imbalanced datasets, other metrics are required. One of them is precision, which measures the accuracy of the positive predictions, that is: <span id="eq-5"><span class="math display">\[
+\text{Precision}_i (\boldsymbol y, \boldsymbol{\hat y}) = \frac{\text{TP}_i}{\text{TP}_i + \text{FP}_i},
+\tag{5}\]</span></span> Precision is important when the cost of a false positive is high. On the other hand, recall measures the amount of positive instances that were correctly identified. Recall is calculated by: <span id="eq-6"><span class="math display">\[
+\text{Recall}_i (\boldsymbol y, \boldsymbol{\hat y}) = \frac{\text{TP}_i}{\text{TP}_i + \text{FN}_i},
+\tag{6}\]</span></span> Recall is important when the cost of a false negative is high.</p>
+<p>Since precision and recall involve a trade-off with respect to false positives and negatives, the <span class="math inline">\(F_1\)</span> score unifies both measures. It is defined as the harmonic mean of these two metrics, given by: <span id="eq-7"><span class="math display">\[
+{\text{F}_1}_i (\boldsymbol y, \boldsymbol{\hat y}) = 2 \cdot \frac{\text{Precision}_i \cdot \text{Recall}_i}{\text{Precision}_i +
+\text{Recall}_i}.
+\tag{7}\]</span></span> The <span class="math inline">\(F_1\)</span> score is considered to be a very robust metric for classification, even in imbalanced scenarios.</p>
+<p>All the previous definitions involved calculating metrics for a single class. When dealing with multiple classes, it is necessary to aggregate these metrics into overall scores. For that, two main methods are considered. One of the most used options is macro-averaging, which computes a certain metric <span class="math inline">\(\mathcal M\)</span> for each class independently and then takes the unweighted arithmetic mean of these results: <span class="math display">\[
+\text{Macro-Average}(\mathcal M, \boldsymbol y, \boldsymbol{\hat y}) = \frac{1}{C} \sum_{i=1}^C \mathcal M_i.
+\]</span> Macro-averaging is useful to ensure that the model performs equally well on smaller or minority classes, giving equal weight to each class’s performance.</p>
+<section id="code-classification" class="level3">
+<h3 class="anchored" data-anchor-id="code-classification">Code: Classification</h3>
+<div class="quarto-embed-nb-cell">
+<p>To demonstrate the classification metrics, a random forest model will be trained. Importing the libraries:</p>
+<div id="cell-2" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (accuracy_score, precision_score, recall_score,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                             f1_score, confusion_matrix, ConfusionMatrixDisplay, classification_report)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Making an imbalanced classification dataset.</p>
+<div id="cell-4" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> make_classification(n_samples<span class="op">=</span><span class="dv">1000</span>, n_classes<span class="op">=</span><span class="dv">3</span>, n_informative<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                           weights<span class="op">=</span>[<span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span>], random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Fitting the model.</p>
+<div id="cell-6" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> RandomForestClassifier(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test Accuracy: </span><span class="sc">{</span>final_test_accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Displaying the confusion matrix.</p>
+<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:449}}" data-outputid="e0ad691f-cd16-432f-fda3-891aeb9d6b23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>disp <span class="op">=</span> ConfusionMatrixDisplay(confusion_matrix<span class="op">=</span>cm, display_labels<span class="op">=</span>[<span class="st">"Class 0"</span>, <span class="st">"Class 1"</span>, <span class="st">"Class 2"</span>])</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>disp.plot(cmap<span class="op">=</span><span class="st">"Blues"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_evaluation_files/figure-html/model_evaluation_assets-classification_metrics-cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Printing the metrics.</p>
+<div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="00600fb6-48e4-4df4-d37e-dafc1e618b71">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> classification_report(y_test, y_pred)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(report)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test Accuracy: 0.9778</code></pre>
-</div>
-</div>
-<a class="quarto-notebook-link" id="nblink-1" href="model_selection_assets/model_selection-preview.html#cell-0">Source: model_selection.ipynb</a></div>
+<pre><code>              precision    recall  f1-score   support
 
+           0       0.82      0.56      0.67        32
+           1       0.82      0.82      0.82        87
+           2       0.88      0.93      0.90       181
+
+    accuracy                           0.86       300
+   macro avg       0.84      0.77      0.80       300
+weighted avg       0.85      0.86      0.85       300
+</code></pre>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-2" href="model_evaluation_assets/classification_metrics-preview.html#cell-0">Source: classification_metrics.ipynb</a></div>
 
 
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-ml:raschka" class="csl-entry" role="listitem">
-Raschka, Sebastian. 2018. <span>“Model Evaluation, Model Selection, and Algorithm Selection in Machine Learning.”</span> <em>arXiv Preprint arXiv:1811.12808</em>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -839,13 +866,13 @@ Raschka, Sebastian. 2018. <span>“Model Evaluation, Model Selection, and Algori
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../machine_learning/pipeline/pre_processing/pre_processing.html" class="pagination-link" aria-label="Pre-Processing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pre-Processing</span>
+      <a href="../../../machine_learning/pipeline/model_selection/model_selection.html" class="pagination-link" aria-label="Model Selection">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Model Selection</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html" class="pagination-link" aria-label="Model Evaluation">
-        <span class="nav-page-text">Model Evaluation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../machine_learning/supervised_learning/index.html" class="pagination-link" aria-label="Supervised Learning">
+        <span class="nav-page-text">Supervised Learning</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
