@@ -64,4 +64,4 @@ That is, in a sequence of iterations, the learnable parameters of the model in t
 
 ### Code
 
-{{< embed mlp.ipynb >}}
+{{< embed mlp_assets/mlp.ipynb >}}

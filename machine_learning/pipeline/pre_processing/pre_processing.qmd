@@ -28,7 +28,7 @@ where $\boldsymbol{\mu}_{\boldsymbol{X}}$ are the mean values of the features an
 
 ### Code: Normalization
 
-{{< embed normalization.ipynb >}}
+{{< embed pre_processing_assets/normalization.ipynb >}}
 
 ## Encoding
 
@@ -36,7 +36,7 @@ Another important part of pre-processing is encoding features that are not numer
 
 ### Code: Encoding
 
-{{< embed encoding.ipynb >}}
+{{< embed pre_processing_assets/encoding.ipynb >}}
 
 ## Feature Selection
 
@@ -52,4 +52,4 @@ If this coefficient is equal to $1$, there is no multicollinearity, while higher
 
 ### Code: Feature Selection
 
-{{< embed vif.ipynb >}}
+{{< embed pre_processing_assets/vif.ipynb >}}

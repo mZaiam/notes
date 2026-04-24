@@ -4,9 +4,8 @@ description: "These notes provide a general view on Machine Learning with tabula
 listing:
   contents: 
     - "pipeline/index.qmd"
-  type: grid
-  grid-columns: 1        
-  grid-item-border: true 
-  grid-item-align: left 
+    - "supervised_learning/index.qmd"
+  type: default
+  image-align: left
   sort: false 
 ---

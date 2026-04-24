@@ -26,7 +26,7 @@ The actual metrics used for model evaluation are introduced in [Model Evaluation
 
 ## $k$-fold Cross-Validation
 
-Another sub-problem in an ML pipeline is model selection, which involves choosing the optimal set of Hyperparameters (HPs) for a given model. A naive approach is using the holdout method to select the best-performing model. However, a key issue with this approach is that the performance on the test set may be biased by the specific split performed. Furthermore, there is no separate test set to evaluate model performance on unseen data, as the test set must be reserved for selecting the optimal HPs.
+Another sub-problem in an ML pipeline is model selection, which involves choosing the optimal set of HPs for a given model. A naive approach is using the holdout method to select the best-performing model. However, a key issue with this approach is that the performance on the test set may be biased by the specific split performed. Furthermore, there is no separate test set to evaluate model performance on unseen data, as the test set must be reserved for selecting the optimal HPs.
 
 To address these issues, $k$-fold Cross-Validation (CV) is employed. First, the method applies the holdout technique to create a training and testing split. Then, using the training set, it generates $k$ disjoint 
 sets $\mathcal D_i \subset \mathcal D_{\text{Train}}$, such that:
@@ -42,4 +42,4 @@ considerations. Visually, the CV process is depicted in @fig-cv.
 
 ### Code
 
-{{< embed model_selection.ipynb >}}
+{{< embed model_selection_assets/model_selection.ipynb >}}

@@ -5,9 +5,8 @@ listing:
   contents: 
     - "pre_processing/pre_processing.qmd" 
     - "model_selection/model_selection.qmd"
-  type: grid        
-  grid-columns: 1
-  grid-item-border: true 
-  grid-item-align: left
+    - "model_evaluation/model_evaluation.qmd"
+  type: default
+  image-align: left
   sort: false
 ---

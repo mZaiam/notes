@@ -25,6 +25,13 @@ website:
                 file: machine_learning/pipeline/pre_processing/pre_processing.qmd
               - text: "Model Selection"
                 file: machine_learning/pipeline/model_selection/model_selection.qmd
+              - text: "Model Evaluation"
+                file: machine_learning/pipeline/model_evaluation/model_evaluation.qmd
+          - section: "Supervised Learning"
+            file: machine_learning/supervised_learning/index.qmd
+            contents:
+              - text: "Linear Models"
+                file: machine_learning/supervised_learning/linear_models/linear_models.qmd
            
       - section: "Deep Learning"
         file: deep_learning/index.qmd

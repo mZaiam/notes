@@ -262,7 +262,7 @@ window.Quarto = {
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="model_selection-preview.html"><i class="bi bi-journal-code"></i>model_selection.ipynb</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="model_selection_assets/model_selection-preview.html"><i class="bi bi-journal-code"></i>model_selection.ipynb</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -322,11 +322,11 @@ Figure&nbsp;2: Diagram of the stratified holdout method. The darker colors repre
 </figcaption>
 </figure>
 </div>
-<p>The actual metrics used for model evaluation are introduced in <a href="../model_evaluation/model_evaluation.qmd">Model Evaluation</a>. Note that the <a href="../../../machine_learning/pipeline/pre_processing/pre_processing.html">Pre-Processing</a> step is always performed after the data splits have been made. When data is normalized using statistics derived from the entire dataset, splitting the observations into training and testing sets leads to data leakage. This occurs because the test set utilizes statistics calculated from the training set, potentially causing biased estimations. The best practice is to first perform the holdout method, then apply pre-processing algorithms – such as feature selection or normalization – using only the training set statistics, and finally apply the resulting transformations to the test set.</p>
+<p>The actual metrics used for model evaluation are introduced in <a href="../../../machine_learning/pipeline/model_evaluation/model_evaluation.html">Model Evaluation</a>. Note that the <a href="../../../machine_learning/pipeline/pre_processing/pre_processing.html">Pre-Processing</a> step is always performed after the data splits have been made. When data is normalized using statistics derived from the entire dataset, splitting the observations into training and testing sets leads to data leakage. This occurs because the test set utilizes statistics calculated from the training set, potentially causing biased estimations. The best practice is to first perform the holdout method, then apply pre-processing algorithms – such as feature selection or normalization – using only the training set statistics, and finally apply the resulting transformations to the test set.</p>
 </section>
 <section id="k-fold-cross-validation" class="level2">
 <h2 class="anchored" data-anchor-id="k-fold-cross-validation"><span class="math inline">\(k\)</span>-fold Cross-Validation</h2>
-<p>Another sub-problem in an ML pipeline is model selection, which involves choosing the optimal set of Hyperparameters (HPs) for a given model. A naive approach is using the holdout method to select the best-performing model. However, a key issue with this approach is that the performance on the test set may be biased by the specific split performed. Furthermore, there is no separate test set to evaluate model performance on unseen data, as the test set must be reserved for selecting the optimal HPs.</p>
+<p>Another sub-problem in an ML pipeline is model selection, which involves choosing the optimal set of HPs for a given model. A naive approach is using the holdout method to select the best-performing model. However, a key issue with this approach is that the performance on the test set may be biased by the specific split performed. Furthermore, there is no separate test set to evaluate model performance on unseen data, as the test set must be reserved for selecting the optimal HPs.</p>
 <p>To address these issues, <span class="math inline">\(k\)</span>-fold Cross-Validation (CV) is employed. First, the method applies the holdout technique to create a training and testing split. Then, using the training set, it generates <span class="math inline">\(k\)</span> disjoint sets <span class="math inline">\(\mathcal D_i \subset \mathcal D_{\text{Train}}\)</span>, such that: <span id="eq-1"><span class="math display">\[
 \bigcup_{i=1}^k \mathcal D_i = D_{\text{Train}}.
 \tag{1}\]</span></span> Subsequently, the <span class="math inline">\(k\)</span>-fold CV trains the model multiple times, once for each HP configuration. For each iteration, the model is trained on <span class="math inline">\(k-1\)</span> sets, using the remaining set as the validation set – analogous to the test set. Finally, the model yields <span class="math inline">\(k\)</span> performance values, and the mean of these values is used to estimate the model’s true performance. This average performance is then used to select the best possible HP configuration from a predetermined search space.</p>
@@ -402,7 +402,7 @@ Validation Accuracy: 0.9714</code></pre>
 <pre><code>Test Accuracy: 0.9778</code></pre>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-1" href="model_selection-preview.html#cell-0">Source: model_selection.ipynb</a></div>
+<a class="quarto-notebook-link" id="nblink-1" href="model_selection_assets/model_selection-preview.html#cell-0">Source: model_selection.ipynb</a></div>
 
 
 
