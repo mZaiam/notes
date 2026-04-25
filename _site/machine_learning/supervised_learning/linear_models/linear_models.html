@@ -86,7 +86,7 @@ div.csl-indent {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../deep_learning/index.html" rel="next">
+<link href="../../../machine_learning/supervised_learning/distance_models/distance_models.html" rel="next">
 <link href="../../../machine_learning/supervised_learning/index.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -249,6 +249,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../../machine_learning/supervised_learning/linear_models/linear_models.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Linear Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/supervised_learning/distance_models/distance_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Distance and Margin Models</span></a>
   </div>
 </li>
       </ul>
@@ -1356,13 +1362,13 @@ x1             1.2107      0.038     31.939      0.000       1.136       1.285
 <p>Generalized Additive Models (GAMs) relax the strict linearity assumption of GLMs, allowing for more flexible, non-linear relationships while preserving interpretability. The general form of a GAM replaces the linear combination of features with a sum of smooth, feature-specific functions: <span id="eq-6"><span class="math display">\[
 g(\mathbb{E}[y_i \mid \boldsymbol{x}_i]) = a_0 + \sum_{j=1}^n f_j(x_{i, j}),
 \tag{6}\]</span></span> where <span class="math inline">\(f_j\)</span> is an arbitrary function associated with the <span class="math inline">\(j\)</span>-th feature. These functions are typically modeled using basis functions, such as splines. Because the model’s output is formulated as the sum of separate input functions, it remains highly interpretable. However, learning these separate non-linear functions without overfitting is a difficult task.</p>
-<p>To address this, Explainable Boosting Machines (EBMs) <span class="citation" data-cites="ml:ebm">(<a href="#ref-ml:ebm" role="doc-biblioref">Lou et al. 2013</a>)</span> implement GAMs using cyclic gradient boosting. EBMs iteratively fit shallow decision trees to each feature independently, learning to correct the residual errors of previous trees. That is, at the <span class="math inline">\(i\)</span>-th iteration, the tree associated to the <span class="math inline">\(j\)</span>-th feature is trained to predict the residual <span class="math inline">\(r_{j-1}^{(i)}\)</span>, in a iterative way. As each tree is restricted to a single feature, it is considered a weak learner, that iteratively refines the corresponding function <span class="math inline">\(f_j\)</span>. After several iterations, the model produces an accurate yet transparent representation of the additive functions. @</p>
-<div id="fig-cv" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<p>To address this, Explainable Boosting Machines (EBMs) <span class="citation" data-cites="ml:ebm">(<a href="#ref-ml:ebm" role="doc-biblioref">Lou et al. 2013</a>)</span> implement GAMs using cyclic gradient boosting. EBMs iteratively fit shallow decision trees to each feature independently, learning to correct the residual errors of previous trees. That is, at the <span class="math inline">\(i\)</span>-th iteration, the tree associated to the <span class="math inline">\(j\)</span>-th feature is trained to predict the residual <span class="math inline">\(r_{j-1}^{(i)}\)</span>, in a iterative way. As each tree is restricted to a single feature, it is considered a weak learner, that iteratively refines the corresponding function <span class="math inline">\(f_j\)</span>. After several iterations, the model produces an accurate yet transparent representation of the additive functions. <a href="#fig-ebm" class="quarto-xref">Fig.&nbsp;1</a> depicts the diagram of an EBM.</p>
+<div id="fig-ebm" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-ebm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="linear_models_assets/ebm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ebm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Diagram of an EBM with <span class="math inline">\(n\)</span> features and <span class="math inline">\(k\)</span> iterations. In the end of the training, the trees of each feature are combined into a single linear function.
 </figcaption>
 </figure>
@@ -2276,8 +2282,8 @@ Lou, Yin, Rich Caruana, Johannes Gehrke, and Giles Hooker. 2013. <span>“Accura
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../deep_learning/index.html" class="pagination-link" aria-label="Deep Learning">
-        <span class="nav-page-text">Deep Learning</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../machine_learning/supervised_learning/distance_models/distance_models.html" class="pagination-link" aria-label="Distance and Margin Models">
+        <span class="nav-page-text">Distance and Margin Models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

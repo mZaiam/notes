@@ -59,9 +59,9 @@ g(\mathbb{E}[y_i \mid \boldsymbol{x}_i]) = a_0 + \sum_{j=1}^n f_j(x_{i, j}),
 $$ {#eq-6}
 where $f_j$ is an arbitrary function associated with the $j$-th feature. These functions are typically modeled using basis functions, such as splines. Because the model's output is formulated as the sum of separate input functions, it remains highly interpretable. However, learning these separate non-linear functions without overfitting is a difficult task.
 
-To address this, Explainable Boosting Machines (EBMs) [@ml:ebm] implement GAMs using cyclic gradient boosting. EBMs iteratively fit shallow decision trees to each feature independently, learning to correct the residual errors of previous trees. That is, at the $i$-th iteration, the tree associated to the $j$-th feature is trained to predict the residual $r_{j-1}^{(i)}$, in a iterative way. As each tree is restricted to a single feature, it is considered a weak learner, that iteratively refines the corresponding function $f_j$. After several iterations, the model produces an accurate yet transparent representation of the additive functions. @
+To address this, Explainable Boosting Machines (EBMs) [@ml:ebm] implement GAMs using cyclic gradient boosting. EBMs iteratively fit shallow decision trees to each feature independently, learning to correct the residual errors of previous trees. That is, at the $i$-th iteration, the tree associated to the $j$-th feature is trained to predict the residual $r_{j-1}^{(i)}$, in a iterative way. As each tree is restricted to a single feature, it is considered a weak learner, that iteratively refines the corresponding function $f_j$. After several iterations, the model produces an accurate yet transparent representation of the additive functions. @fig-ebm depicts the diagram of an EBM.
 
-![Diagram of an EBM with $n$ features and $k$ iterations. In the end of the training, the trees of each feature are combined into a single linear function.](linear_models_assets/ebm.png){#fig-cv width=60% fig-align="center"}
+![Diagram of an EBM with $n$ features and $k$ iterations. In the end of the training, the trees of each feature are combined into a single linear function.](linear_models_assets/ebm.png){#fig-ebm width=60% fig-align="center"}
 
 ### Code: Generalized Linear Models
 

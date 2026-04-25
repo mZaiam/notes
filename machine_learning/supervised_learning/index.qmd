@@ -4,6 +4,7 @@ description: "A presentation of supervised Machine Learning algorithms."
 listing:
   contents: 
     - "linear_models/linear_models.qmd"
+    - "distance_models/distance_models.qmd"
   type: default
   image-align: left
   sort: false
