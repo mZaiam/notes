@@ -34,6 +34,8 @@ website:
                 file: machine_learning/supervised_learning/linear_models/linear_models.qmd
               - text: "Distance and Margin Models"
                 file: machine_learning/supervised_learning/distance_models/distance_models.qmd
+              - text: "Tree Models"
+                file: machine_learning/supervised_learning/tree_models/tree_models.qmd
            
       - section: "Deep Learning"
         file: deep_learning/index.qmd
