@@ -6,7 +6,7 @@
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/machine_learning/supervised_learning/index.html</loc>
-    <lastmod>2026-04-25T20:30:46.217Z</lastmod>
+    <lastmod>2026-04-25T22:27:39.593Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/machine_learning/supervised_learning/distance_models/distance_models_assets/knn.html</loc>
@@ -23,6 +23,14 @@
   <url>
     <loc>https://mZaiam.github.io/notes/machine_learning/supervised_learning/linear_models/linear_models.html</loc>
     <lastmod>2026-04-24T18:42:37.937Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_learning/tree_models/tree_models_assets/rf.html</loc>
+    <lastmod>2026-04-26T23:43:48.017Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_learning/tree_models/tree_models_assets/gbm.html</loc>
+    <lastmod>2026-04-26T23:39:13.308Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/model_evaluation/model_evaluation_assets/regression_metrics.html</loc>
@@ -75,6 +83,14 @@
   <url>
     <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/index.html</loc>
     <lastmod>2026-04-24T17:07:28.263Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_learning/tree_models/tree_models_assets/dt.html</loc>
+    <lastmod>2026-04-26T23:41:29.201Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_learning/tree_models/tree_models.html</loc>
+    <lastmod>2026-04-26T23:40:16.810Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/machine_learning/supervised_learning/linear_models/linear_models_assets/glm.html</loc>

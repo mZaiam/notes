@@ -3,7 +3,8 @@
     "listing": "/machine_learning/supervised_learning/index.html",
     "items": [
       "/machine_learning/supervised_learning/linear_models/linear_models.html",
-      "/machine_learning/supervised_learning/distance_models/distance_models.html"
+      "/machine_learning/supervised_learning/distance_models/distance_models.html",
+      "/machine_learning/supervised_learning/tree_models/tree_models.html"
     ]
   },
   {
