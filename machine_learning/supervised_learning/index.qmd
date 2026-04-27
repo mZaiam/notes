@@ -7,6 +7,7 @@ listing:
     - "distance_models/distance_models.qmd"
     - "tree_models/tree_models.qmd"
     - "probabilistic_models/probabilistic_models.qmd"
+    - "symbolic_models/symbolic_models.qmd"
   type: default
   image-align: left
   sort: false

@@ -38,6 +38,8 @@ website:
                 file: machine_learning/supervised_learning/tree_models/tree_models.qmd
               - text: "Probabilistic Models"
                 file: machine_learning/supervised_learning/probabilistic_models/probabilistic_models.qmd
+              - text: "Symbolic Models"
+                file: machine_learning/supervised_learning/symbolic_models/symbolic_models.qmd
            
       - section: "Deep Learning"
         file: deep_learning/index.qmd

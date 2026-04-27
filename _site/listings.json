@@ -9,17 +9,17 @@
     ]
   },
   {
-    "listing": "/deep_learning/index.html",
-    "items": [
-      "/deep_learning/mlp/mlp.html"
-    ]
-  },
-  {
     "listing": "/machine_learning/pipeline/index.html",
     "items": [
       "/machine_learning/pipeline/pre_processing/pre_processing.html",
       "/machine_learning/pipeline/model_selection/model_selection.html",
       "/machine_learning/pipeline/model_evaluation/model_evaluation.html"
+    ]
+  },
+  {
+    "listing": "/deep_learning/index.html",
+    "items": [
+      "/deep_learning/mlp/mlp.html"
     ]
   },
   {

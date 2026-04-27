@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Here, the basis of Neural Networks will be presented, focusing on Multilayer Perceptrons (MLPs).">
 
 <title>Multilayer Perceptron (MLP)</title>
 <style>
@@ -259,6 +258,12 @@ window.Quarto = {
  <span class="menu-text">Tree Models</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/supervised_learning/probabilistic_models/probabilistic_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Probabilistic Models</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -290,10 +295,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#theory" id="toc-theory" class="nav-link active" data-scroll-target="#theory">Theory</a>
-  <ul class="collapse">
-  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
-  </ul></li>
+  <li><a href="#code" id="toc-code" class="nav-link active" data-scroll-target="#code">Code</a></li>
   </ul>
 <div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="mlp_assets/mlp-preview.html"><i class="bi bi-journal-code"></i>mlp.ipynb</a></li></ul></div></nav>
     </div>
@@ -305,11 +307,6 @@ window.Quarto = {
 <h1 class="title">Multilayer Perceptron (MLP)</h1>
 </div>
 
-<div>
-  <div class="description">
-    Here, the basis of Neural Networks will be presented, focusing on Multilayer Perceptrons (MLPs).
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -324,8 +321,6 @@ window.Quarto = {
 </header>
 
 
-<section id="theory" class="level2">
-<h2 class="anchored" data-anchor-id="theory">Theory</h2>
 <p>Deep Learning (DL) is a subarea of Machine Learning (ML) that is based on models composed of Neural Networks (NNs) <span class="citation" data-cites="book:dlbengio">(<a href="#ref-book:dlbengio" role="doc-biblioref">LeCun, Bengio, and Hinton 2015</a>)</span>. Here, the basis of NNs will be presented, focusing on Multilayer Perceptrons (MLPs).</p>
 <p>NNs were inspired by biological neural networks <span class="citation" data-cites="book:understanddl">(<a href="#ref-book:understanddl" role="doc-biblioref">Prince 2023</a>)</span>. The smallest part of a NN is a neuron, which was famously modeled as a perceptron. A perceptron is a function of the form: <span id="eq-perceptron"><span class="math display">\[
 \hat{y} = \sigma\left(b + \sum_{i=1}^n w_ix_i\right),
@@ -581,7 +576,6 @@ weighted avg     0.9656    0.9656    0.9655     10000
 
 
 
-</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
