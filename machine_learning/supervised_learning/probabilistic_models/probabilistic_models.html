@@ -85,7 +85,7 @@ div.csl-indent {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../deep_learning/index.html" rel="next">
+<link href="../../../machine_learning/supervised_learning/symbolic_models/symbolic_models.html" rel="next">
 <link href="../../../machine_learning/supervised_learning/tree_models/tree_models.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -266,6 +266,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../../machine_learning/supervised_learning/probabilistic_models/probabilistic_models.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Probabilistic Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/supervised_learning/symbolic_models/symbolic_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Symbolic Models</span></a>
   </div>
 </li>
       </ul>
@@ -833,7 +839,7 @@ f(\boldsymbol{x}) \sim \mathcal{GP}\left(\mu(\boldsymbol{x}), k(\boldsymbol{x}, 
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process <span class="im">import</span> GaussianProcessRegressor</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.gaussian_process.kernels <span class="im">import</span> RBF, ConstantKernel <span class="im">as</span> C</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Creating a functions and drawing noisy observations from it.</p>
+<p>Creating a function and drawing noisy observations from it.</p>
 <div id="cell-4" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">*</span> np.sin(x)</span>
@@ -1713,8 +1719,8 @@ Rasmussen, Carl Edward. 2003. <span>â€œGaussian Processes in Machine Learning.â€
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../deep_learning/index.html" class="pagination-link" aria-label="Deep Learning">
-        <span class="nav-page-text">Deep Learning</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../machine_learning/supervised_learning/symbolic_models/symbolic_models.html" class="pagination-link" aria-label="Symbolic Models">
+        <span class="nav-page-text">Symbolic Models</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
