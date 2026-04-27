@@ -4,13 +4,8 @@
     "items": [
       "/machine_learning/supervised_learning/linear_models/linear_models.html",
       "/machine_learning/supervised_learning/distance_models/distance_models.html",
-      "/machine_learning/supervised_learning/tree_models/tree_models.html"
-    ]
-  },
-  {
-    "listing": "/deep_learning/index.html",
-    "items": [
-      "/deep_learning/mlp/mlp.html"
+      "/machine_learning/supervised_learning/tree_models/tree_models.html",
+      "/machine_learning/supervised_learning/probabilistic_models/probabilistic_models.html"
     ]
   },
   {
@@ -19,6 +14,12 @@
       "/machine_learning/pipeline/pre_processing/pre_processing.html",
       "/machine_learning/pipeline/model_selection/model_selection.html",
       "/machine_learning/pipeline/model_evaluation/model_evaluation.html"
+    ]
+  },
+  {
+    "listing": "/deep_learning/index.html",
+    "items": [
+      "/deep_learning/mlp/mlp.html"
     ]
   },
   {
