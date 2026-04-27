@@ -1,6 +1,5 @@
 ---
 title: "Pre-Processing"
-description: "The first step of a Machine Learning pipeline is pre-processing the data. Here, some of these techniques are going to be presented."
 bibliography: ../../../references.bib
 ---
 

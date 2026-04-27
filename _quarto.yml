@@ -36,6 +36,8 @@ website:
                 file: machine_learning/supervised_learning/distance_models/distance_models.qmd
               - text: "Tree Models"
                 file: machine_learning/supervised_learning/tree_models/tree_models.qmd
+              - text: "Probabilistic Models"
+                file: machine_learning/supervised_learning/probabilistic_models/probabilistic_models.qmd
            
       - section: "Deep Learning"
         file: deep_learning/index.qmd

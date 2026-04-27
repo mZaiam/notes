@@ -1,6 +1,5 @@
 ---
 title: "Tree Models"
-description: "Machine Learning algorithms based on trees."
 bibliography: ../../../references.bib
 ---
 

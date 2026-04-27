@@ -1,6 +1,5 @@
 ---
 title: "Distance and Margin Models"
-description: "Machine Learning algorithms that are based on the distance between observations and a referential in the feature space."
 bibliography: ../../../references.bib
 ---
 

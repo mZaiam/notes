@@ -1,6 +1,5 @@
 ---
 title: "Model Evaluation"
-description: "The last step in a Machine Learning pipeline is the evaluation of the generalization of the models. Here, some notable metrics are presented, both for classification and regression tasks."
 bibliography: ../../../references.bib
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: "Linear Models"
-description: "The simplest Machine Learning models are linear models. Here, some notable variations of linear regressions are presented."
 bibliography: ../../../references.bib
 ---
 

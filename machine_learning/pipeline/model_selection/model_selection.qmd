@@ -1,6 +1,5 @@
 ---
 title: "Model Selection"
-description: "During a Machine Learning pipeline, the goal is to select the best possible model to deploy. For that, model selection techniques are needed."
 bibliography: ../../../references.bib
 ---
 
