@@ -1,0 +1,12 @@
+---
+title: "Unsupervised Learning"
+description: "Models and techniques that seek to extract patterns in datasets without labels."
+listing:
+  contents: 
+    - "dimensionality_reduction/dimensionality_reduction.qmd" 
+    - "clustering/clustering.qmd"
+    - "outlier/outlier.qmd"
+  type: default
+  image-align: left
+  sort: false
+---

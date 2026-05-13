@@ -5,9 +5,9 @@ bibliography: ../../../references.bib
 
 One of the most important steps in a Machine Learning (ML) pipeline is to select the best available model to deploy in the desired task. This is closely related to hyperparameter tuning (HP-tuning), which is the process of finding the best hyperparameters (HPs) of the model for the given problem. These problems involve estimating the performance of a model on unseen data -- data that was not available at training time [@ml:raschka]. For clarity, the following sub-problems are going to be defined:
 
-- Model evaluation: the process of estimating how well a model generalizes on unseen data;
-- Model selection: the process of choosing the best hyperparameters for a given model;
-- Model comparison: comparing the performance of different models. 
+- **Model evaluation**: the process of estimating how well a model generalizes on unseen data;
+- **Model selection**: the process of choosing the best hyperparameters for a given model;
+- **Model comparison**: comparing the performance of different models. 
 
 ## Holdout Method
 

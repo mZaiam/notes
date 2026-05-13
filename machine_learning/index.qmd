@@ -5,6 +5,7 @@ listing:
   contents: 
     - "pipeline/index.qmd"
     - "supervised_learning/index.qmd"
+    - "unsupervised_learning/index.qmd"
   type: default
   image-align: left
   sort: false 

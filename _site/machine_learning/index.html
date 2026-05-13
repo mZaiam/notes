@@ -242,6 +242,41 @@ window.Quarto = {
  <span class="menu-text">Probabilistic Models</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../machine_learning/supervised_learning/symbolic_models/symbolic_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Symbolic Models</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../machine_learning/unsupervised_learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unsupervised Learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../machine_learning/unsupervised_learning/dimensionality_reduction/dimensionality_reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dimensionality Reduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../machine_learning/unsupervised_learning/clustering/clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../machine_learning/unsupervised_learning/outlier/outlier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Outlier Identification</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -250,11 +285,11 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="../deep_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
@@ -323,7 +358,7 @@ window.Quarto = {
 </a>
 </div>
 </div>
-<div class="quarto-post image-left" data-index="1" data-listing-file-modified-sort="1777313065331" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="quarto-post image-left" data-index="1" data-listing-file-modified-sort="1777319092336" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <div class="thumbnail"><a href="../machine_learning/supervised_learning/index.html" class="no-external">
 
 <p class="card-img-top"><img src="supervised_learning/linear_models/linear_models_files/figure-html/linear_models_assets-linear_regression-cell-7-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -339,6 +374,25 @@ window.Quarto = {
 </div>
 <div class="metadata">
 <a href="../machine_learning/supervised_learning/index.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-left" data-index="2" data-listing-file-modified-sort="1778698258565" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="thumbnail"><a href="../machine_learning/unsupervised_learning/index.html" class="no-external">
+
+<p class="card-img-top"><img src="unsupervised_learning/dimensionality_reduction/dimensionality_reduction_files/figure-html/dimensionality_reduction_assets-dimensionality_reduction-cell-6-output-1.png"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../machine_learning/unsupervised_learning/index.html" class="no-external">Unsupervised Learning</a>
+</h3>
+<div class="delink listing-description"><a href="../machine_learning/unsupervised_learning/index.html" class="no-external">
+<p>Models and techniques that seek to extract patterns in datasets without labels.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="../machine_learning/unsupervised_learning/index.html" class="no-external">
 </a>
 </div>
 </div>
@@ -418,7 +472,7 @@ window.Quarto = {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/mZaiam\.github\.io\/notes\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
