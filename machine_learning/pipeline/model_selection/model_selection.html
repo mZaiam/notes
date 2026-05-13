@@ -273,17 +273,46 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../machine_learning/unsupervised_learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unsupervised Learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/unsupervised_learning/dimensionality_reduction/dimensionality_reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dimensionality Reduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/unsupervised_learning/clustering/clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/unsupervised_learning/outlier/outlier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Outlier Identification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../../deep_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
@@ -334,9 +363,9 @@ window.Quarto = {
 
 <p>One of the most important steps in a Machine Learning (ML) pipeline is to select the best available model to deploy in the desired task. This is closely related to hyperparameter tuning (HP-tuning), which is the process of finding the best hyperparameters (HPs) of the model for the given problem. These problems involve estimating the performance of a model on unseen data – data that was not available at training time <span class="citation" data-cites="ml:raschka">(<a href="#ref-ml:raschka" role="doc-biblioref">Raschka 2018</a>)</span>. For clarity, the following sub-problems are going to be defined:</p>
 <ul>
-<li>Model evaluation: the process of estimating how well a model generalizes on unseen data;</li>
-<li>Model selection: the process of choosing the best hyperparameters for a given model;</li>
-<li>Model comparison: comparing the performance of different models.</li>
+<li><strong>Model evaluation</strong>: the process of estimating how well a model generalizes on unseen data;</li>
+<li><strong>Model selection</strong>: the process of choosing the best hyperparameters for a given model;</li>
+<li><strong>Model comparison</strong>: comparing the performance of different models.</li>
 </ul>
 <section id="holdout-method" class="level2">
 <h2 class="anchored" data-anchor-id="holdout-method">Holdout Method</h2>

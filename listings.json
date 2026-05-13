@@ -1,12 +1,16 @@
 [
   {
-    "listing": "/machine_learning/supervised_learning/index.html",
+    "listing": "/machine_learning/unsupervised_learning/index.html",
     "items": [
-      "/machine_learning/supervised_learning/linear_models/linear_models.html",
-      "/machine_learning/supervised_learning/distance_models/distance_models.html",
-      "/machine_learning/supervised_learning/tree_models/tree_models.html",
-      "/machine_learning/supervised_learning/probabilistic_models/probabilistic_models.html",
-      "/machine_learning/supervised_learning/symbolic_models/symbolic_models.html"
+      "/machine_learning/unsupervised_learning/dimensionality_reduction/dimensionality_reduction.html",
+      "/machine_learning/unsupervised_learning/clustering/clustering.html",
+      "/machine_learning/unsupervised_learning/outlier/outlier.html"
+    ]
+  },
+  {
+    "listing": "/deep_learning/index.html",
+    "items": [
+      "/deep_learning/mlp/mlp.html"
     ]
   },
   {
@@ -18,16 +22,21 @@
     ]
   },
   {
-    "listing": "/deep_learning/index.html",
+    "listing": "/machine_learning/supervised_learning/index.html",
     "items": [
-      "/deep_learning/mlp/mlp.html"
+      "/machine_learning/supervised_learning/linear_models/linear_models.html",
+      "/machine_learning/supervised_learning/distance_models/distance_models.html",
+      "/machine_learning/supervised_learning/tree_models/tree_models.html",
+      "/machine_learning/supervised_learning/probabilistic_models/probabilistic_models.html",
+      "/machine_learning/supervised_learning/symbolic_models/symbolic_models.html"
     ]
   },
   {
     "listing": "/machine_learning/index.html",
     "items": [
       "/machine_learning/pipeline/index.html",
-      "/machine_learning/supervised_learning/index.html"
+      "/machine_learning/supervised_learning/index.html",
+      "/machine_learning/unsupervised_learning/index.html"
     ]
   }
 ]
