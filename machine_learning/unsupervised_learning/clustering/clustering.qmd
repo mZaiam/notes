@@ -20,6 +20,7 @@ where $|\mathcal{C}_j|$ denotes the number of observations in cluster $j$. This 
 Density-Based Spatial Clustering of Applications with Noise (DBSCAN) [@ml:dbscan] identifies clusters based on the local density of points in the feature space. The algorithm relies on two hyperparameters: $\epsilon > 0$, defining the search radius of the neighborhood, and $M > 0$, the minimum number of points required within that radius to constitute a dense region.
 
 Based on these thresholds, the algorithm classifies each data point into one of three categories:
+
 - **Core Point:** an observation with at least $M$ neighbors within its $\epsilon$-radius;
 - **Border Point:** an observation with fewer than $M$ neighbors within $\epsilon$, but that falls within the neighborhood of a core point;
 - **Noise Point:** an observation that meets neither condition.

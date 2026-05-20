@@ -27,6 +27,8 @@ website:
                 file: machine_learning/pipeline/model_selection/model_selection.qmd
               - text: "Model Evaluation"
                 file: machine_learning/pipeline/model_evaluation/model_evaluation.qmd
+              - text: "Model Explanation"
+                file: machine_learning/pipeline/model_explanation/model_explanation.qmd
           - section: "Supervised Learning"
             file: machine_learning/supervised_learning/index.qmd
             contents:

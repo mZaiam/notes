@@ -67,3 +67,36 @@ Macro-averaging is useful to ensure that the model performs equally well on smal
 ### Code: Classification
 
 {{< embed model_evaluation_assets/classification_metrics.ipynb >}}
+
+## Clustering
+
+In a clustering task, the algorithm assigns data points to a discrete set of clusters $\{\mathcal C_i\}^{C}_{i=1}$, where $C$ denotes the total number of predicted clusters. Unlike classification, clustering is an unsupervised task, meaning ground-truth labels $\boldsymbol{y}$ are often unavailable. Consequently, clustering metrics are divided into two main categories: internal metrics, which evaluate the structural properties of the clusters using only the feature space $\boldsymbol{X}$, and external metrics, which compare the predicted assignments $\boldsymbol{\hat{y}}$ against true partitions when available.
+
+Internal metrics rely on geometry of clusters. One of them is the Silhouette Coefficient, which assesses both cluster cohesion and separation. For a specific observation $\boldsymbol{x}_i$ assigned to cluster $\mathcal{C}_A$, let $a(\boldsymbol{x}_i)$ be the mean intra-cluster distance between $\boldsymbol{x}_i$ and all other points in the same cluster:
+$$
+a(\boldsymbol{x}_i) = \frac{1}{|\mathcal{C}_A| - 1} \sum_{\boldsymbol{x}_j \in \mathcal{C}_A, i \neq j} d(\boldsymbol{x}_i, \boldsymbol{x}_j),
+$$ {#eq-8}
+where $d(\cdot, \cdot)$ denotes a distance function. Next, let $b(\boldsymbol{x}_i)$ be the mean nearest-cluster distance from $\boldsymbol{x}_i$ to the closest neighboring cluster $\mathcal{C}_B$:
+$$
+b(\boldsymbol{x}_i) = \min_{\mathcal{C}_B \neq \mathcal{C}_A} \frac{1}{|\mathcal{C}_B|} \sum_{\boldsymbol{x}_j \in \mathcal{C}_B} d(\boldsymbol{x}_i, \boldsymbol{x}_j).
+$$ {#eq-9}
+
+The Silhouette Coefficient $s(\boldsymbol{x}_i)$ for a single observation is given by:
+$$
+s(\boldsymbol{x}_i) = \frac{b(\boldsymbol{x}_i) - a(\boldsymbol{x}_i)}{\max\{a(\boldsymbol{x}_i), b(\boldsymbol{x}_i)\}}.
+$$ {#eq-10}
+The overall Silhouette score for a dataset is the arithmetic mean of $s(\boldsymbol{x}_i)$ across all $N$ observations. The score is bounded within the interval $[-1, 1]$, where a value close to $1$ implies well-separated, dense clusters, a value near $0$ indicates overlapping clusters, and negative values suggest incorrect sample assignments.
+
+On the other hand, when ground-truth labels $\boldsymbol{y}$ are available, external evaluation metrics are used. Because cluster indices are arbitrary, metrics cannot directly compare labels via a standard confusion matrix. For that, the Rand Index (RI) calculates the proportion of pairs that are consistently clustered in both the true partitions and the predicted assignments. Let $a$ be the number of pairs placed in the same cluster in both partitions, and let $b$ be the number of pairs placed in different clusters in both partitions. Out of a total of $\binom{N}{2}$ possible pairs, the index is expressed as:
+$$
+\text{RI} = \frac{a + b}{\binom{N}{2}}.
+$$ {#eq-11}
+While easy to interpret, the raw Rand Index suffers from a baseline bias -- random cluster assignments yield an RI significantly greater than zero --, inflating performance on large datasets. To fix this limitation, the Adjusted Rand Index (ARI) normalizes the metric by subtracting the expected value of random permutations:
+$$
+\text{ARI} = \frac{\text{RI} - \mathbb E[\text{RI}]}{\max(\text{RI}) - \mathbb E[\text{RI}]}.
+$$ {#eq-12}
+A score of $1.0$ indicates identical cluster structures up to a permutation of labels, while a score of $0.0$ indicates a distribution consistent with random guessing.
+
+### Code: Clustering
+
+{{< embed model_evaluation_assets/clustering_metrics.ipynb >}}

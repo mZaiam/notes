@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../machine_learning/supervised_learning/index.html" rel="next">
+<link href="../../../machine_learning/pipeline/model_explanation/model_explanation.html" rel="next">
 <link href="../../../machine_learning/pipeline/model_selection/model_selection.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -210,6 +210,12 @@ window.Quarto = {
  <span class="menu-text">Model Evaluation</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/pipeline/model_explanation/model_explanation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Explanation</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -253,17 +259,46 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../machine_learning/unsupervised_learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unsupervised Learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/unsupervised_learning/dimensionality_reduction/dimensionality_reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dimensionality Reduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/unsupervised_learning/clustering/clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../machine_learning/unsupervised_learning/outlier/outlier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Outlier Identification</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../../deep_learning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Deep Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
@@ -290,8 +325,12 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#code-classification" id="toc-code-classification" class="nav-link" data-scroll-target="#code-classification">Code: Classification</a></li>
   </ul></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a>
+  <ul class="collapse">
+  <li><a href="#code-clustering" id="toc-code-clustering" class="nav-link" data-scroll-target="#code-clustering">Code: Clustering</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="model_evaluation_assets/classification_metrics-preview.html"><i class="bi bi-journal-code"></i>classification_metrics.ipynb</a></li><li><a href="model_evaluation_assets/regression_metrics-preview.html"><i class="bi bi-journal-code"></i>regression_metrics.ipynb</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="model_evaluation_assets/clustering_metrics-preview.html"><i class="bi bi-journal-code"></i>```</a></li><li><a href="model_evaluation_assets/classification_metrics-preview.html"><i class="bi bi-journal-code"></i>classification_metrics.ipynb</a></li><li><a href="model_evaluation_assets/regression_metrics-preview.html"><i class="bi bi-journal-code"></i>regression_metrics.ipynb</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -476,6 +515,107 @@ weighted avg       0.85      0.86      0.85       300
 </div>
 </div>
 <a class="quarto-notebook-link" id="nblink-2" href="model_evaluation_assets/classification_metrics-preview.html#cell-0">Source: classification_metrics.ipynb</a></div>
+</section>
+</section>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<p>In a clustering task, the algorithm assigns data points to a discrete set of clusters <span class="math inline">\(\{\mathcal C_i\}^{C}_{i=1}\)</span>, where <span class="math inline">\(C\)</span> denotes the total number of predicted clusters. Unlike classification, clustering is an unsupervised task, meaning ground-truth labels <span class="math inline">\(\boldsymbol{y}\)</span> are often unavailable. Consequently, clustering metrics are divided into two main categories: internal metrics, which evaluate the structural properties of the clusters using only the feature space <span class="math inline">\(\boldsymbol{X}\)</span>, and external metrics, which compare the predicted assignments <span class="math inline">\(\boldsymbol{\hat{y}}\)</span> against true partitions when available.</p>
+<p>Internal metrics rely on geometry of clusters. One of them is the Silhouette Coefficient, which assesses both cluster cohesion and separation. For a specific observation <span class="math inline">\(\boldsymbol{x}_i\)</span> assigned to cluster <span class="math inline">\(\mathcal{C}_A\)</span>, let <span class="math inline">\(a(\boldsymbol{x}_i)\)</span> be the mean intra-cluster distance between <span class="math inline">\(\boldsymbol{x}_i\)</span> and all other points in the same cluster: <span id="eq-8"><span class="math display">\[
+a(\boldsymbol{x}_i) = \frac{1}{|\mathcal{C}_A| - 1} \sum_{\boldsymbol{x}_j \in \mathcal{C}_A, i \neq j} d(\boldsymbol{x}_i, \boldsymbol{x}_j),
+\tag{8}\]</span></span> where <span class="math inline">\(d(\cdot, \cdot)\)</span> denotes a distance function. Next, let <span class="math inline">\(b(\boldsymbol{x}_i)\)</span> be the mean nearest-cluster distance from <span class="math inline">\(\boldsymbol{x}_i\)</span> to the closest neighboring cluster <span class="math inline">\(\mathcal{C}_B\)</span>: <span id="eq-9"><span class="math display">\[
+b(\boldsymbol{x}_i) = \min_{\mathcal{C}_B \neq \mathcal{C}_A} \frac{1}{|\mathcal{C}_B|} \sum_{\boldsymbol{x}_j \in \mathcal{C}_B} d(\boldsymbol{x}_i, \boldsymbol{x}_j).
+\tag{9}\]</span></span></p>
+<p>The Silhouette Coefficient <span class="math inline">\(s(\boldsymbol{x}_i)\)</span> for a single observation is given by: <span id="eq-10"><span class="math display">\[
+s(\boldsymbol{x}_i) = \frac{b(\boldsymbol{x}_i) - a(\boldsymbol{x}_i)}{\max\{a(\boldsymbol{x}_i), b(\boldsymbol{x}_i)\}}.
+\tag{10}\]</span></span> The overall Silhouette score for a dataset is the arithmetic mean of <span class="math inline">\(s(\boldsymbol{x}_i)\)</span> across all <span class="math inline">\(N\)</span> observations. The score is bounded within the interval <span class="math inline">\([-1, 1]\)</span>, where a value close to <span class="math inline">\(1\)</span> implies well-separated, dense clusters, a value near <span class="math inline">\(0\)</span> indicates overlapping clusters, and negative values suggest incorrect sample assignments.</p>
+<p>On the other hand, when ground-truth labels <span class="math inline">\(\boldsymbol{y}\)</span> are available, external evaluation metrics are used. Because cluster indices are arbitrary, metrics cannot directly compare labels via a standard confusion matrix. For that, the Rand Index (RI) calculates the proportion of pairs that are consistently clustered in both the true partitions and the predicted assignments. Let <span class="math inline">\(a\)</span> be the number of pairs placed in the same cluster in both partitions, and let <span class="math inline">\(b\)</span> be the number of pairs placed in different clusters in both partitions. Out of a total of <span class="math inline">\(\binom{N}{2}\)</span> possible pairs, the index is expressed as: <span id="eq-11"><span class="math display">\[
+\text{RI} = \frac{a + b}{\binom{N}{2}}.
+\tag{11}\]</span></span> While easy to interpret, the raw Rand Index suffers from a baseline bias – random cluster assignments yield an RI significantly greater than zero –, inflating performance on large datasets. To fix this limitation, the Adjusted Rand Index (ARI) normalizes the metric by subtracting the expected value of random permutations: <span id="eq-12"><span class="math display">\[
+\text{ARI} = \frac{\text{RI} - \mathbb E[\text{RI}]}{\max(\text{RI}) - \mathbb E[\text{RI}]}.
+\tag{12}\]</span></span> A score of <span class="math inline">\(1.0\)</span> indicates identical cluster structures up to a permutation of labels, while a score of <span class="math inline">\(0.0\)</span> indicates a distribution consistent with random guessing.</p>
+<section id="code-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="code-clustering">Code: Clustering</h3>
+<div class="quarto-embed-nb-cell">
+<p>Importing the packages.</p>
+<div id="cell-2" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score, silhouette_samples, adjusted_rand_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Creating a synthetic dataset.</p>
+<div id="cell-4" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X, y_true <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">500</span>, centers<span class="op">=</span><span class="dv">4</span>, cluster_std<span class="op">=</span><span class="fl">0.60</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Instantiating and fitting the <span class="math inline">\(k\)</span>-Means algorithm with different <span class="math inline">\(k\)</span> values.</p>
+<div id="cell-6" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>k_range <span class="op">=</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">7</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>silhouette_scores <span class="op">=</span> []</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> k_range:</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k, random_state<span class="op">=</span><span class="dv">42</span>, n_init<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> kmeans.fit_predict(X)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> silhouette_score(X, labels)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    silhouette_scores.append(score)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Plotting the Silhouette Coefficient of the different algorithms, while showing the best result.</p>
+<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:568}}" data-outputid="0da2359b-5bd6-4b68-b137-a38ef5b36c93" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax1.plot(k_range, silhouette_scores, marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'teal'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="vs">r"</span><span class="dv">$</span><span class="vs">k</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"Mean Silhouette Coefficient"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>optimal_k <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>kmeans_opt <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>optimal_k, random_state<span class="op">=</span><span class="dv">42</span>, n_init<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> kmeans_opt.fit_predict(X)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>scatter <span class="op">=</span> ax2.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>y_pred, cmap<span class="op">=</span><span class="st">'viridis'</span>, s<span class="op">=</span><span class="dv">30</span>, edgecolor<span class="op">=</span><span class="st">'k'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"Feature 1"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">"Feature 2"</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="model_evaluation_files/figure-html/model_evaluation_assets-clustering_metrics-cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Calculating the Adjusted Radn Index with the labels from the synthetic dataset.</p>
+<div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;}}" data-outputid="000ef856-6a4f-4875-e3d1-57bd5a6a2aaf" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">60</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ADJUSTED RAND INDEX (ARI)"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">60</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>y_permuted <span class="op">=</span> np.zeros_like(y_pred)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>y_permuted[y_pred <span class="op">==</span> <span class="dv">0</span>] <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>y_permuted[y_pred <span class="op">==</span> <span class="dv">1</span>] <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>y_permuted[y_pred <span class="op">==</span> <span class="dv">2</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>y_permuted[y_pred <span class="op">==</span> <span class="dv">3</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>ari_standard <span class="op">=</span> adjusted_rand_score(y_true, y_pred)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>ari_permuted <span class="op">=</span> adjusted_rand_score(y_true, y_permuted)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>ari_random <span class="op">=</span> adjusted_rand_score(y_true, np.random.randint(<span class="dv">0</span>, <span class="dv">4</span>, size<span class="op">=</span><span class="bu">len</span>(y_true)))</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Standard Predictions ARI: </span><span class="sc">{</span>ari_standard<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Permuted Labels Predictions ARI: </span><span class="sc">{</span>ari_permuted<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Purely Random Assignments ARI: </span><span class="sc">{</span>ari_random<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">60</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>============================================================
+ADJUSTED RAND INDEX (ARI)
+============================================================
+Standard Predictions ARI: 1.0000
+Permuted Labels Predictions ARI: 1.0000
+Purely Random Assignments ARI: -0.0016
+============================================================</code></pre>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-3" href="model_evaluation_assets/clustering_metrics-preview.html#cell-0">Source: ```</a></div>
 
 
 </section>
@@ -555,7 +695,7 @@ weighted avg       0.85      0.86      0.85       300
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/mZaiam\.github\.io\/notes\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -889,8 +1029,8 @@ weighted avg       0.85      0.86      0.85       300
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../machine_learning/supervised_learning/index.html" class="pagination-link" aria-label="Supervised Learning">
-        <span class="nav-page-text">Supervised Learning</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../machine_learning/pipeline/model_explanation/model_explanation.html" class="pagination-link" aria-label="Model Explanation">
+        <span class="nav-page-text">Model Explanation</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -373,7 +373,12 @@ window.Quarto = {
 <section id="density-based-spatial-clustering-of-applications-with-noise-dbscan" class="level2">
 <h2 class="anchored" data-anchor-id="density-based-spatial-clustering-of-applications-with-noise-dbscan">Density-Based Spatial Clustering of Applications with Noise (DBSCAN)</h2>
 <p>Density-Based Spatial Clustering of Applications with Noise (DBSCAN) <span class="citation" data-cites="ml:dbscan">(<a href="#ref-ml:dbscan" role="doc-biblioref">Ester et al. 1996</a>)</span> identifies clusters based on the local density of points in the feature space. The algorithm relies on two hyperparameters: <span class="math inline">\(\epsilon &gt; 0\)</span>, defining the search radius of the neighborhood, and <span class="math inline">\(M &gt; 0\)</span>, the minimum number of points required within that radius to constitute a dense region.</p>
-<p>Based on these thresholds, the algorithm classifies each data point into one of three categories: - <strong>Core Point:</strong> an observation with at least <span class="math inline">\(M\)</span> neighbors within its <span class="math inline">\(\epsilon\)</span>-radius; - <strong>Border Point:</strong> an observation with fewer than <span class="math inline">\(M\)</span> neighbors within <span class="math inline">\(\epsilon\)</span>, but that falls within the neighborhood of a core point; - <strong>Noise Point:</strong> an observation that meets neither condition.</p>
+<p>Based on these thresholds, the algorithm classifies each data point into one of three categories:</p>
+<ul>
+<li><strong>Core Point:</strong> an observation with at least <span class="math inline">\(M\)</span> neighbors within its <span class="math inline">\(\epsilon\)</span>-radius;</li>
+<li><strong>Border Point:</strong> an observation with fewer than <span class="math inline">\(M\)</span> neighbors within <span class="math inline">\(\epsilon\)</span>, but that falls within the neighborhood of a core point;</li>
+<li><strong>Noise Point:</strong> an observation that meets neither condition.</li>
+</ul>
 <p>The algorithm forms clusters by connecting adjacent core points and their respective border points. Noise points are left unassigned. Unlike <span class="math inline">\(k\)</span>-Means, DBSCAN does not require specifying the number of clusters <em>a priori</em> and can discover clusters of arbitrary shapes, though it can struggle with datasets containing different local densities.</p>
 </section>
 <section id="hierarchical-clustering" class="level2">
