@@ -18,7 +18,8 @@
     "items": [
       "/machine_learning/pipeline/pre_processing/pre_processing.html",
       "/machine_learning/pipeline/model_selection/model_selection.html",
-      "/machine_learning/pipeline/model_evaluation/model_evaluation.html"
+      "/machine_learning/pipeline/model_evaluation/model_evaluation.html",
+      "/machine_learning/pipeline/model_explanation/model_explanation.html"
     ]
   },
   {
