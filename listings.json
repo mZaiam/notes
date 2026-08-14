@@ -10,7 +10,13 @@
   {
     "listing": "/deep_learning/index.html",
     "items": [
-      "/deep_learning/mlp/mlp.html"
+      "/deep_learning/nn/index.html"
+    ]
+  },
+  {
+    "listing": "/deep_learning/nn/index.html",
+    "items": [
+      "/deep_learning/nn/intro/introduction.html"
     ]
   },
   {
