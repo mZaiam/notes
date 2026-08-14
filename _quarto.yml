@@ -53,10 +53,13 @@ website:
                 file: machine_learning/unsupervised_learning/outlier/outlier.qmd
               
       - section: "Deep Learning"
-        file: deep_learning/index.qmd
+        file: deep_learning/index.qmd 
         contents:
-          - text: "Multilayer Perceptron"
-            file: deep_learning/mlp/mlp.qmd
+          - section: "Neural Networks"
+            file: deep_learning/nn/index.qmd
+            contents:
+              - text: "Introduction"
+                file: deep_learning/nn/intro/introduction.qmd
 
 format:
   html:

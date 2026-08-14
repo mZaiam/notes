@@ -165,6 +165,12 @@ div.csl-indent {
  <span class="menu-text">Model Evaluation</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./machine_learning/pipeline/model_explanation/model_explanation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Explanation</span></a>
+  </div>
+</li>
       </ul>
   </li>
           <li class="sidebar-item sidebar-item-section">
@@ -248,12 +254,23 @@ div.csl-indent {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./deep_learning/nn/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Neural Networks</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multilayer Perceptron</span></a>
+  <a href="./deep_learning/nn/intro/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
   </div>
 </li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -267,6 +284,7 @@ div.csl-indent {
    
   <ul>
   <li><a href="#socials" id="toc-socials" class="nav-link active" data-scroll-target="#socials">Socials</a></li>
+  <li><a href="#news" id="toc-news" class="nav-link" data-scroll-target="#news">News</a></li>
   <li><a href="#publications" id="toc-publications" class="nav-link" data-scroll-target="#publications">Publications</a></li>
   </ul>
 </nav>
@@ -301,6 +319,12 @@ div.csl-indent {
 <li><i class="bi bi-github"></i> <a href="https://github.com/mZaiam">GitHub</a></li>
 <li><i class="bi bi-linkedin"></i> <a href="https://www.linkedin.com/in/matheus-zaia-monteiro-793a432b4/">LinkedIn</a></li>
 <li><i class="bi bi-envelope"></i> <a href="mailto:matheus.z.monteiro@gmail.com">Email</a></li>
+</ul>
+</section>
+<section id="news" class="level3">
+<h3 class="anchored" data-anchor-id="news">News</h3>
+<ul>
+<li><a href="https://cnpem.br/en/egresso-da-faculdade-do-cnpem-recebe-premio-nacional-da-sociedade-brasileira-de-matematica-aplicada-e-computacional/">Graduate of CNPEM bachelor’s program receives national award from the Brazilian Society of Computational and Applied Mathematics</a></li>
 </ul>
 </section>
 <section id="publications" class="level3">
@@ -388,7 +412,7 @@ Monteiro, Matheus Zaia, and Vinicius Francisco Wasques. 2026. <span>“ANFISpy: 
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/mZaiam\.github\.io\/notes\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

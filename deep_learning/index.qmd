@@ -1,11 +1,10 @@
 ---
-title: "Deep Learning (DL)"
-description: These notes provide a general view on Deep Learning (DL).
+title: "Deep Learning"
+description: "These notes explore essential topics in Deep Learning." 
 listing:
   contents: 
-    - "mlp/mlp.qmd"
-  type: grid
-  grid-columns: 2       
-  grid-item-border: true 
-  grid-item-align: left 
+    - "nn/index.qmd"
+  type: default
+  image-align: left
+  sort: false 
 ---
