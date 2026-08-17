@@ -8,6 +8,7 @@ listing:
     - "probabilistic_models/probabilistic_models.qmd"
     - "symbolic_models/symbolic_models.qmd"
   type: default
+  fields: [image, title]
   image-align: left
   sort: false
 ---

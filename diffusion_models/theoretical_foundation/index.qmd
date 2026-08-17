@@ -6,6 +6,7 @@ listing:
     - "ddpm/ddpm.qmd"
     - "sde/sde.qmd"
   type: default
+  fields: [image, title]
   image-align: left
   sort: false 
 ---

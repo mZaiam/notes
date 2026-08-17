@@ -6,6 +6,7 @@ listing:
     - "supervised_learning/index.qmd"
     - "unsupervised_learning/index.qmd"
   type: default
+  fields: [image, title]
   image-align: left
   sort: false 
 ---

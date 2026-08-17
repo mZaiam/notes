@@ -7,6 +7,7 @@ listing:
     - "model_evaluation/model_evaluation.qmd"
     - "model_explanation/model_explanation.qmd"
   type: default
+  fields: [image, title]
   image-align: left
   sort: false
 ---

@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
     };
@@ -400,9 +400,6 @@ window.Quarto = {
 <h3 class="no-anchor listing-title">
 <a href="../../deep_learning/nn/intro/introduction.html" class="no-external">Introduction</a>
 </h3>
-<div class="delink listing-description"><a href="../../deep_learning/nn/intro/introduction.html" class="no-external">
-Deep Learning (DL) is a subarea of Machine Learning (ML) based on models composed of artificial Neural Networks (NNs) <span class="citation" data-cites="book:dlbengio">(LeCun, Bengio, and Hinton 2015)</span>. These architectures…<span class="citation" data-cites="book:understanddl"></span><span class="citation" data-cites="dl:neuron"></span><span class="citation" data-cites="dl:perceptron"></span><span class="math inline"></span><span class="math inline"></span><span class="math inline"></span><span class="math inline"></span><span id="eq-1"><span class="math display"></span></span><span class="math inline"></span>
-</a></div>
 </div>
 <div class="metadata">
 <a href="../../deep_learning/nn/intro/introduction.html" class="no-external">
@@ -485,7 +482,7 @@ Deep Learning (DL) is a subarea of Machine Learning (ML) based on models compose
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/mZaiam\.github\.io\/notes\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

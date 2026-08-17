@@ -9,6 +9,7 @@ listing:
     # - "normalization/normalization.qmd"
     # - "extras/extras.qmd"
   type: default
+  fields: [image, title]
   image-align: left
   sort: false
 ---

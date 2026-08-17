@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
     };
@@ -400,9 +400,6 @@ window.Quarto = {
 <h3 class="no-anchor listing-title">
 <a href="../../diffusion_models/theoretical_foundation/smld/smld.html" class="no-external">Score Matching with Langevin Dynamics (SMLD)</a>
 </h3>
-<div class="delink listing-description"><a href="../../diffusion_models/theoretical_foundation/smld/smld.html" class="no-external">
-Score Matching with Langevin Dynamics (SMLD) <span class="citation" data-cites="dm:smld">(Song and Ermon 2019)</span> was the first formulation of the current Diffusion Models (DMs). The idea was to approximate the score…<span class="math inline"></span><span class="math inline"></span><span class="math inline"></span>
-</a></div>
 </div>
 <div class="metadata">
 <a href="../../diffusion_models/theoretical_foundation/smld/smld.html" class="no-external">
@@ -419,9 +416,6 @@ Score Matching with Langevin Dynamics (SMLD) <span class="citation" data-cites="
 <h3 class="no-anchor listing-title">
 <a href="../../diffusion_models/theoretical_foundation/ddpm/ddpm.html" class="no-external">Denoising Diffusion Probabilistic Models (DDPM)</a>
 </h3>
-<div class="delink listing-description"><a href="../../diffusion_models/theoretical_foundation/ddpm/ddpm.html" class="no-external">
-Following the Score Matching with Langevin Dynamics (SMLD), Denoising Diffusion Probabilistic Models (DDPMs) <span class="citation" data-cites="dm:ddpm">(Ho, Jain, and Abbeel 2020)</span> formulated a Diffusion Models (DMs)…<span class="math inline"></span><span id="eq-1"><span class="math display"></span></span><span class="math inline"></span><span id="eq-2"><span class="math display"></span></span><span class="math inline"></span><span id="eq-3"><span class="math display"></span></span><span class="math inline"></span><span class="math inline"></span><span class="math inline"></span>
-</a></div>
 </div>
 <div class="metadata">
 <a href="../../diffusion_models/theoretical_foundation/ddpm/ddpm.html" class="no-external">
@@ -438,9 +432,6 @@ Following the Score Matching with Langevin Dynamics (SMLD), Denoising Diffusion 
 <h3 class="no-anchor listing-title">
 <a href="../../diffusion_models/theoretical_foundation/sde/sde.html" class="no-external">Stochastic Differential Equations (SDEs) Formulation</a>
 </h3>
-<div class="delink listing-description"><a href="../../diffusion_models/theoretical_foundation/sde/sde.html" class="no-external">
-After both Score Matching with Langevin Dynamics (SMLD) and Denoising Diffusion Probabilistic Models (DDPMs) were introduced, research focused on unifying these formulations…<span class="citation" data-cites="dm:sde"><strong></strong></span>
-</a></div>
 </div>
 <div class="metadata">
 <a href="../../diffusion_models/theoretical_foundation/sde/sde.html" class="no-external">
@@ -523,7 +514,7 @@ After both Score Matching with Langevin Dynamics (SMLD) and Denoising Diffusion 
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/mZaiam\.github\.io\/notes\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

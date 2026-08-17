@@ -4,6 +4,7 @@ listing:
   contents: 
     - "nn/index.qmd"
   type: default
+  fields: [image, title]
   image-align: left
   sort: false 
 ---

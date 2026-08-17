@@ -8,6 +8,7 @@ listing:
     # - "architectures/index.qmd"
     # - "extras/index.qmd"
   type: default
+  fields: [image, title]
   image-align: left
   sort: false 
 ---

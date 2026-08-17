@@ -6,6 +6,7 @@ listing:
     - "clustering/clustering.qmd"
     - "outlier/outlier.qmd"
   type: default
+  fields: [image, title]
   image-align: left
   sort: false
 ---

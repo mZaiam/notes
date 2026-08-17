@@ -23,9 +23,3 @@ h2, h3 {
   margin-top: 2em;
   margin-bottom: 0.75em;
 }
-
-.quarto-grid-item .card-img-top {
-  object-fit: contain !important; 
-  padding: 10px;                  
-  background-color: #f8f9fa;     
-}
