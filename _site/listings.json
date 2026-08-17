@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/diffusion_models/index.html",
+    "items": [
+      "/diffusion_models/theoretical_foundation/index.html"
+    ]
+  },
+  {
     "listing": "/machine_learning/unsupervised_learning/index.html",
     "items": [
       "/machine_learning/unsupervised_learning/dimensionality_reduction/dimensionality_reduction.html",
@@ -11,6 +17,12 @@
     "listing": "/deep_learning/index.html",
     "items": [
       "/deep_learning/nn/index.html"
+    ]
+  },
+  {
+    "listing": "/deep_learning/gnn/index.html",
+    "items": [
+      "/deep_learning/gnn/intro/introduction.html"
     ]
   },
   {
@@ -44,6 +56,14 @@
       "/machine_learning/pipeline/index.html",
       "/machine_learning/supervised_learning/index.html",
       "/machine_learning/unsupervised_learning/index.html"
+    ]
+  },
+  {
+    "listing": "/diffusion_models/theoretical_foundation/index.html",
+    "items": [
+      "/diffusion_models/theoretical_foundation/smld/smld.html",
+      "/diffusion_models/theoretical_foundation/ddpm/ddpm.html",
+      "/diffusion_models/theoretical_foundation/sde/sde.html"
     ]
   }
 ]
