@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Neural Networks (NNs)</title>
+<title>Introduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,6 +85,7 @@ div.csl-indent {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
+<link href="../../../diffusion_models/index.html" rel="next">
 <link href="../../../deep_learning/nn/index.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -337,6 +338,46 @@ window.Quarto = {
   </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../diffusion_models/theoretical_foundation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Theoretical Foundation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../diffusion_models/theoretical_foundation/smld/smld.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Score Matching with Langevin Dynamics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../diffusion_models/theoretical_foundation/ddpm/ddpm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Denoising Diffusion Probabilistic Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../diffusion_models/theoretical_foundation/sde/sde.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic Differential Equations Formulation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -356,7 +397,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../deep_learning/index.html">Deep Learning</a></li><li class="breadcrumb-item"><a href="../../../deep_learning/nn/index.html">Neural Networks</a></li><li class="breadcrumb-item"><a href="../../../deep_learning/nn/intro/introduction.html">Introduction</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Neural Networks (NNs)</h1>
+<h1 class="title">Introduction</h1>
 </div>
 
 
@@ -379,7 +420,7 @@ window.Quarto = {
 <div id="fig-perceptron" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-perceptron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="intro_assets/perceptron.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+<img src="intro_assets/perceptron.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-perceptron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Diagram of a Perceptron.
@@ -396,7 +437,7 @@ Figure&nbsp;1: Diagram of a Perceptron.
 \hat{y} = \sigma\left(b + \sum_{i=1}^n w_i x_i\right) = \sigma\left(\boldsymbol{w}^T \boldsymbol{x} + b\right),
 \tag{4}\]</span></span> where <span class="math inline">\(\boldsymbol{w} \in \mathbb{R}^n\)</span> represents the weight vector and <span class="math inline">\(b \in \mathbb{R}\)</span> denotes the scalar bias. The parameters <span class="math inline">\(\boldsymbol{\Theta} = \{\boldsymbol{w}, b\}\)</span> constitute the learnable components of the unit. To approximate more complex function, neurons are organized in parallel to form a layer. A single layer mapping an input vector <span class="math inline">\(\boldsymbol{x} \in \mathbb{R}^n\)</span> to an <span class="math inline">\(m\)</span>-dimensional representation is defined as: <span id="eq-5"><span class="math display">\[
 \boldsymbol{\hat{y}} = \sigma\left(\boldsymbol{W}\boldsymbol{x} + \boldsymbol{b}\right),
-\tag{5}\]</span></span> where <span class="math inline">\(\boldsymbol{W} \in \mathbb{R}^{m \times n}\)</span> is the linear coefficient matrix, <span class="math inline">\(\boldsymbol{b} \in \mathbb{R}^m\)</span> is the bias vector and <span class="math inline">\(\boldsymbol{\hat{y}} \in \mathbb{R}^m\)</span> is the layer output vector. Expanding this operation into matrix notation yields: <span id="eq-6"><span class="math display">\[
+\tag{5}\]</span></span> where <span class="math inline">\(\boldsymbol{W} \in \mathbb{R}^{m \times n}\)</span> is the linear coefficient matrix, <span class="math inline">\(\boldsymbol{b} \in \mathbb{R}^m\)</span> is the bias vector and <span class="math inline">\(\boldsymbol{\hat{y}} \in \mathbb{R}^m\)</span> is the output vector. Expanding this operation into matrix notation yields: <span id="eq-6"><span class="math display">\[
 \begin{bmatrix}
 \hat{y}_1 \\
 \hat{y}_2 \\
@@ -430,7 +471,7 @@ Figure&nbsp;2: Diagram of an MLP.
 </figure>
 </div>
 <p>The learnable parameters are optimized in a Supervised Learning framework using a labeled dataset <span class="math inline">\(\mathcal{D} = \{(\boldsymbol{x}_i, \boldsymbol{y}_i)\}_{i=1}^N\)</span>. Given a loss function <span class="math inline">\(\mathcal{L} : \mathcal Y \times \mathcal Y \to \mathbb R\)</span>, the learnable parameter set <span class="math inline">\(\boldsymbol{\Theta} = \{\boldsymbol{W}^{(l)}, \boldsymbol{b}^{(l)}\}_{l=1}^L\)</span> is updated iteratively via backpropagation: <span id="eq-7"><span class="math display">\[
-\boldsymbol{\Theta}^{(k+1)} = \boldsymbol{\Theta}^{(k)} - \eta \nabla_{\boldsymbol{\Theta}^{(k)}} \mathcal{L}\left(\boldsymbol{y}, f_{\boldsymbol{\Theta}^{(k)}}(\boldsymbol{x})\right),
+\boldsymbol{\Theta}^{(k+1)} = \boldsymbol{\Theta}^{(k)} - \eta \nabla_{\boldsymbol{\Theta}^{(k)}} \mathcal{L}\left(\boldsymbol{y}_i, f_{\boldsymbol{\Theta}^{(k)}}(\boldsymbol{x}_i)\right),
 \tag{7}\]</span></span> where <span class="math inline">\(k\)</span> denotes the optimization step index and <span class="math inline">\(\eta \in \mathbb{R}^+\)</span> represents the learning rate. Finally, the MLP has some important hyperparameters that need to be tuned:</p>
 <ul>
 <li>Number of hidden layers <span class="math inline">\(L\)</span>,</li>
@@ -649,7 +690,7 @@ LeCun, Yann, Yoshua Bengio, and Geoffrey Hinton. 2015. <em>Deep Learning</em>. <
 McCulloch, Warren S, and Walter Pitts. 1943. <span>“A Logical Calculus of the Ideas Immanent in Nervous Activity.”</span> <em>The Bulletin of Mathematical Biophysics</em> 5 (4): 115–33.
 </div>
 <div id="ref-dl:minsky" class="csl-entry" role="listitem">
-Minsky, Marvin, and Seymour A Papert. 2017. <em>Perceptrons: An Introduction to Computational Geometry</em>. the MIT Press.
+Minsky, Marvin, and Seymour A Papert. 2017. <em>Perceptrons: An Introduction to Computational Geometry</em>. MIT Press.
 </div>
 <div id="ref-book:understanddl" class="csl-entry" role="listitem">
 Prince, Simon JD. 2023. <em>Understanding Deep Learning</em>. MIT press.
@@ -1071,6 +1112,9 @@ Widrow, Bernard, and Marcian E Hoff. 1960. <span>“Adaptive Switching Circuits.
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../../diffusion_models/index.html" class="pagination-link" aria-label="Diffusion Models">
+        <span class="nav-page-text">Diffusion Models</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
