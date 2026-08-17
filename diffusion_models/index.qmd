@@ -1,0 +1,13 @@
+---
+title: "Diffusion Models"
+listing:
+  contents: 
+    - "theoretical_foundation/index.qmd"
+    # - "samplers/index.qmd"
+    # - "conditioning/index.qmd"
+    # - "architectures/index.qmd"
+    # - "extras/index.qmd"
+  type: default
+  image-align: left
+  sort: false 
+---

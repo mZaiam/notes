@@ -1,0 +1,9 @@
+---
+title: "Graph Neural Networks"
+listing:
+  contents: 
+    - "intro/introduction.qmd"
+  type: default
+  image-align: left
+  sort: false
+---

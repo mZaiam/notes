@@ -1,6 +1,5 @@
 ---
 title: "Deep Learning"
-description: "These notes explore essential topics in Deep Learning." 
 listing:
   contents: 
     - "nn/index.qmd"

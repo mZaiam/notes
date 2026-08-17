@@ -1,6 +1,5 @@
 ---
 title: "Machine Learning"
-description: "These notes provide a general view on Machine Learning with tabular data." 
 listing:
   contents: 
     - "pipeline/index.qmd"

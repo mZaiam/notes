@@ -1,5 +1,5 @@
 ---
-title: "Neural Networks (NNs)"
+title: "Introduction"
 bibliography: ../../../references.bib
 ---
 
@@ -9,7 +9,7 @@ $$
 $$ {#eq-1}
 where $f(z) = \text{sgn}(z)$ was a step function. 
 
-![Diagram of a Perceptron.](intro_assets/perceptron.svg){#fig-perceptron width=60% fig-align="center"}
+![Diagram of a Perceptron.](intro_assets/perceptron.svg){#fig-perceptron width=50% fig-align="center"}
 
 Following the Perceptron, the Adaptive Linear Element (Adaline) [@dl:adaline] introduced a way to update weights using continuous activations during training. This model defined a loss function:
 $$
@@ -30,7 +30,7 @@ where $\boldsymbol{w} \in \mathbb{R}^n$ represents the weight vector and $b \in 
 $$
 \boldsymbol{\hat{y}} = \sigma\left(\boldsymbol{W}\boldsymbol{x} + \boldsymbol{b}\right),
 $$ {#eq-5}
-where $\boldsymbol{W} \in \mathbb{R}^{m \times n}$ is the linear coefficient matrix, $\boldsymbol{b} \in \mathbb{R}^m$ is the bias vector and $\boldsymbol{\hat{y}} \in \mathbb{R}^m$ is the layer output vector. Expanding this operation into matrix notation yields:
+where $\boldsymbol{W} \in \mathbb{R}^{m \times n}$ is the linear coefficient matrix, $\boldsymbol{b} \in \mathbb{R}^m$ is the bias vector and $\boldsymbol{\hat{y}} \in \mathbb{R}^m$ is the output vector. Expanding this operation into matrix notation yields:
 $$
 \begin{bmatrix}
 \hat{y}_1 \\
@@ -60,7 +60,7 @@ The activation function $\sigma(\cdot)$ is applied element-wise. In an MLP, mult
 
 The learnable parameters are optimized in a Supervised Learning framework using a labeled dataset $\mathcal{D} = \{(\boldsymbol{x}_i, \boldsymbol{y}_i)\}_{i=1}^N$. Given a loss function $\mathcal{L} : \mathcal Y \times \mathcal Y \to \mathbb R$, the learnable parameter set $\boldsymbol{\Theta} = \{\boldsymbol{W}^{(l)}, \boldsymbol{b}^{(l)}\}_{l=1}^L$ is updated iteratively via backpropagation:
 $$
-\boldsymbol{\Theta}^{(k+1)} = \boldsymbol{\Theta}^{(k)} - \eta \nabla_{\boldsymbol{\Theta}^{(k)}} \mathcal{L}\left(\boldsymbol{y}, f_{\boldsymbol{\Theta}^{(k)}}(\boldsymbol{x})\right),
+\boldsymbol{\Theta}^{(k+1)} = \boldsymbol{\Theta}^{(k)} - \eta \nabla_{\boldsymbol{\Theta}^{(k)}} \mathcal{L}\left(\boldsymbol{y}_i, f_{\boldsymbol{\Theta}^{(k)}}(\boldsymbol{x}_i)\right),
 $$ {#eq-7}
 where $k$ denotes the optimization step index and $\eta \in \mathbb{R}^+$ represents the learning rate. Finally, the MLP has some important hyperparameters that need to be tuned:
 

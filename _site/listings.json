@@ -14,6 +14,12 @@
     ]
   },
   {
+    "listing": "/deep_learning/nn/index.html",
+    "items": [
+      "/deep_learning/nn/intro/introduction.html"
+    ]
+  },
+  {
     "listing": "/machine_learning/pipeline/index.html",
     "items": [
       "/machine_learning/pipeline/pre_processing/pre_processing.html",
@@ -38,12 +44,6 @@
       "/machine_learning/pipeline/index.html",
       "/machine_learning/supervised_learning/index.html",
       "/machine_learning/unsupervised_learning/index.html"
-    ]
-  },
-  {
-    "listing": "/deep_learning/nn/index.html",
-    "items": [
-      "/deep_learning/nn/intro/introduction.html"
     ]
   }
 ]

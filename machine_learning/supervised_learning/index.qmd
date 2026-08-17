@@ -1,6 +1,5 @@
 ---
 title: "Supervised Learning"
-description: "A presentation of supervised Machine Learning algorithms."
 listing:
   contents: 
     - "linear_models/linear_models.qmd"

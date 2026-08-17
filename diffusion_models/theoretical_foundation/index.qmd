@@ -1,0 +1,11 @@
+---
+title: "Theoretical Foundation"
+listing:
+  contents: 
+    - "smld/smld.qmd"
+    - "ddpm/ddpm.qmd"
+    - "sde/sde.qmd"
+  type: default
+  image-align: left
+  sort: false 
+---

@@ -1,9 +1,13 @@
 ---
 title: "Neural Networks"
-description: "The basics of Neural Networks."
 listing:
   contents: 
     - "intro/introduction.qmd"
+    # - "tasks/tasks.qmd"
+    # - "activations/activations.qmd"
+    # - "optimizers/optimizers.qmd"
+    # - "normalization/normalization.qmd"
+    # - "extras/extras.qmd"
   type: default
   image-align: left
   sort: false

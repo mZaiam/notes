@@ -1,6 +1,5 @@
 ---
 title: "Pipeline"
-description: "The structure of a general Machine Learning pipeline, including: data pre-processing, selecting and evaluating models."
 listing:
   contents: 
     - "pre_processing/pre_processing.qmd" 

@@ -61,6 +61,19 @@ website:
               - text: "Introduction"
                 file: deep_learning/nn/intro/introduction.qmd
 
+      - section: "Diffusion Models"
+        file: diffusion_models/index.qmd 
+        contents:
+          - section: "Theoretical Foundation"
+            file: diffusion_models/theoretical_foundation/index.qmd
+            contents:
+              - text: "Score Matching with Langevin Dynamics"
+                file: diffusion_models/theoretical_foundation/smld/smld.qmd
+              - text: "Denoising Diffusion Probabilistic Models"
+                file: diffusion_models/theoretical_foundation/ddpm/ddpm.qmd
+              - text: "Stochastic Differential Equations Formulation"
+                file: diffusion_models/theoretical_foundation/sde/sde.qmd
+
 format:
   html:
     theme:
