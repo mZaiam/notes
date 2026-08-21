@@ -63,7 +63,8 @@
     "items": [
       "/diffusion_models/theoretical_foundation/smld/smld.html",
       "/diffusion_models/theoretical_foundation/ddpm/ddpm.html",
-      "/diffusion_models/theoretical_foundation/sde/sde.html"
+      "/diffusion_models/theoretical_foundation/sde/sde.html",
+      "/diffusion_models/theoretical_foundation/edm/edm.html"
     ]
   }
 ]
