@@ -1,10 +1,14 @@
 ---
-title: "Deep Learning"
-listing:
-  contents: 
-    - "nn/index.qmd"
-  type: default
-  fields: [image, title]
-  image-align: left
-  sort: false 
+title: "Deep Learning (DL)"
+toc: true
 ---
+
+This section has several classes of DL models, with their respective theoretical explanation and notable architectures.
+
+## 1. Neural Networks
+
+Neural models based on fully-connected layers.
+
+### 1.1 [Theoretical Foundation](deep_learning/nn/theoretical_foundation/theoretical_foundation.qmd)
+
+The basics of neural models.

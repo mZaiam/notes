@@ -47,7 +47,7 @@ $$
 $$ {#eq-8}
 where $\lambda(t)$ is a weighting function introduced to balance the gradient magnitudes across different noise scales. If one sets $\lambda(t) = \sigma_t^2$ to the respective forward processes of SMLDs and DDPMs, one gets their original objective functions.
 
-It was also proved that every diffusion process has a deterministic process that shares the same marginal probability densities $p_t(\boldsymbol{x})$ for all $t$. This is modelled by an Ordinary Differential Equation (ODE), known as the probability flow ODE, given by:
+It was also shown that every diffusion process has a deterministic process that shares the same marginal probability densities $p_t(\boldsymbol{x})$ for all $t$. This is modelled by an Ordinary Differential Equation (ODE), known as the probability flow ODE, given by:
 $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt.
 $$ {#eq-9}

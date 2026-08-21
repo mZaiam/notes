@@ -1,14 +1,34 @@
 ---
-title: "Diffusion Models"
-listing:
-  contents: 
-    - "theoretical_foundation/index.qmd"
-    # - "samplers/index.qmd"
-    # - "conditioning/index.qmd"
-    # - "architectures/index.qmd"
-    # - "extras/index.qmd"
-  type: default
-  fields: [image, title]
-  image-align: left
-  sort: false 
+title: "Diffusion Models (DMs) and Flow-Matching (FM)"
+toc: true
 ---
+
+These notes cover the theoretical and mathematical foundations of diffusion and flow-based generative models.
+
+## 1. Theoretical Foundation
+
+The various definitions of the diffusion and flow-based generative learning process.
+
+### 1.1 [Score Matching with Langevin Dynamics](theoretical_foundation/smld/smld.qmd)
+
+Score matching as a foundation for generative modeling.
+
+### 1.2 [Denoising Diffusion Probabilistic Models](theoretical_foundation/ddpm/ddpm.qmd)
+
+The noise prediction formulation, including the forward diffusion process, reverse denoising process, and training objective.
+
+### 1.3 [Stochastic Differential Equations Formulation](theoretical_foundation/sde/sde.qmd)
+
+The continuous-time formulation of DMs through forward and reverse-time stochastic differential equations.
+
+### 1.4 [Elucidated Diffusion Models](theoretical_foundation/edm/edm.qmd)
+
+Decoupling the noise schedules and other hyperparameters from the previous formulations.
+
+### 1.5 [Cold-Diffusion](theoretical_foundation/cold_diffusion/cold_diffusion.qmd)
+
+DMs with more general corruption schemes.
+
+--- 
+
+## 2. Samplers

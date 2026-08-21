@@ -9,7 +9,7 @@ $$
 $$ {#eq-1}
 where $f(z) = \text{sgn}(z)$ was a step function. 
 
-![Diagram of a Perceptron.](intro_assets/perceptron.svg){#fig-perceptron width=50% fig-align="center"}
+![Diagram of a Perceptron.](theoretical_foundation_assets/perceptron.svg){#fig-perceptron width=50% fig-align="center"}
 
 Following the Perceptron, the Adaptive Linear Element (Adaline) [@dl:adaline] introduced a way to update weights using continuous activations during training. This model defined a loss function:
 $$
@@ -56,7 +56,7 @@ b_m
 $$ {#eq-6}
 The activation function $\sigma(\cdot)$ is applied element-wise. In an MLP, multiple layers are composed sequentially to parameterize a function $f_{\boldsymbol{\Theta}}: \mathcal{X} \to \mathcal{Y}$ that maps the input space $\mathcal{X}$ to the target space $\mathcal{Y}$. Intermediate layers between input and output are called hidden layers. @fig-mlp depicts a diagram of the MLP architecture.
 
-![Diagram of an MLP.](intro_assets/mlp.svg){#fig-mlp width=60% fig-align="center"}
+![Diagram of an MLP.](theoretical_foundation_assets/mlp.svg){#fig-mlp width=60% fig-align="center"}
 
 The learnable parameters are optimized in a Supervised Learning framework using a labeled dataset $\mathcal{D} = \{(\boldsymbol{x}_i, \boldsymbol{y}_i)\}_{i=1}^N$. Given a loss function $\mathcal{L} : \mathcal Y \times \mathcal Y \to \mathbb R$, the learnable parameter set $\boldsymbol{\Theta} = \{\boldsymbol{W}^{(l)}, \boldsymbol{b}^{(l)}\}_{l=1}^L$ is updated iteratively via backpropagation:
 $$
@@ -70,4 +70,4 @@ where $k$ denotes the optimization step index and $\eta \in \mathbb{R}^+$ repres
 
 ### Code
 
-{{< embed intro_assets/mlp.ipynb >}}
+{{< embed theoretical_foundation_assets/mlp.ipynb >}}

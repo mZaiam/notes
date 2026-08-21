@@ -1,5 +1,5 @@
 ---
-title: "mZaiam"
+title: "mZaiam Notes"
 bibliography: references.bib
 nocite: |
   @publication:anfispy

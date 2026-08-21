@@ -1,12 +1,68 @@
 ---
-title: "Machine Learning"
-listing:
-  contents: 
-    - "pipeline/index.qmd"
-    - "supervised_learning/index.qmd"
-    - "unsupervised_learning/index.qmd"
-  type: default
-  fields: [image, title]
-  image-align: left
-  sort: false 
+title: "Machine Learning (ML)"
+toc: true
 ---
+
+This section contains notes on ML foundations, pipelines, learning paradigms, and model families.
+
+---
+
+## 1. Pipeline
+
+The ML pipeline encompasses all stages from data preparation to model interpretation.
+
+### 1.1 [Pre-Processing](pipeline/pre_processing/pre_processing.qmd)
+
+Data cleaning, normalization, and data transformations.
+
+### 1.2 [Model Selection](pipeline/model_selection/model_selection.qmd)
+
+Training strategies, validation protocols, hyperparameter optimization, and model comparison.
+
+### 1.3 [Model Evaluation](pipeline/model_evaluation/model_evaluation.qmd)
+
+Metrics for the classical ML tasks.
+
+### 1.4 [Model Explanation](pipeline/model_explanation/model_explanation.qmd)
+
+Methods for explaining the predictions of a black-box model.
+
+---
+
+## 2. Supervised Learning
+
+Methods that learn mappings from inputs to outputs using labeled data.
+
+### 2.1 [Linear Models](supervised_learning/linear_models/linear_models.qmd)
+
+Linear regression, logistic regression, generalized linear models, generalized additive models.
+
+### 2.2 [Distance and Margin Models](supervised_learning/distance_models/distance_models.qmd)
+
+K-nearest neighbors, support vector machines.
+
+### 2.3 [Tree Models](supervised_learning/tree_models/tree_models.qmd)
+
+Decision trees, random forests, gradient boosting, symbolic  regression.
+
+### 2.4 [Probabilistic Models](supervised_learning/probabilistic_models/probabilistic_models.qmd)
+
+Naive Bayes, Gaussian processes.
+
+---
+
+## 3. Unsupervised Learning
+
+Methods for discovering patterns without explicit labels.
+
+### 3.1 [Dimensionality Reduction](unsupervised_learning/dimensionality_reduction/dimensionality_reduction.qmd)
+
+PCA, t-SNE, UMAP.
+
+### 3.2 [Clustering](unsupervised_learning/clustering/clustering.qmd)
+
+K-means, hierarchical clustering, density-based methods.
+
+### 3.3 [Outlier Identification](unsupervised_learning/outlier/outlier.qmd)
+
+Anomaly detection methods.

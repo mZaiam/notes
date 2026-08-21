@@ -14,65 +14,15 @@ website:
     contents:
       - text: "Home"
         file: index.qmd
-        
-      - section: "Machine Learning"
-        file: machine_learning/index.qmd 
-        contents:
-          - section: "Pipeline"
-            file: machine_learning/pipeline/index.qmd
-            contents:
-              - text: "Pre-Processing"
-                file: machine_learning/pipeline/pre_processing/pre_processing.qmd
-              - text: "Model Selection"
-                file: machine_learning/pipeline/model_selection/model_selection.qmd
-              - text: "Model Evaluation"
-                file: machine_learning/pipeline/model_evaluation/model_evaluation.qmd
-              - text: "Model Explanation"
-                file: machine_learning/pipeline/model_explanation/model_explanation.qmd
-          - section: "Supervised Learning"
-            file: machine_learning/supervised_learning/index.qmd
-            contents:
-              - text: "Linear Models"
-                file: machine_learning/supervised_learning/linear_models/linear_models.qmd
-              - text: "Distance and Margin Models"
-                file: machine_learning/supervised_learning/distance_models/distance_models.qmd
-              - text: "Tree Models"
-                file: machine_learning/supervised_learning/tree_models/tree_models.qmd
-              - text: "Probabilistic Models"
-                file: machine_learning/supervised_learning/probabilistic_models/probabilistic_models.qmd
-              - text: "Symbolic Models"
-                file: machine_learning/supervised_learning/symbolic_models/symbolic_models.qmd
-          - section: "Unsupervised Learning"
-            file: machine_learning/unsupervised_learning/index.qmd
-            contents:
-              - text: "Dimensionality Reduction"
-                file: machine_learning/unsupervised_learning/dimensionality_reduction/dimensionality_reduction.qmd
-              - text: "Clustering"
-                file: machine_learning/unsupervised_learning/clustering/clustering.qmd
-              - text: "Outlier Identification"
-                file: machine_learning/unsupervised_learning/outlier/outlier.qmd
-              
-      - section: "Deep Learning"
-        file: deep_learning/index.qmd 
-        contents:
-          - section: "Neural Networks"
-            file: deep_learning/nn/index.qmd
-            contents:
-              - text: "Introduction"
-                file: deep_learning/nn/intro/introduction.qmd
+      
+      - text: "Machine Learning"
+        file: machine_learning/index.qmd
 
-      - section: "Diffusion Models"
-        file: diffusion_models/index.qmd 
-        contents:
-          - section: "Theoretical Foundation"
-            file: diffusion_models/theoretical_foundation/index.qmd
-            contents:
-              - text: "Score Matching with Langevin Dynamics"
-                file: diffusion_models/theoretical_foundation/smld/smld.qmd
-              - text: "Denoising Diffusion Probabilistic Models"
-                file: diffusion_models/theoretical_foundation/ddpm/ddpm.qmd
-              - text: "Stochastic Differential Equations Formulation"
-                file: diffusion_models/theoretical_foundation/sde/sde.qmd
+      - text: "Deep Learning"
+        file: deep_learning/index.qmd
+      
+      - text: "Diffusion Models"
+        file: diffusion_models/index.qmd
 
 format:
   html:
