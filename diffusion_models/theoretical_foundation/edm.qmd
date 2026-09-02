@@ -1,0 +1,40 @@
+---
+title: "Elucidated Diffusion Models (EDMs)"
+bibliography: ../../references.bib
+---
+
+After the [Stochastic Differential Equations (SDEs)](../sde.qmd) general framework for Diffusion Models (DMs), Elucidated Diffusion Models (EDMs) [@dm:edm] focused on simplifying the diffusion framework, decoupling the choices of parametrization such as noise schedules and other important hyperparameters that were jointly defined in previous approaches.
+
+Given the data distribution $p_0(\boldsymbol x)$ and its standard deviation $\sigma_0$, let $p(\boldsymbol x,  \sigma)$ denote a modified data distribution with noise scale $\sigma$. Using the general ODE Probability Flow equation, EDM formulates diffusion with $\boldsymbol{f}(\boldsymbol x, t) = \boldsymbol 0$ and $g(t)^2 = 2 \frac{d\sigma(t)}{dt} \sigma(t)$, that is:
+$$
+d\boldsymbol{x} = - \frac{d\sigma(t)}{dt} \sigma(t) \nabla_{\boldsymbol x} \log p(\boldsymbol x; \sigma(t)) dt,
+$$ {#eq-1}
+where $\sigma(t)$ is a noise scale. Running forward in time goes away from the data, while the opposite goes towards the data distribution. These choices imply that the diffusion process has no drift coefficient, therefore, the Markov chain only adds noise throughout the iterations.
+
+Given a trained denoiser $\boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{x}, \sigma(t))$, parametrized by $\boldsymbol{\theta}$, that minimizes the expected $\ell_2$ error to the clean data, the score function can be expressed in terms of the optimal denoiser $\boldsymbol{D}$:
+$$
+\nabla_{\boldsymbol x} \log p(\boldsymbol x; \sigma(t)) = \frac{\boldsymbol{D}(\boldsymbol{x}, \sigma(t)) - \boldsymbol{x}}{\sigma(t)^2}.
+$$ {#eq-2}
+Substituting the denoiser into the Probability Flow ODE yields:
+$$
+d\boldsymbol{x} = -\frac{d\sigma(t)}{dt} \frac{\boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{x}, \sigma(t)) - \boldsymbol{x}}{\sigma(t)} dt.
+$$ {#eq-3}
+In particular, EDM employs $\sigma(t) = t$, simplifying the ODE to:
+$$
+d\boldsymbol{x} = \frac{\boldsymbol{x} - \boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{x}, t)}{t} dt.
+$$ {#eq-4}
+This simplifies the concept of time and noise, as both of these quantities represented the severity of data corruption. 
+
+To ensure training stability, EDM introduces a pre-conditioning framework that makes the neural network inputs scaled dynamically based on $\sigma$ to maintain a zero mean and unit variance. This ensures the neural network architecture does not need to be adapted to a specific noise schedule. Finally, the model is trained by minimizing:
+$$
+\mathcal{L}(\boldsymbol{\theta}) = \mathbb{E}_{\boldsymbol{x}, \boldsymbol{\epsilon}, \sigma} \left[ \lambda(\sigma) \left\| \boldsymbol{D}_{\boldsymbol{\theta}} (\boldsymbol{x} + \boldsymbol{\epsilon}, \sigma) - \boldsymbol{x} \right\|_2^2 \right], 
+$$ {#eq-5}
+where $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \sigma^2 \boldsymbol{I})$. The weighting function $\lambda(\sigma)$ is defined as:
+$$
+\lambda(\sigma) = \frac{\sigma^2 + \sigma_0^2}{\sigma^2\cdot \sigma_0^2}.
+$$ {#eq-6}
+Overall, EDM simplified the design choices of implementing DMs, including the noise schedules, network pre-conditioning, among other practical aspects.
+
+### Code
+
+{{< embed theoretical_foundation_assets/edm.ipynb >}}

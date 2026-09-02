@@ -1,0 +1,56 @@
+---
+title: "Probabilistic Models"
+bibliography: ../../references.bib
+---
+
+Probabilistic models treat the relationship between features $\boldsymbol{x}$ and targets $y$ as a result of stochastic processes. These models allow to quantify the uncertainty associated with the predictions -- an important aspect in interpreting the model and decision-making.
+
+## Naive Bayes
+
+Naive Bayes (NB) [@ml:nb] is a supervised learning algorithm based on applying Bayes' theorem with the "naive" assumption of conditional independence between every pair of features given the value of the class variable. For a target class $y$ and a feature vector $\boldsymbol{x} \in \mathbb R^n$, Bayes' theorem states:
+$$
+P(y \mid \boldsymbol{x}) = \frac{P(\boldsymbol{x} \mid y) P(y)}{P(\boldsymbol{x})}.
+$$ {#eq-1}
+The "naive" assumption implies that:
+$$
+P(x_i \mid y, x_1, \dots, x_{i-1}, x_{i+1}, \dots, x_n) = P(x_i \mid y),
+$$ {#eq-2}
+which simplifies the joint probability to a product of individual conditional probabilities:
+$$
+P(y \mid \boldsymbol{x}) \propto P(y) \prod_{i=1}^{n} P(x_i \mid y).
+$$ {#eq-3}
+During inference, the predicted class $\hat{y}$ is chosen by maximizing this posterior probability:
+$$
+\hat{y} = \underset{y}{\arg \max} \  P(y) \prod_{i=1}^{n} P(x_i \mid y).
+$$ {#eq-4}
+
+In general, NB is used as a classification baseline -- as it makes "naive" assumptions about the relations between features and targets. 
+
+### Code: Naive Bayes
+
+{{< embed supervised_methods_assets/nb.ipynb >}}
+
+## Gaussian Processes (GPs)
+
+Gaussian Processes (GPs) [@ml:gp] extend the idea of probabilistic modeling to regression by defining a distribution over functions. While a standard regression model learns parameters of a specific function, a GP describes a distribution where any finite collection of function values has a joint Gaussian distribution.
+
+A GP is specified by two components: its mean function $\mu: \mathbb{R}^n \to \mathbb{R}$ and its kernel function $k: \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}$. The mean function provides the expected value at any point in the feature space, while the kernel function determines how to calculate the covariance between two observations. Together, they define the GP:
+$$
+f(\boldsymbol{x}) \sim \mathcal{GP}\left(\mu(\boldsymbol{x}), k(\boldsymbol{x}, \boldsymbol{x}')\right).
+$$ {#eq-5}
+The kernel function $k(\boldsymbol{x}, \boldsymbol{x}')$ encodes the prior assumptions about the properties of the function, such as smoothness and periodicity. Similar to the kernels used in [Distance and Margin Models](distance_models.qmd), the Radial Basis Function (RBF) is a common choice. As GPs are non-parametrical, the training only involves tuning the hyperparameters of the model.
+
+During inference, given a training set $\mathcal{D}^{(\text{Train})} = \{(\boldsymbol{x}_i^{(\text{Train})}, y_i^{(\text{Train})})\}_{i=1}^N$, the GP utilizes the joint distribution of the training data and a new test data point $\boldsymbol{x}^{(\text{Test})}$ to calculate the posterior distribution $P(f_* \mid \boldsymbol{x}^{(\text{Test})}, \mathcal{D}^{(\text{Train})})$. This results in a predictive mean $\mu_*$, which serves as the point prediction, and a predictive variance $\sigma_*^2$, which quantifies the model's uncertainty:
+$$
+\mu_* = \boldsymbol{k}_*^T \boldsymbol{K}^{-1} \boldsymbol{y}^{(\text{Train})},
+$$ {#eq-7}
+$$
+\sigma_*^2 = k(\boldsymbol{x}^{(\text{Test})}, \boldsymbol{x}^{(\text{Test})}) - \boldsymbol{k}_*^T \boldsymbol{K}^{-1} \boldsymbol{k}_*,
+$$ {#eq-8}
+where $\boldsymbol{y}^{(\text{Train})} \in \mathbb R^N$ is the vector of training targets, $\boldsymbol{K} \in \mathbb R^{N \times N}$ is the covariance matrix of the training data with entries $\boldsymbol{K}_{i,j} = k(\boldsymbol{x}_i^{(\text{Train})}, \boldsymbol{x}_j^{(\text{Train})})$, and $\boldsymbol{k}_* \in \mathbb R^N$ is the vector of covariances between the training data and the test point, where its $i$-th element is $k(\boldsymbol{x}_i^{(\text{Train})}, \boldsymbol{x}^{(\text{Test})})$.
+
+With that, GPs provide a mean curve and a confidence interval around it. This is specially useful for interpreting the uncertainty of the predictions, as well as potentially new regions to collected new data.
+
+### Code: Gaussian Processes
+
+{{< embed supervised_methods_assets/gp.ipynb >}}

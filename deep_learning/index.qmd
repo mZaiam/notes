@@ -5,10 +5,10 @@ toc: true
 
 This section has several classes of DL models, with their respective theoretical explanation and notable architectures.
 
-## 1. Neural Networks
+## 1. Neural Networks (NNs)
 
 Neural models based on fully-connected layers.
 
-### 1.1 [Theoretical Foundation](deep_learning/nn/theoretical_foundation/theoretical_foundation.qmd)
+### 1.1 [Theoretical Foundation](deep_learning/nn/theoretical_foundation.qmd)
 
 The basics of neural models.

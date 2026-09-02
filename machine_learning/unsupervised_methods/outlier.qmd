@@ -1,0 +1,30 @@
+---
+title: "Outlier Identification"
+bibliography: ../../references.bib
+---
+
+Identifying outliers involves searching for observations that do not fit the patterns of the rest of the data. Outliers are not necessarily errors or values that should be ignored or excluded, they are unusual observations that should be examined with caution. Models such as linear regression are highly sensitive to outliers, thus identifying these points serves as a warning for further study of the dataset. 
+
+## Local Outlier Factor (LOF)
+
+The Local Outlier Factor (LOF) [@ml:lof] algorithm uses the density of neighbors of a point to determine whether it is an outlier. Firstly, the hyperparameter $k$ is defined, representing the number of neighbors considered. Given a point $\boldsymbol{x}$, $\eta_k(\boldsymbol{x})$ denotes the set of the $k$ nearest neighbors, and $d_k(\boldsymbol{x})$ denotes the distance from $\boldsymbol{x}$ to its $k$-th nearest neighbor. Note that $\eta_k(\boldsymbol{x})$ can contain more than $k$ elements in the case of a tie. The reachability distance $D_k(\boldsymbol{x}_i, \boldsymbol{x}_j)$ is then defined as:
+$$
+D_k(\boldsymbol{x}_i, \boldsymbol{x}_j) = \max\{d_k(\boldsymbol{x}_j), d(\boldsymbol{x}_i, \boldsymbol{x}_j)\}.
+$$ {#eq-1}
+In words, the distance $D_k$ is the distance from $\boldsymbol{x}_i$ to $\boldsymbol{x}_j$, but never less than $d_k(\boldsymbol{x}_j)$. As it is not symmetric, this function is not a true mathematical distance. Next, the local reachability density $L_k(\boldsymbol{x}_i)$ of $\boldsymbol{x}_i$ is defined as:
+$$
+L_k(\boldsymbol{x}_i) = \left(\frac{1}{|\eta_k(\boldsymbol{x}_i)|}\sum\limits_{\boldsymbol{x}_j \in \eta_k(\boldsymbol{x}_i)} D_k(\boldsymbol{x}_i,\boldsymbol{x}_j)\right)^{-1}.
+$$ {#eq-2}
+This corresponds to the inverse of the average reachability distance of $\boldsymbol{x}_i$ from its neighbors. Finally, the LOF value for a point $\boldsymbol{x}_i$ is given by:
+$$
+\text{LOF}_k(\boldsymbol{x}_i) = \frac{1}{|\eta_k(\boldsymbol{x}_i)|} \sum\limits_{\boldsymbol{x}_j \in \eta_k(\boldsymbol{x}_i)} \frac{L_k(\boldsymbol{x}_j)}{L_k(\boldsymbol{x}_i)}.
+$$ {#eq-3}
+The expression above divides the average distance at which its neighbors can be reached with the average distance at which the point can be accessed. Therefore, values close to $1$ shows that the point $\boldsymbol{x}_i$ is not an outlier, values much lower than $1$ present an inlier, and values much bigger than $1$ represent outliers.
+
+## Isolation Forest (IF)
+
+Isolation Forest (IF) [@ml:if] works similarly to [Random Forest](../supervised_methods/tree_models.qmd). The intuition behind this algorithm is that outliers are more easily isolated than the rest of the data. Each tree randomly selects a feature at each split and, within the range of values of that feature, performs a separation. This process is repeated until all data points are isolated in leaf nodes. The average depth at which the data points are isolated is then computed. Points with shorter average path lengths are more likely to be outliers. Based on a threshold, each point is classified as either an outlier or an inlier.
+
+### Code
+
+{{< embed unsupervised_methods_assets/outlier.ipynb >}}

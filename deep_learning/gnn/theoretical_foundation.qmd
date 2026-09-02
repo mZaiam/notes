@@ -1,0 +1,65 @@
+---
+title: "Graph Neural Networks (GNNs)"
+bibliography: ../../references.bib
+---
+
+graph is a set $\mathcal G = (\mathcal V, \mathcal E)$, with vertices and edges. directional edge is denoted $(u, v) \in \mathcal E$. could be represented using the adjacency matrix $\boldsymbol A \in \mathbb R^{|\mathcal V| \times |\mathcal E|}$. directed/undirected. weighted/not weighted. 
+
+multi-relational graphs (knowledge graphs) have different edge types $\boldsymbol A \in \mathbb R^{|\mathcal V| \times |\mathcal R| \times |\mathcal E|}$, with a set of relations. heterogeneous and multiplex graphs are examples.
+
+graphs can have features $\mathcal X \in \mathbb R^{|\mathcal V| \times m}$.
+
+tasks include: node classification, relation prediction, community detection (clustering), graph datasets tasks
+
+node degree $d_u = \sum_{v \in \mathcal V} \boldsymbol A[u, v]$
+node eigenvector centrality $\lambda \boldsymbol e = \boldsymbol A \boldsymbol e$. tells the likelihood of visiting a node into an infinite random walk
+clustering coeef
+
+## chp 3: neighborhood reconstruction methods
+
+encoder-decoder perspective
+
+the decoder is a func that maps nodes $v\in \mathcal V$ to vector embeddings $\boldsymbol z_u \in \mathbb R^d$. the simplest form is $\mathcal E: \mathcal V \to \mathbb R$. this a shallow embedding approach, as the embeddings are treated as a lookup table (only transductive), which does not enable new nodes or learning the explicit encoder fnc.
+
+the decoder focuses on reconstruction neighborhood statistics from the node given its embedding. the most commom approach is func $\mathcal D: \mathbb R^{d\times d} \to \mathbb R^+$, where the decoder predicts the relationship between two nodes.
+
+the encoder and decoders are optimized to minimize $\mathcal D(\mathcal E(u), \mathcal E(v)) \approx f(u, v)$, where $f$ is a similarity measure on the graph nodes. with that, standard loss form is given by $\mathcal L = \sum_{(u, v) \in \mathcal V} \ell (\mathcal D(\boldsymbol z_u, \boldsymbol z_v), f(u, v))$, with $\ell \mathbb R^2 \to \mathbb R$ is a loss term. 
+
+maybe include some methods
+
+# chp 4: multi-relational graphs and knowledge graphs
+
+maybe see later (application of chp3)
+
+# chp5: gnns
+
+should be permutation invariance ($f(PAP^T) = f(A)$) and equivariance $f(PAP^T) = Pf(A)$.
+
+each layer of a GNN updates the hidden embedding $\boldsymbol h_u$ with the information from its neighbors $\mathcal N(u)$, called the message $\boldsymbol m_{\mathcal N(u)}$. this is called as message-passing. the intuition is that layer after layer, the information of the $k$-hop neighbors is brought to each node, sharing the features across the graph structure. the basic implementation at layer $k$ is given by:
+$$
+\boldsymbol h_u^(k) = \sigma ( \boldsymbol W_self \boldsymbol h_u^(k-1) + \boldsymbol W_neighborhood \boldsymbol m_{\mathcal N(u)} + \boldsymbol b^k)
+$$
+where $m_{\mathcal N(u)} = \sum_{v\in \mathcal N(u)} \boldsymbol h_v$. this could be simplified into a self-loop GNN, which is described at graph level as:
+$$
+\boldsymbol H^(t) = \sigma ((\boldsymbol {A + I}) \boldsymbol H^{(t-1)} \boldsymbol W^(t))
+$$
+this does not separate self embeddings from the neighbor embeddings.
+
+the message passing can be improved by normalizing the message by $1/|\mathcal N(u)|$ or by $1/\sqrt{|\mathcal N(u)|^2}$. this could affect the distinction of embeddings of nodes with high connectivity, being a task-based decision.
+
+the most popular GNN baseline is the GCNs, described as a symmetric normalized self loop update approach:
+$$
+\boldsymbol h^(t) = \sigma (\boldsymbol W^{(t)} \boldsymbol m_{\mathcal N(u) \cup \{u \}} / \sqrt{|\mathcal N(u)|^2})
+$$
+
+more general set aggregators can be used to create the message. eg, MLPs can be used such as:
+$$
+\boldsymbol m_{\mathcal N(u)} = \text{MLP}_{\theta} (\sum \text{MLP}_\phi h_v)
+$$
+another approach is Janossy pooling. this approach employs a permutation-sensitive operator, ie, LSTM, and then average a set of permutations to get the result. 
+$$
+\boldsymbol m_{\mathcal N(u)} = \text{MLP}_{\theta} ( 1/|\Pi|\text{LSTM}_\phi \pi(h_v, \dots) )
+$$
+other approach is attention such as in Graph Attention Network (GAT). 
+
+CONTINUE FROM 5.2.3 (p. 56)
