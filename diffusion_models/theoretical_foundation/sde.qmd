@@ -3,19 +3,19 @@ title: "Stochastic Differential Equations (SDEs) Formulation"
 bibliography: ../../references.bib
 ---
 
-After both [Score Matching with Langevin Dynamics (SMLD)](../smld.qmd) and [Denoising Diffusion Probabilistic Models (DDPMs)](../ddpm.qmd) were introduced, research focused on unifying these formulations under the same theoretical basis. For that, it was noted that both approaches used noise to perturb data. With that, a connection with Stochastic Differential Equations (SDEs) was done, extending the corruption process to a continuous version [@dm:sde].
+After both [Score Matching with Langevin Dynamics (SMLD)](smld.qmd) and [Denoising Diffusion Probabilistic Models (DDPMs)](ddpm.qmd) were introduced, research focused on unifying these formulations under the same theoretical basis. For that, it was noted that both approaches used noise to perturb data. With that, a connection with Stochastic Differential Equations (SDEs) was done, extending the corruption process to a continuous version [@dm:sde].
 
-Let $\{\boldsymbol{x}(t)\}_{t=0}^T$ with $t\in[0,1]$ being a continuous time index. The goal is to obtain a way to sample $\boldsymbol{x}(0) \sim p_0$, for which $p_0$ is the data distribution, while $p_T$ is the prior distribution. The diffusion process can be described as the solution of an Itô SDE:
+Let $\{\boldsymbol{x}(t)\}_{t=0}^T$ be a sequence of data $\boldsymbol x(t) \in \mathbb R^n$ with $t\in[0,1]$ being a continuous time index. The goal is to obtain a way to sample $\boldsymbol{x}(0) \sim p_0$, for which $p_0$ is the data distribution, while $p_T$ is the prior distribution. The diffusion process can be described as the solution of an Itô SDE:
 $$
 d\boldsymbol{x} = \boldsymbol{f}(\boldsymbol{x}, t) dt + g(t)d\boldsymbol{w},
 $$ {#eq-1}
-where $\boldsymbol{w}$ is the Wiener process, $\boldsymbol{f}(\cdot, t)$ is the drift coefficient of $\boldsymbol{x}(t)$ and $g(t)$ is the diffusion coefficient of $\boldsymbol{x}(t)$. To denote the probability density of $\boldsymbol{x}(t)$ the notation $p_t$ is going to be used, which also holds for the transition kernels $p_{st} (\boldsymbol{x}(s) \mid \boldsymbol{x}(t))$, with $0\leq s < t \leq T$. 
+where $\boldsymbol{w} \in \mathbb R^n$ is the Wiener process, $\boldsymbol{f}(\cdot, t) \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x}(t)$ and $g(t) : \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$. To denote the probability density of $\boldsymbol{x}(t)$ the notation $p_t$ is going to be used, which also holds for the transition kernels $p_{st} (\boldsymbol{x}(s) \mid \boldsymbol{x}(t))$, with $0\leq s < t \leq T$. 
 
 Then, by taking $\boldsymbol{x}(T) \sim p_T$ and reversing the diffusion process, samples can be obtained from the data distribution. This is modelled by a reverse diffusion process, given by:
 $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt + g(t)d\boldsymbol{\overline w},
 $$ {#eq-2}
-where $\boldsymbol{\overline w}$ is the Wiener process running from $T$ to $0$. To reverse the process, however, one needs to approximate the score function. The general diffusion framework is schematically depicted in @fig-sde.
+where $\boldsymbol{\overline w} \in \mathbb R^n$ is the Wiener process running from $T$ to $0$. To reverse the process, however, one needs to approximate the score function $\nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x}): \mathbb R^{n \times 1} \to \mathbb R^n$ at each time step $t$. The general diffusion framework is schematically depicted in @fig-sde.
 
 ![General SDE diffusion framework. Data is corrupted via the forward process, while the parametrized reverse diffusion process samples from the initial distribution, starting from pure noise.](theoretical_foundation_assets/sde.svg){#fig-sde width=60% fig-align="center"}
 
@@ -35,7 +35,7 @@ with $T\to \infty$:
 $$
 d\boldsymbol{x} = -\frac{1}{2}\beta(t) \boldsymbol{x} dt + \sqrt{\beta(t)}d\boldsymbol{w}.
 $$ {#eq-6}
-Therefore, it is possible to observe that both SMLDs and DDPMs are particular discretization cases for a more general diffusion process framework. The SMLD increases the variance as time goes to infinity, so it is called a Variance Exploding (VE) SDE, while the DDPM is a Variance Preserving (VP) SDE. In the work, the authors introduced a sub-VP SDE, given by:
+Therefore, it was possible to observe that both SMLDs and DDPMs were particular discretization cases for a more general diffusion process framework. The SMLD increases the variance as time goes to infinity, so it is called a Variance Exploding (VE) SDE, while the DDPM is a Variance Preserving (VP) SDE. In the work, the authors introduced a sub-VP SDE, given by:
 $$
 d\boldsymbol{x} = -\frac{1}{2}\beta(t) \boldsymbol{x} dt + \sqrt{\beta(t)\left(1 - \exp\left(-2\int^t_0\beta(s)ds\right)\right)}d\boldsymbol{w}.
 $$ {#eq-7}
@@ -45,13 +45,17 @@ The objective functions of both SMLDs and DDPMs were also unified. That is, the 
 $$
 \mathcal{L}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}_0, \boldsymbol{\epsilon}} \left[ \lambda(t) \left\| \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) + \frac{\boldsymbol{\epsilon}}{\sigma_t} \right\|_2^2 \right],
 $$ {#eq-8}
-where $\lambda(t)$ is a weighting function introduced to balance the gradient magnitudes across different noise scales. If one sets $\lambda(t) = \sigma_t^2$ to the respective forward processes of SMLDs and DDPMs, one gets their original objective functions.
+where $\lambda(t) : \mathbb R \to \mathbb R$ is a weighting function introduced to balance the gradient magnitudes across different noise scales. If one sets $\lambda(t) = \sigma_t^2$ to the respective forward processes of SMLDs and DDPMs, one gets their original objective functions.
 
-It was also shown that every diffusion process has a deterministic process that shares the same marginal probability densities $p_t(\boldsymbol{x})$ for all $t$. This is modelled by an Ordinary Differential Equation (ODE), known as the probability flow ODE, given by:
+It was also shown that every diffusion process has a deterministic process that shares the same marginal probability densities $p_t(\boldsymbol{x})$ for all $t$. This is modelled by an Ordinary Differential Equation (ODE), known as the Probability Flow ODE, given by:
 $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt.
 $$ {#eq-9}
 Because this formulation removes the stochastic Wiener process, the generative trajectory becomes entirely deterministic. 
+
+The SDE formulation also decoupled the learning process of the prior with the inference time sampling process. While [DDPM](ddpm.qmd) used [Ancestral Sampling](../samplers/sde_samplers.qmd) and [SMLD](smld.qmd) employed [Annealed Langevin Dynamics](../samplers/sde_samplers.qmd), the authors 
+
+The SDE formulation also decoupled the training of the generative model from the inference-time sampling process. While frameworks relied on fixed schemes -- such as [DDPM](ddpm.qmd) using [Ancestral Sampling](../samplers/sde_samplers.qmd) and [SMLD](smld.qmd) employing [Annealed Langevin Dynamics](../samplers/sde_samplers.qmd) -- the continuous-time formulation demonstrated that given a trained score network, different samplers could be used to generate the data, without retraining the model. In the work, a new [Predictor-Corrector (PC)](../samplers/sde_samplers.qmd) algorithm was also proposed.
 
 ### Code
 

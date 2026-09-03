@@ -3,11 +3,11 @@ title: "Score Matching with Langevin Dynamics (SMLD)"
 bibliography: ../../references.bib
 ---
 
-Score Matching with Langevin Dynamics (SMLD) [@dm:smld] was the first formulation of the current Diffusion Models (DMs). The idea was to approximate the score function of the data distribution to generate new images. Therefore, given a data distribution $p(\boldsymbol{x}_0)$, the goal was to approximate the score function $\nabla_{\boldsymbol{x}_0} \log p(\boldsymbol{x}_0)$ with a Neural Network (NN) $\boldsymbol{s}_{\boldsymbol{\theta}}$. 
+Score Matching with Langevin Dynamics (SMLD) [@dm:smld] was the first formulation of the current Diffusion Models (DMs). The idea was to approximate the score function of the data distribution to generate new images. Therefore, given a data distribution $p(\boldsymbol{x}_0)$ with $\boldsymbol x_0 \in \mathbb R^n$, the goal was to approximate the score function $\nabla_{\boldsymbol{x}_0} \log p(\boldsymbol{x}_0): \mathbb R^n \to \mathbb R^n$ with a Neural Network (NN) $\boldsymbol{s}_{\boldsymbol{\theta}} : \mathbb R^n \to \mathbb R^n$. The reason is that the score function indicates regions in space with higher data density, therefore, approximating this term helps to reach regions in space where the dataset lies.
 
 Although this could be done using a mean squared error approach, the score function only has relevant signal in regions of high data density. Therefore, a denoising approach was used to overcome the fact that real data typically resides on a low-dimensional manifold embedded in a high-dimensional space. In the empty spaces between valid data points, the probability density $p(\boldsymbol{x}_0) \approx 0$, which makes the score function contain close to no information.
 
-To solve this, SMLD corrupted the data with a sequence of Gaussian noise scales, $\sigma_T > \sigma_{T-1} > \dots > \sigma_1$. The largest noise scale was chosen to be large enough to provide relevant signal across the entire space, while the smallest scale was chosen to be small enough to approximate the clean data distribution. The NN $\boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, \sigma_t)$ was then trained to predict the score across all the noise levels. For a specific noise scale $\sigma_t$, the perturbation kernel is Gaussian, being given by:
+To solve this, SMLD corrupted the data with a sequence of Gaussian noise scales, $\sigma_T > \sigma_{T-1} > \dots > \sigma_1$, where $\sigma_t \in \mathbb R^{+}$. The largest noise scale was chosen to be large enough to provide relevant signal across the entire space, while the smallest scale was chosen to be small enough to approximate the clean data distribution. The NN $\boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, \sigma_t) : \mathbb R^{n\times 1} \to \mathbb R^n$ was then trained to predict the score across all the noise levels. For a specific noise scale $\sigma_t$, the perturbation kernel is Gaussian, being given by:
 $$
 q_{\sigma_t}(\boldsymbol{x}_t \mid \boldsymbol{x}_0) = \mathcal{N}(\boldsymbol{x}_t \mid \boldsymbol{x}_0, \sigma_t^2 \boldsymbol{I}),
 $$ {#eq-1}
@@ -20,11 +20,7 @@ $$
 \mathcal{L}_{\sigma_t}(\boldsymbol{\theta}) = \frac{1}{2} \mathbb{E}_{\boldsymbol{x}_0, \boldsymbol{x}_t} \left[ \left\| \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, \sigma_t) + \frac{\boldsymbol{x}_t - \boldsymbol{x}_0}{\sigma_t^2} \right\|_2^2 \right].
 $$ {#eq-3}
 
-After training, data generation is performed using Annealed Langevin Dynamics. Starting from an initial noise sample $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2 \boldsymbol{I})$, the algorithm iteratively walks along the estimated score vectors, moving towards high data density regions. To prevent the generated data from collapsing into local maxima, a stochastic step is performed at each iteration. For a given noise level $\sigma_t$, the algorithm performs $M$ gradient steps in the direction of the estimated score. The update rule for the $m$-th inner step is given by: 
-$$
-\boldsymbol{x}_{t}^m = \boldsymbol{x}_{t}^{m-1} + \frac{\sigma'_t}{2} \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_{t}^{m-1}, \sigma_t) + \sqrt{\sigma'_t} \boldsymbol{z}^{m - 1},
-$$ {#eq-4}
-where $\sigma'_t = \epsilon \cdot(\sigma_t^2 / \sigma_1^2)$ is the step size corresponding to the current noise scale $\sigma_t$ with fixed parameter $\epsilon$, and $\boldsymbol{z}^{m-1} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$. After $M$ steps, the noise level is annealed to $\sigma_{t-1}$, and the process repeats until $\sigma_1$.
+To synthesize new data, SMLD employed the [Annealed Langevin Dynamics](../samplers/sde_samplers.qmd) method.
 
 ### Code
 

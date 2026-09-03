@@ -5,7 +5,7 @@ bibliography: ../../references.bib
 
 Another diffusion paradigm is the Cold-Diffusion (CD) [@dm:cold_diffusion] generalization. Although previous formulations specifically employed noise addition as the degradation scheme, CD showed that more general degradation operators could be used to train Diffusion Models (DMs). 
 
-Let $\boldsymbol x_0\sim p_0$ be a data point and let $\boldsymbol x_t = \boldsymbol D (\boldsymbol x_0, t)$ be the degradation of $\boldsymbol x_0$ by the degradation operator $\boldsymbol D$ at scale $t$. Then, let $\boldsymbol R_{\boldsymbol \theta}$ be the restoration operator that satisfies:
+Let $\boldsymbol x_0 \in \mathbb R^n$ be a data point sampled from $\boldsymbol x_0\sim p_0$ and let $\boldsymbol x_t = \boldsymbol D (\boldsymbol x_0, t)$ be the degradation of $\boldsymbol x_0$ by the degradation operator $\boldsymbol D : \mathbb R^{n \times 1} \to \mathbb R^n$ at scale $t$. Then, let $\boldsymbol R_{\boldsymbol \theta} : \mathbb R^{n \times 1} \to \mathbb R^n$ be the restoration operator that satisfies:
 $$
 \boldsymbol R_{\boldsymbol \theta} \left(\boldsymbol D (\boldsymbol x_0, t), t\right) \approx \boldsymbol x_0.
 $$ {#eq-1}
@@ -15,7 +15,7 @@ $$
 $$ {#eq-2}
 where $\boldsymbol x_0 \sim p_0$ and $t$ is sampled from a degradation scale interval. 
 
-The CD formulation is particularly interesting for inverse problems, as the degradation and restoration operators can be directly employed during the DM training.
+The CD formulation is particularly interesting for inverse problems, as the degradation and restoration operators can be directly employed during the DM training. 
 
 ### Code
 
