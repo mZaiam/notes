@@ -9,23 +9,15 @@ This section contains notes on ML foundations, pipelines, learning paradigms, an
 
 ## 1. Pipeline
 
-The ML pipeline encompasses all stages from data preparation to model interpretation.
+The stages of a general ML pipeline, ranging from data preparation to model interpretation.
 
-### 1.1 [Pre-Processing](pipeline/pre_processing.qmd)
+### [1.1. Pre-Processing](pipeline/pre_processing.qmd)
 
-Data cleaning, normalization, and data transformations.
+### [1.2. Model Selection](pipeline/model_selection.qmd)
 
-### 1.2 [Model Selection](pipeline/model_selection.qmd)
+### [1.3. Model Evaluation](pipeline/model_evaluation.qmd)
 
-Training strategies, validation protocols, hyperparameter optimization, and model comparison.
-
-### 1.3 [Model Evaluation](pipeline/model_evaluation.qmd)
-
-Metrics for the classical ML tasks.
-
-### 1.4 [Model Explanation](pipeline/model_explanation.qmd)
-
-Methods for explaining the predictions of a black-box model.
+### [1.4. Model Explanation](pipeline/model_explanation.qmd)
 
 ---
 
@@ -33,21 +25,13 @@ Methods for explaining the predictions of a black-box model.
 
 Methods that learn mappings from inputs to outputs using labeled data.
 
-### 2.1 [Linear Models](supervised_methods/linear_models.qmd)
+### [2.1. Linear Models](supervised_methods/linear_models.qmd)
 
-Linear regression, logistic regression, generalized linear models, generalized additive models.
+### [2.2. Distance and Margin Models](supervised_methods/distance_models.qmd)
 
-### 2.2 [Distance and Margin Models](supervised_methods/distance_models.qmd)
+### [2.3. Tree Models](supervised_methods/tree_models.qmd)
 
-K-nearest neighbors, support vector machines.
-
-### 2.3 [Tree Models](supervised_methods/tree_models.qmd)
-
-Decision trees, random forests, gradient boosting, symbolic  regression.
-
-### 2.4 [Probabilistic Models](supervised_methods/probabilistic_models.qmd)
-
-Naive Bayes, Gaussian processes.
+### [2.4. Probabilistic Models](supervised_methods/probabilistic_models.qmd)
 
 ---
 
@@ -55,14 +39,8 @@ Naive Bayes, Gaussian processes.
 
 Methods for discovering patterns without explicit labels.
 
-### 3.1 [Dimensionality Reduction](unsupervised_methods/dimensionality_reduction.qmd)
+### [3.1. Dimensionality Reduction](unsupervised_methods/dimensionality_reduction.qmd)
 
-PCA, t-SNE, UMAP.
+### [3.2. Clustering](unsupervised_methods/clustering.qmd)
 
-### 3.2 [Clustering](unsupervised_methods/clustering.qmd)
-
-K-means, hierarchical clustering, density-based methods.
-
-### 3.3 [Outlier Identification](unsupervised_methods/outlier.qmd)
-
-Anomaly detection methods.
+### [3.3. Outlier Identification](unsupervised_methods/outlier.qmd)

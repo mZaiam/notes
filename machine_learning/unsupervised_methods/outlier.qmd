@@ -1,5 +1,5 @@
 ---
-title: "Outlier Identification"
+title: "3.3. Outlier Identification"
 bibliography: ../../references.bib
 ---
 

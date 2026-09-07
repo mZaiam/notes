@@ -1,5 +1,5 @@
 ---
-title: "Tree Models"
+title: "2.3. Tree Models"
 bibliography: ../../references.bib
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "Cold-Diffusion (CD)"
+title: "1.5. Cold-Diffusion (CD)"
 bibliography: ../../references.bib
 ---
 

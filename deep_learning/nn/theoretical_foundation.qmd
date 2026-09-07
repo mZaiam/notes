@@ -1,5 +1,5 @@
 ---
-title: "Neural Networks (NNs)"
+title: "1.1 Neural Networks (NNs)"
 bibliography: ../../references.bib
 ---
 
@@ -62,11 +62,7 @@ The learnable parameters are optimized in a Supervised Learning framework using 
 $$
 \boldsymbol{\Theta}^{(k+1)} = \boldsymbol{\Theta}^{(k)} - \eta \nabla_{\boldsymbol{\Theta}^{(k)}} \mathcal{L}\left(\boldsymbol{y}_i, f_{\boldsymbol{\Theta}^{(k)}}(\boldsymbol{x}_i)\right),
 $$ {#eq-7}
-where $k$ denotes the optimization step index and $\eta \in \mathbb{R}^+$ represents the learning rate. Finally, the MLP has some important hyperparameters that need to be tuned:
-
-- Number of hidden layers $L$,
-- Number of neurons in each hidden layer $m^{(l)}$ for $l \in \{1, \dots, L\}$,
-- Activation functions for each hidden layer $\sigma^{(l)}$ for $l \in \{1, \dots, L\}$.
+where $k$ denotes the optimization step index and $\eta \in \mathbb{R}^+$ represents the learning rate. Finally, the MLP has some important hyperparameters that need to be tuned: number of hidden layers $L$, number of neurons in each hidden layer $m^{(l)}$ for $l \in \{1, \dots, L\}$, activation functions for each hidden layer $\sigma^{(l)}$ for $l \in \{1, \dots, L\}$.
 
 ### Code
 

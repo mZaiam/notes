@@ -23,3 +23,35 @@ h2, h3 {
   margin-top: 2em;
   margin-bottom: 0.75em;
 }
+
+.sidebar-navigation .sidebar-section > .sidebar-item-container .sidebar-item-text {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 1em;
+  padding-top: 0.5em;
+  border-top: 1px solid #e0e0e0;
+}
+
+.sidebar-navigation .sidebar-item-container .sidebar-item-text {
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding-left: 0.5em;
+  color: #555;
+}
+
+.sidebar-navigation .sidebar-item-container:hover .sidebar-item-text {
+  color: #0066cc;
+}
+
+.sidebar-navigation .sidebar-item-container.active .sidebar-item-text {
+  font-weight: 600;
+  color: #0066cc;
+}
+
+.sidebar-navigation hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 0.5em 0;
+}

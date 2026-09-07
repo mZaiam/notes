@@ -1,5 +1,5 @@
 ---
-title: "Samplers based on Stochastic Differential Equations (SDEs)"
+title: "2.1. Samplers based on Stochastic Differential Equations (SDEs)"
 bibliography: ../../references.bib
 ---
 
@@ -7,7 +7,7 @@ One approach to sampling data from a diffusion generative model is to simulate t
 $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt + g(t)d\boldsymbol{\overline w},
 $$ {#eq-1}
-where $\boldsymbol{f}(\cdot, t) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x}(t) \in \mathbb R^n$, $g(t): \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$ and $\boldsymbol{\overline w} \in \mathbb R^n$ is the Wiener process running from $T$ to $0$. Then, by discretizing @eq-1, one can iteratively move from $p_T$ to $p_0$, effectively sampling from the data distribution given an initial tractable distribution.
+where $\boldsymbol{f}(\cdot, t) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x}(t) \in \mathbb R^n$, $g(t): \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$ and $\boldsymbol{\overline w} \in \mathbb R^n$ is the Wiener process running from $T$ to $0$. Then, by discretizing @eq-1, one can iteratively move from $p_T$ to $p_0$, effectively sampling from the data distribution given an initial tractable distribution. One important aspect from this approach is that trajectories are stochastic, that is, the same initial noise sample can lead to different generated samples.
 
 ## Annealed Langevin Dynamics
 
@@ -18,7 +18,7 @@ $$ {#eq-2}
 where $\sigma'_t = \\kappa \cdot (\sigma_t^2 / \sigma_1^2)$ is the step size corresponding to the current noise scale $\sigma_t$ with fixed parameter $\\kappa$, and $\boldsymbol \epsilon \in \mathbb R^n$ with $\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$. After $M$ steps, the noise level is annealed to $\sigma_{t-1}$, and the process repeats until $\sigma_1$. @alg:annealed_langevin presents the Annealed Langevin Dynamic Algorithm.
 
 ```pseudocode
-#| label: algo:annealed_langevin
+#| label: alg:annealed_langevin
 #| html-indent-size: "1.2em"
 #| html-line-number: true
 
@@ -58,7 +58,7 @@ The Ancestral Sampling method was proposed in [Denoising Diffusion Probabilistic
 $$
 d\boldsymbol{x} = -\frac{1}{2}\beta(t) \boldsymbol{x} dt + \sqrt{\beta(t)}d\boldsymbol{w},
 $$ {#eq-4}
-where $\beta(t): \mathbb R \to \mathbb R^{+}$ is a parameter from the noise schedule. Then, Ancestral Sampling iteratively follows:
+where $\beta(t): \mathbb R \to \mathbb R_{>0}$ is a parameter from the noise schedule. Then, Ancestral Sampling iteratively follows:
 $$
 \boldsymbol{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(\boldsymbol{x}_t - \frac{\beta_t}{\sqrt{1-\overline{\alpha}_t}} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)\right) + \sigma_t\boldsymbol{\epsilon},
 $$ {#eq-5}
@@ -99,7 +99,7 @@ where the noise $\boldsymbol \epsilon \in \mathbb R^n$ is sampled as $\boldsymbo
 
 ## Predictor-Corrector (PC)
 
-The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previous sampling methods into a unified Predictor-Corrector (PC) family of algorithms. These methods are divided into two distinct steps. The first is the predictor, which provides an estimate of the next denoised data point along the reverse diffusion trajectory. Then, the corrector step is applied via a score-based Markov Chain Monte Carlo (MCMC) approach to project the estimate back onto the data manifold. It was noted by the authors that DDPM relied solely on a predictor step, while SMLD relied entirely on a corrector step. Consequently, generalized PC algorithms were proposed for both the SMLD and DDPM SDEs, presented respectively in @alg:pc_smld and @alg:pc_ddpm. These algorithms used the numerical discretization of the reverse-time SDE as the predictor, and Annealed Langevin Dynamics as the corrector.
+The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previous sampling methods into a unified Predictor-Corrector (PC) family of algorithms. These methods are divided into two distinct steps. The first is the predictor, which provides an estimate of the next denoised data point along the reverse diffusion trajectory. Then, the corrector step is applied via a score-based Markov Chain Monte Carlo (MCMC) approach to project the estimate back onto the data manifold. It was noted by the authors that DDPM relied solely on a predictor step, while SMLD relied entirely on a corrector step. Consequently, generalized PC algorithms were proposed for both the Variance Exploding (VE) and Variance Preserving (VP) SDEs, presented respectively in @alg:pc_smld and @alg:pc_ddpm. These algorithms used the numerical discretization of the reverse-time SDE as the predictor, and Annealed Langevin Dynamics as the corrector.
 
 ```pseudocode
 #| label: alg:pc_smld
@@ -107,7 +107,7 @@ The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previ
 #| html-line-number: true
 
 \begin{algorithm}
-\caption{Predictor-Corrector for SMLD}
+\caption{VE Predictor-Corrector}
 \begin{algorithmic}
 \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise levels $\{\sigma_t\}_{t=0}^{T}$, corrector step sizes $\{\kappa_t\}_{t=1}^{T}$, number of corrector steps $M$
 
@@ -136,7 +136,7 @@ The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previ
 #| html-line-number: true
 
 \begin{algorithm}
-\caption{Predictor-Corrector for DDPM}
+\caption{VP Predictor-Corrector}
 \begin{algorithmic}
 \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise schedule $\{\beta_t\}_{t=1}^{T}$, corrector step sizes $\{\kappa_t\}_{t=1}^{T}$, number of corrector steps $M$
 
@@ -168,4 +168,4 @@ The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previ
 
 ### Code
 
-<!-- {{< embed samplers_assets/sde_samplers.ipynb >}} -->
+{{< embed samplers_assets/sde_samplers.ipynb >}}

@@ -3,12 +3,7 @@ project:
 
 filters:
   - pseudocode
-
-crossref:
-  fig-prefix: "Fig."
-  eq-prefix: "Eq."
-  alg-prefix: "Alg."
-
+  
 website:
   bread-crumbs: true 
   page-navigation: true
@@ -19,10 +14,12 @@ website:
     contents:
       - text: "Home"
         file: index.qmd
+
+      - text: "---"
       
-      - section: "Machine Learning"
+      - section: "Machine Learning (ML)"
+        href: "machine_learning/index.qmd"
         contents:
-          - machine_learning/index.qmd
           - machine_learning/pipeline/pre_processing.qmd
           - machine_learning/pipeline/model_selection.qmd
           - machine_learning/pipeline/model_evaluation.qmd
@@ -37,23 +34,24 @@ website:
       
       - text: "---"
       
-      - section: "Deep Learning"
+      - section: "Deep Learning (DL)"
+        href: "deep_learning/index.qmd"
         contents:
-          - deep_learning/index.qmd
           - deep_learning/nn/theoretical_foundation.qmd
       
       - text: "---"
       
-      - section: "Diffusion Models"
+      - section: "Diffusion Models (DM) and Flow-Matching (FM)"
+        href: "diffusion_models/index.qmd"
         contents:
-          - diffusion_models/index.qmd
           - diffusion_models/theoretical_foundation/smld.qmd
           - diffusion_models/theoretical_foundation/ddpm.qmd
           - diffusion_models/theoretical_foundation/sde.qmd
           - diffusion_models/theoretical_foundation/edm.qmd
           - diffusion_models/theoretical_foundation/cold_diffusion.qmd
           - diffusion_models/samplers/sde_samplers.qmd
-
+          - diffusion_models/samplers/ode_samplers.qmd
+          
 format:
   html:
     theme:

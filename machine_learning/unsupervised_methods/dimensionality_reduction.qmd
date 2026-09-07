@@ -1,5 +1,5 @@
 ---
-title: "Dimensionality Reduction"
+title: "3.1. Dimensionality Reduction"
 bibliography: ../../references.bib
 ---
 

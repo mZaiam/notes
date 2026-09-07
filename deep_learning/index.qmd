@@ -9,6 +9,6 @@ This section has several classes of DL models, with their respective theoretical
 
 Neural models based on fully-connected layers.
 
-### 1.1 [Theoretical Foundation](nn/theoretical_foundation.qmd)
+### [1.1. Theoretical Foundation](nn/theoretical_foundation.qmd)
 
 The basics of neural models.
