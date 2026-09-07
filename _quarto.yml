@@ -1,9 +1,13 @@
 project:
   type: website
 
+filters:
+  - pseudocode
+
 crossref:
   fig-prefix: "Fig."
   eq-prefix: "Eq."
+  alg-prefix: "Alg."
 
 website:
   bread-crumbs: true 
@@ -11,18 +15,44 @@ website:
 
   sidebar:
     style: "docked"
+    collapse-level: 1
     contents:
       - text: "Home"
         file: index.qmd
       
-      - text: "Machine Learning"
-        file: machine_learning/index.qmd
-
-      - text: "Deep Learning"
-        file: deep_learning/index.qmd
+      - section: "Machine Learning"
+        contents:
+          - machine_learning/index.qmd
+          - machine_learning/pipeline/pre_processing.qmd
+          - machine_learning/pipeline/model_selection.qmd
+          - machine_learning/pipeline/model_evaluation.qmd
+          - machine_learning/pipeline/model_explanation.qmd
+          - machine_learning/supervised_methods/linear_models.qmd
+          - machine_learning/supervised_methods/distance_models.qmd
+          - machine_learning/supervised_methods/tree_models.qmd
+          - machine_learning/supervised_methods/probabilistic_models.qmd
+          - machine_learning/unsupervised_methods/dimensionality_reduction.qmd
+          - machine_learning/unsupervised_methods/clustering.qmd
+          - machine_learning/unsupervised_methods/outlier.qmd
       
-      - text: "Diffusion Models"
-        file: diffusion_models/index.qmd
+      - text: "---"
+      
+      - section: "Deep Learning"
+        contents:
+          - deep_learning/index.qmd
+          - deep_learning/nn/theoretical_foundation.qmd
+      
+      - text: "---"
+      
+      - section: "Diffusion Models"
+        contents:
+          - diffusion_models/index.qmd
+          - diffusion_models/theoretical_foundation/smld.qmd
+          - diffusion_models/theoretical_foundation/ddpm.qmd
+          - diffusion_models/theoretical_foundation/sde.qmd
+          - diffusion_models/theoretical_foundation/edm.qmd
+          - diffusion_models/theoretical_foundation/cold_diffusion.qmd
+          - diffusion_models/samplers/sde_samplers.qmd
 
 format:
   html:

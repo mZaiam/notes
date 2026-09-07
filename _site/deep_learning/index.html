@@ -138,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#neural-networks" id="toc-neural-networks" class="nav-link active" data-scroll-target="#neural-networks">1. Neural Networks</a>
+  <li><a href="#neural-networks-nns" id="toc-neural-networks-nns" class="nav-link active" data-scroll-target="#neural-networks-nns">1. Neural Networks (NNs)</a>
   <ul class="collapse">
   <li><a href="#theoretical-foundation" id="toc-theoretical-foundation" class="nav-link" data-scroll-target="#theoretical-foundation">1.1 Theoretical Foundation</a></li>
   </ul></li>
@@ -168,11 +168,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>This section has several classes of DL models, with their respective theoretical explanation and notable architectures.</p>
-<section id="neural-networks" class="level2">
-<h2 class="anchored" data-anchor-id="neural-networks">1. Neural Networks</h2>
+<section id="neural-networks-nns" class="level2">
+<h2 class="anchored" data-anchor-id="neural-networks-nns">1. Neural Networks (NNs)</h2>
 <p>Neural models based on fully-connected layers.</p>
 <section id="theoretical-foundation" class="level3">
-<h3 class="anchored" data-anchor-id="theoretical-foundation">1.1 <a href="deep_learning/nn/theoretical_foundation/theoretical_foundation.qmd">Theoretical Foundation</a></h3>
+<h3 class="anchored" data-anchor-id="theoretical-foundation">1.1 <a href="deep_learning/nn/theoretical_foundation.qmd">Theoretical Foundation</a></h3>
 <p>The basics of neural models.</p>
 
 
@@ -253,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/mZaiam\.github\.io\/notes\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

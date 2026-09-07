@@ -36,3 +36,5 @@ DMs with more general corruption schemes.
 Algorithms that perform the reverse diffusion process, given a trained score network.
 
 ### 2.1 [Samplers based on Stochastic Differential Equations (SDEs)](samplers/sde_samplers.qmd)
+
+Samplers based on the reverse diffusion SDE.

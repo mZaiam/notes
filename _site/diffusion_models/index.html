@@ -139,13 +139,16 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#theoretical-foundation" id="toc-theoretical-foundation" class="nav-link active" data-scroll-target="#theoretical-foundation">1. Theoretical Foundation</a>
   <ul class="collapse">
-  <li><a href="#score-matching-with-langevin-dynamics" id="toc-score-matching-with-langevin-dynamics" class="nav-link" data-scroll-target="#score-matching-with-langevin-dynamics">1.1 Score Matching with Langevin Dynamics</a></li>
-  <li><a href="#denoising-diffusion-probabilistic-models" id="toc-denoising-diffusion-probabilistic-models" class="nav-link" data-scroll-target="#denoising-diffusion-probabilistic-models">1.2 Denoising Diffusion Probabilistic Models</a></li>
-  <li><a href="#stochastic-differential-equations-formulation" id="toc-stochastic-differential-equations-formulation" class="nav-link" data-scroll-target="#stochastic-differential-equations-formulation">1.3 Stochastic Differential Equations Formulation</a></li>
-  <li><a href="#elucidated-diffusion-models" id="toc-elucidated-diffusion-models" class="nav-link" data-scroll-target="#elucidated-diffusion-models">1.4 Elucidated Diffusion Models</a></li>
-  <li><a href="#cold-diffusion" id="toc-cold-diffusion" class="nav-link" data-scroll-target="#cold-diffusion">1.5 Cold-Diffusion</a></li>
+  <li><a href="#score-matching-with-langevin-dynamics-smld" id="toc-score-matching-with-langevin-dynamics-smld" class="nav-link" data-scroll-target="#score-matching-with-langevin-dynamics-smld">1.1 Score Matching with Langevin Dynamics (SMLD)</a></li>
+  <li><a href="#denoising-diffusion-probabilistic-models-ddpm" id="toc-denoising-diffusion-probabilistic-models-ddpm" class="nav-link" data-scroll-target="#denoising-diffusion-probabilistic-models-ddpm">1.2 Denoising Diffusion Probabilistic Models (DDPM)</a></li>
+  <li><a href="#stochastic-differential-equations-sdes-formulation" id="toc-stochastic-differential-equations-sdes-formulation" class="nav-link" data-scroll-target="#stochastic-differential-equations-sdes-formulation">1.3 Stochastic Differential Equations (SDEs) Formulation</a></li>
+  <li><a href="#elucidated-diffusion-models-edms" id="toc-elucidated-diffusion-models-edms" class="nav-link" data-scroll-target="#elucidated-diffusion-models-edms">1.4 Elucidated Diffusion Models (EDMs)</a></li>
+  <li><a href="#cold-diffusion-cd" id="toc-cold-diffusion-cd" class="nav-link" data-scroll-target="#cold-diffusion-cd">1.5 Cold-Diffusion (CD)</a></li>
   </ul></li>
-  <li><a href="#samplers" id="toc-samplers" class="nav-link" data-scroll-target="#samplers">2. Samplers</a></li>
+  <li><a href="#samplers" id="toc-samplers" class="nav-link" data-scroll-target="#samplers">2. Samplers</a>
+  <ul class="collapse">
+  <li><a href="#samplers-based-on-stochastic-differential-equations-sdes" id="toc-samplers-based-on-stochastic-differential-equations-sdes" class="nav-link" data-scroll-target="#samplers-based-on-stochastic-differential-equations-sdes">2.1 Samplers based on Stochastic Differential Equations (SDEs)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -175,32 +178,36 @@ ul.task-list li input[type="checkbox"] {
 <section id="theoretical-foundation" class="level2">
 <h2 class="anchored" data-anchor-id="theoretical-foundation">1. Theoretical Foundation</h2>
 <p>The various definitions of the diffusion and flow-based generative learning process.</p>
-<section id="score-matching-with-langevin-dynamics" class="level3">
-<h3 class="anchored" data-anchor-id="score-matching-with-langevin-dynamics">1.1 <a href="../diffusion_models/theoretical_foundation/smld/smld.html">Score Matching with Langevin Dynamics</a></h3>
+<section id="score-matching-with-langevin-dynamics-smld" class="level3">
+<h3 class="anchored" data-anchor-id="score-matching-with-langevin-dynamics-smld">1.1 <a href="../diffusion_models/theoretical_foundation/smld.html">Score Matching with Langevin Dynamics (SMLD)</a></h3>
 <p>Score matching as a foundation for generative modeling.</p>
 </section>
-<section id="denoising-diffusion-probabilistic-models" class="level3">
-<h3 class="anchored" data-anchor-id="denoising-diffusion-probabilistic-models">1.2 <a href="../diffusion_models/theoretical_foundation/ddpm/ddpm.html">Denoising Diffusion Probabilistic Models</a></h3>
+<section id="denoising-diffusion-probabilistic-models-ddpm" class="level3">
+<h3 class="anchored" data-anchor-id="denoising-diffusion-probabilistic-models-ddpm">1.2 <a href="../diffusion_models/theoretical_foundation/ddpm.html">Denoising Diffusion Probabilistic Models (DDPM)</a></h3>
 <p>The noise prediction formulation, including the forward diffusion process, reverse denoising process, and training objective.</p>
 </section>
-<section id="stochastic-differential-equations-formulation" class="level3">
-<h3 class="anchored" data-anchor-id="stochastic-differential-equations-formulation">1.3 <a href="../diffusion_models/theoretical_foundation/sde/sde.html">Stochastic Differential Equations Formulation</a></h3>
+<section id="stochastic-differential-equations-sdes-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="stochastic-differential-equations-sdes-formulation">1.3 <a href="../diffusion_models/theoretical_foundation/sde.html">Stochastic Differential Equations (SDEs) Formulation</a></h3>
 <p>The continuous-time formulation of DMs through forward and reverse-time stochastic differential equations.</p>
 </section>
-<section id="elucidated-diffusion-models" class="level3">
-<h3 class="anchored" data-anchor-id="elucidated-diffusion-models">1.4 <a href="../diffusion_models/theoretical_foundation/edm/edm.html">Elucidated Diffusion Models</a></h3>
+<section id="elucidated-diffusion-models-edms" class="level3">
+<h3 class="anchored" data-anchor-id="elucidated-diffusion-models-edms">1.4 <a href="../diffusion_models/theoretical_foundation/edm.html">Elucidated Diffusion Models (EDMs)</a></h3>
 <p>Decoupling the noise schedules and other hyperparameters from the previous formulations.</p>
 </section>
-<section id="cold-diffusion" class="level3">
-<h3 class="anchored" data-anchor-id="cold-diffusion">1.5 <a href="../diffusion_models/theoretical_foundation/cold_diffusion/cold_diffusion.html">Cold-Diffusion</a></h3>
+<section id="cold-diffusion-cd" class="level3">
+<h3 class="anchored" data-anchor-id="cold-diffusion-cd">1.5 <a href="../diffusion_models/theoretical_foundation/cold_diffusion.html">Cold-Diffusion (CD)</a></h3>
 <p>DMs with more general corruption schemes.</p>
 <hr>
 </section>
 </section>
 <section id="samplers" class="level2">
 <h2 class="anchored" data-anchor-id="samplers">2. Samplers</h2>
+<p>Algorithms that perform the reverse diffusion process, given a trained score network.</p>
+<section id="samplers-based-on-stochastic-differential-equations-sdes" class="level3">
+<h3 class="anchored" data-anchor-id="samplers-based-on-stochastic-differential-equations-sdes">2.1 <a href="../diffusion_models/samplers/sde_samplers.html">Samplers based on Stochastic Differential Equations (SDEs)</a></h3>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -277,7 +284,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/mZaiam\.github\.io\/notes\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
