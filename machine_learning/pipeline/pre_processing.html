@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="The first step of a Machine Learning (ML) pipeline is pre-processing the data. Here, some of these techniques are going to be presented.">
 
 <title>Pre-Processing</title>
 <style>
@@ -66,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../deep_learning/index.html" rel="next">
-<link href="../../machine_learning/pipeline/index.html" rel="prev">
+<link href="../../machine_learning/pipeline/model_selection.html" rel="next">
+<link href="../../machine_learning/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -79,6 +78,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-46858c2c8c16e82321d3cea5e177c50c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -106,6 +107,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -149,7 +166,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../machine_learning/pipeline/index.html">Pipeline</a></li><li class="breadcrumb-item"><a href="../../machine_learning/pipeline/pre_processing.html">Pre-Processing</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../machine_learning/pipeline/pre_processing.html">Pre-Processing</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -177,45 +194,161 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../machine_learning/index.html" class="sidebar-item-text sidebar-link">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Machine Learning</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../../machine_learning/pipeline/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Machine Learning (ML)</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../machine_learning/pipeline/pre_processing.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Pre-Processing</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/pipeline/model_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Selection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/pipeline/model_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Evaluation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/pipeline/model_explanation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Explanation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/supervised_methods/linear_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/supervised_methods/distance_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Distance and Margin Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/supervised_methods/tree_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tree Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/supervised_methods/probabilistic_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Probabilistic Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/unsupervised_methods/dimensionality_reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dimensionality Reduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/unsupervised_methods/clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../machine_learning/unsupervised_methods/outlier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Outlier Identification</span></a>
+  </div>
+</li>
       </ul>
   </li>
-      </ul>
-  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../deep_learning/index.html" class="sidebar-item-text sidebar-link">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Deep Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../deep_learning/mlp/mlp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multilayer Perceptron</span></a>
+  <a href="../../deep_learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Learning (DL)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../deep_learning/nn/theoretical_foundation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Neural Networks (NNs)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Diffusion Models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Models (DMs) and Flow-Matching (FM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/smld.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Score Matching with Langevin Dynamics (SMLD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/ddpm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Denoising Diffusion Probabilistic Models (DDPM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/sde.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic Differential Equations (SDEs) Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/edm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Elucidated Diffusion Models (EDMs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cold-Diffusion (CD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Samplers based on Stochastic Differential Equations (SDEs)</span></a>
   </div>
 </li>
       </ul>
@@ -243,21 +376,16 @@ window.Quarto = {
   <li><a href="#code-feature-selection" id="toc-code-feature-selection" class="nav-link" data-scroll-target="#code-feature-selection">Code: Feature Selection</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="encoding-preview.html"><i class="bi bi-journal-code"></i>encoding.ipynb</a></li><li><a href="normalization-preview.html"><i class="bi bi-journal-code"></i>normalization.ipynb</a></li><li><a href="vif-preview.html"><i class="bi bi-journal-code"></i>vif.ipynb</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="pipeline_assets/encoding-preview.html"><i class="bi bi-journal-code"></i>encoding.ipynb</a></li><li><a href="pipeline_assets/normalization-preview.html"><i class="bi bi-journal-code"></i>normalization.ipynb</a></li><li><a href="pipeline_assets/vif-preview.html"><i class="bi bi-journal-code"></i>vif.ipynb</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../machine_learning/pipeline/index.html">Pipeline</a></li><li class="breadcrumb-item"><a href="../../machine_learning/pipeline/pre_processing.html">Pre-Processing</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../machine_learning/index.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="../../machine_learning/pipeline/pre_processing.html">Pre-Processing</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Pre-Processing</h1>
 </div>
 
-<div>
-  <div class="description">
-    The first step of a Machine Learning (ML) pipeline is pre-processing the data. Here, some of these techniques are going to be presented.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -272,7 +400,7 @@ window.Quarto = {
 </header>
 
 
-<p>Before feeding the the data to a model, it is usually necessary to pre-process it. This is necessary due to the mathematical formulation of these models, where some of them might require data to follow specific patterns. Here, the following pre-processing strategies are going to be presented: normalization, encoding and feature selection.</p>
+<p>Before feeding the data to a model, it is usually necessary to pre-process it. This is necessary due to the mathematical formulation of these models, where some of them might require data to follow specific patterns. Here, the following pre-processing strategies are going to be presented: normalization, encoding and feature selection.</p>
 <section id="normalization" class="level2">
 <h2 class="anchored" data-anchor-id="normalization">Normalization</h2>
 <p>Normalization is a class of transformations that make features present more uniform statistics. The first approach for normalizing data is the absolute maximum normalization. This technique takes the a set of features <span class="math inline">\(\boldsymbol X \in \mathbb R^{N\times n}\)</span>, where <span class="math inline">\(N\)</span> is the number of observations and <span class="math inline">\(n\)</span> is the number of features, and applies the following transformation: <span id="eq-1"><span class="math display">\[
@@ -373,12 +501,12 @@ Std:  [1. 1.]</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pre_processing_files/figure-html/normalization-cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="pre_processing_files/figure-html/pipeline_assets-normalization-cell-7-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-1" href="normalization-preview.html#cell-0">Source: normalization.ipynb</a></div>
+<a class="quarto-notebook-link" id="nblink-1" href="pipeline_assets/normalization-preview.html#cell-0">Source: normalization.ipynb</a></div>
 </section>
 </section>
 <section id="encoding" class="level2">
@@ -453,7 +581,7 @@ Std:  [1. 1.]</code></pre>
 └─────┴───────┴────────┴───────┴────────────┴─────────────┴───────────┴───────────────────────┘</code></pre>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-2" href="encoding-preview.html#cell-0">Source: encoding.ipynb</a></div>
+<a class="quarto-notebook-link" id="nblink-2" href="pipeline_assets/encoding-preview.html#cell-0">Source: encoding.ipynb</a></div>
 </section>
 </section>
 <section id="feature-selection" class="level2">
@@ -525,7 +653,7 @@ x5: 121103.62</code></pre>
 </div>
 </div>
 <p>As the results show, feature <code>x5</code> has the highest VIF value, it would be the first feature to be dropped. Note that the other features also have high values, because the generation of the linearly dependent feature also make other features dependent on it.</p>
-<a class="quarto-notebook-link" id="nblink-3" href="vif-preview.html#cell-0">Source: vif.ipynb</a></div>
+<a class="quarto-notebook-link" id="nblink-3" href="pipeline_assets/vif-preview.html#cell-0">Source: vif.ipynb</a></div>
 
 
 </section>
@@ -934,17 +1062,50 @@ x5: 121103.62</code></pre>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../machine_learning/pipeline/index.html" class="pagination-link" aria-label="Pipeline">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pipeline</span>
+      <a href="../../machine_learning/index.html" class="pagination-link" aria-label="Machine Learning (ML)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Machine Learning (ML)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../deep_learning/index.html" class="pagination-link" aria-label="Deep Learning">
-        <span class="nav-page-text">Deep Learning</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../machine_learning/pipeline/model_selection.html" class="pagination-link" aria-label="Model Selection">
+        <span class="nav-page-text">Model Selection</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix,
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+  
 
 
 
