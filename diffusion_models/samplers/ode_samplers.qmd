@@ -29,7 +29,7 @@ where $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ i
 #| html-line-number: true
 
 \begin{algorithm}
-\caption{DDIM Sampler}
+\caption{Denoising Diffusion Implicit Models Sampler}
 \begin{algorithmic}
 \REQUIRE Noise network $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}$, number of diffusion steps $T$, variance schedule $\{\alpha_t\}_{t=0}^{T}$, noise schedule $\{\sigma_t\}_{t=0}^{T}$
 
@@ -49,72 +49,57 @@ where $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ i
 \end{algorithm}
 ```
 
-<!-- ## Heun Sampler and Stochastic Churn Sampler
+## Stochastic Churn Sampler
 
-The Stochastic Churn Sampler was introduced in [Elucidated Diffusion Models (EDMs)](../theoretical_foundation/edm.qmd) [@dm:edm] as a stochastic extension of the deterministic Heun solver. EDM controlled the stochasticity through a hyperparameter $\gamma_t \in \mathbb{R}_{\geq 0}$ that governs the amount of additional noise added to $\boldsymbol{x}_t$ before the predictor step.
+The Stochastic Churn sampler was introduced in [Elucidated Diffusion Models (EDMs)](../theoretical_foundation/edm.qmd) [@dm:edm] as a stochastic extension of the deterministic Heun solver. EDM controlled the stochasticity through a hyperparameter $\gamma_i \in \mathbb{R}_{\geq 0}$ that governed the amount of noise added to $\boldsymbol{x}_i$ before the predictor step.
 
-Let the noise schedule be the parametrized log-SNR schedule from EDM:
+Let $\boldsymbol{D}_{\boldsymbol{\theta}}: \mathbb R^{n \times 1} \to \mathbb R^n$ be the trained denoiser network, and let $\{t_i\}_{i=0}^{T}$ denote a decreasing noise schedule, with $t_0 > t_1 > \cdots > t_T$. The idea of the Stochastic Churn sampler is to first increase the noise level from $t_i$ to $\hat{t}_i$ according to:
 $$
-\log(\alpha_t^2 / \sigma_t^2) = -\gamma_t \cdot (\log(\sigma_{\min}) - \log(\sigma_{\max})),
-$$ {#eq-edm-1}
-where $\sigma_{\min}$ and $\sigma_{\max}$ are the smallest and largest noise levels of the discretization. Let $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}$ be the trained noise network and let $\boldsymbol{x}_0 = \boldsymbol{x}_t - \sigma_t \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, \sigma_t)$ denote the predicted clean sample. The EDM stochastic sampler first *churns* the current sample by adding extra noise, then performs a second-order predictor–corrector (Heun) step using the updated noise level $\tilde{\sigma}_t$.
+\hat{t}_i = (1+\gamma_i)t_i,
+$$ {#eq-4}
+and then perturb the current sample according to:
+$$
+\boldsymbol{\hat{x}}_i = \boldsymbol{x}_i + \sqrt{\hat{t}_i^2-t_i^2}\boldsymbol{\epsilon}_i,
+$$ {#eq-5}
+where $\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{0}, \sigma_{\text{Std}}^2\boldsymbol{I})$. Thus, the current sample is moved to a higher noise level before the deterministic denoising step. The sampler then applies Heun's method to integrate the denoising ODE from $\hat{t}_i$ to $t_{i+1}$. In particular, the first evaluation defines the direction:
+$$
+\boldsymbol{d}_i = \frac{\boldsymbol{\hat{x}}_i - \boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{\hat{x}}_i,\hat{t}_i)}{\hat{t}_i},
+$$ {#eq-5}
+which is used to obtain a first-order prediction at $t_{i+1}$. A second evaluation of the denoiser is then used to correct this prediction through the average of the two directions.
 
-The update rule for the churn step is given by:
-$$
-\tilde{\boldsymbol{x}}_t = \boldsymbol{x}_t + \sqrt{\sigma_t^2 - \tilde{\sigma}_t^2} \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I}),
-$$ {#eq-edm-2}
-with the increased noise scale:
-$$
-\tilde{\sigma}_t = \sigma_t \cdot \left(1 + \gamma_t\right),
-$$ {#eq-edm-3}
-so that $\tilde{\sigma}_t \geq \sigma_t$ for $\gamma_t \geq 0$. When $\gamma_t = 0$, no extra noise is added and the sampler degenerates to the deterministic Heun solver.
-
-After the churn, a second-order Heun step is applied using $\tilde{\boldsymbol{x}}_t$ and $\tilde{\sigma}_t$:
-$$
-\boldsymbol{d}_t = \left(\tilde{\boldsymbol{x}}_t - \boldsymbol{x}_\theta(\tilde{\boldsymbol{x}}_t, \tilde{\sigma}_t)\right) / \tilde{\sigma}_t,
-$$ {#eq-edm-4}
-$$
-\boldsymbol{x}_{t-1}' = \tilde{\boldsymbol{x}}_t + (\sigma_{t-1} - \tilde{\sigma}_t) \boldsymbol{d}_t.
-$$ {#eq-edm-5}
-
-A corrector step then refines $\boldsymbol{x}_{t-1}'$ using the predicted denoised sample at $\sigma_{t-1}$:
-$$
-\boldsymbol{d}_t' = (\boldsymbol{x}_{t-1}' - \boldsymbol{x}_\theta(\boldsymbol{x}_{t-1}', \sigma_{t-1})) / \sigma_{t-1},
-$$ {#eq-edm-6}
-$$
-\boldsymbol{x}_{t-1} = \boldsymbol{x}_{t-1}' + \tfrac{1}{2}(\sigma_{t-1} - \tilde{\sigma}_t) \boldsymbol{d}_t'.
-$$ {#eq-edm-7}
-
-This formulation makes the stochasticity of the sampler explicitly tunable: with $\gamma_t = 0$, the algorithm recovers the deterministic Heun solver; with large $\gamma_t$, the sampler injects substantial noise, producing highly diverse trajectories. The full algorithm is presented in @alg:edm_stochastic.
+The stochastic perturbation allows the sampler to explore different denoising trajectories instead of following a single deterministic trajectory. With $\gamma_i = 0$, $\hat{t}_i=t_i$ and the stochastic perturbation does not occur, recovering the deterministic Heun solver. Larger values of $\gamma_i$ increase the temporary noise level and consequently introduce greater stochasticity into the generated trajectory. The full algorithm is presented in @alg:edm_churn.
 
 ```pseudocode
-#| label: alg:edm_stochastic
+#| label: alg:edm_churn
 #| html-indent-size: "1.2em"
 #| html-line-number: true
 
 \begin{algorithm}
-\caption{EDM Stochastic Sampler (Churn)}
+\caption{Stochastic Churn Sampler}
 \begin{algorithmic}
-\REQUIRE Noise network $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}$, noise schedule $\{\sigma_t\}_{t=0}^{T}$, churn schedule $\{\gamma_t\}_{t=0}^{T}$
+\REQUIRE Denoiser network $\boldsymbol{D}_{\boldsymbol{\theta}}$, noise schedule $\{t_i\}_{i=0}^{T}$, churn schedule $\{\gamma_i\}_{i=0}^{T-1}$, noise standard-deviation $\sigma_{\text{Std}}$
 
-\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2 \boldsymbol{I})$
+\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, t_0^2 \boldsymbol{I})$
 
-\FOR{$t = T,\ldots,1$}
-    \STATE $\tilde{\sigma}_t \gets \sigma_t \cdot (1 + \gamma_t)$
+\FOR{$i = 0,\ldots,T-1$}
+    \STATE Sample $\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{0}, \sigma_{\text{Std}}^2 \boldsymbol{I})$
+    \STATE $\hat{t}_i \gets (1+\gamma_i)t_i$
+    \STATE $\boldsymbol{\hat{x}}_i \gets
+    \boldsymbol{x}_i +
+    \sqrt{\hat{t}_i^2-t_i^2}\boldsymbol{\epsilon}_i$
 
-    \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
-    \STATE $\tilde{\boldsymbol{x}}_t \gets \boldsymbol{x}_t + \sqrt{\sigma_t^2 - \tilde{\sigma}_t^2} \boldsymbol{\epsilon}$
+    \STATE $\boldsymbol{d}_i \gets \left(\boldsymbol{\hat{x}}_i - \boldsymbol{D}_{\boldsymbol{\theta}} (\boldsymbol{\hat{x}}_i,\hat{t}_i) \right)/\hat{t}_i$
 
-    \STATE $\boldsymbol{d}_t \gets (\tilde{\boldsymbol{x}}_t - (\tilde{\boldsymbol{x}}_t - \tilde{\sigma}_t \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\tilde{\boldsymbol{x}}_t, \tilde{\sigma}_t))) / \tilde{\sigma}_t$
-    \STATE $\boldsymbol{x}_{t-1}' \gets \tilde{\boldsymbol{x}}_t + (\sigma_{t-1} - \tilde{\sigma}_t) \boldsymbol{d}_t$
+    \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{\hat{x}}_i + (t_{i+1}-\hat{t}_i)\boldsymbol{d}_i$
 
-    \STATE $\boldsymbol{d}_t' \gets (\boldsymbol{x}_{t-1}' - (\boldsymbol{x}_{t-1}' - \sigma_{t-1} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1}', \sigma_{t-1}))) / \sigma_{t-1}$
-    \STATE $\boldsymbol{x}_{t-1} \gets \boldsymbol{x}_{t-1}' + \tfrac{1}{2}(\sigma_{t-1} - \tilde{\sigma}_t) \boldsymbol{d}_t'$
+    \IF{$t_{i+1} \neq 0$}
+        \STATE $\boldsymbol{d}_i' \gets \left(\boldsymbol{x}_{i+1} - \boldsymbol{D}_{\boldsymbol{\theta}} (\boldsymbol{x}_{i+1},t_{i+1})\right)/t_{i+1}$
+
+        \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{\hat{x}}_i + (t_{i+1}-\hat{t}_i) \left(\frac{\boldsymbol{d}_i+\boldsymbol{d}_i'}{2}\right)$
+    \ENDIF
+
 \ENDFOR
 
-\RETURN $\boldsymbol{x}_0$
+\RETURN $\boldsymbol{x}_T$
 \end{algorithmic}
 \end{algorithm}
-```
-
-In practice, EDM recommends a small but nonzero churn ($\gamma_t \in [0, 1.5]$) along with $S_{\text{churn}} \in [0, 1]$ defining the *fraction* of timesteps where churn is applied — typically only the high-noise (early) steps churn, while low-noise (late) steps are deterministic. This balances sample diversity against fidelity, an explicit knob that the deterministic samplers lack. -->

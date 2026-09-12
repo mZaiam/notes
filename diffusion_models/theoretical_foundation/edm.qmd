@@ -35,7 +35,7 @@ $$
 $$ {#eq-6}
 Overall, EDM simplified the design choices of implementing DMs, including the noise schedules, network pre-conditioning, among other practical aspects. 
 
-For sampling, EDM proposed a [Stochastic Churn Sampler](../samplers/ode_samplers.qmd) and a deterministic [Heun Sampler](../samplers/ode_samplers.qmd).
+For sampling, EDM proposed a [Stochastic Churn Sampler](../samplers/ode_samplers.qmd) by using the Probability Flow ODE.
 
 ### Code
 
