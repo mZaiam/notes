@@ -1,0 +1,35 @@
+---
+title: "1.6. Discrete Denoising Diffusion Probabilistic Models (D3PMs)"
+bibliography: ../../references.bib
+---
+
+Previous diffusion formulations focused on continuous variables, adding Gaussian noise to corrupt data. In this context, Discrete Denoising Diffusion Probabilistic Models (D3PMs) [@dm:d3pm] introduced a diffusion paradigm for discrete data, enabling the application to text, graphs and more general categorical data. 
+
+Let a single data component at diffusion step $t$ be represented by a one-hot vector $\boldsymbol x_t \in \{0, 1\}^K$ with $K \in \mathbb N$ discrete states. The forward diffusion process in D3PM was defined as:
+$$
+q(\boldsymbol x_t \mid \boldsymbol x_{t - 1}) = \boldsymbol x_t^T \boldsymbol Q_t \boldsymbol x_{t - 1},
+$$ {#eq-1}
+where $\boldsymbol Q_t \in \mathbb R^{K\times K}$ is the Markov transition matrix. The components of this matrix define the probability of state $j$ transitioning to state $i$, that is, $q(\boldsymbol x_t = i \mid \boldsymbol x_t = j)$. This definition enables sampling at any time step $t$ given a clean data $\boldsymbol x_0$:
+$$
+q(\boldsymbol x_t \mid \boldsymbol x_0) = \boldsymbol x_t^T \boldsymbol{\overline{Q}}_t \boldsymbol x_0,
+$$ {#eq-2}
+where $\boldsymbol{\overline{Q}}_t = \boldsymbol Q_1 \boldsymbol Q_2\dots\boldsymbol Q_t$. The transition matrices defined different corruption processes, and were chosen to match the structure of the input data. For example, non-ordinal data could be modelled using an uniform transition state, where each component can change to any other state. Another proposed design was the absorbing state transition, where the variables can transition to a $[\text{MASK}]$ state, but can not transition out of it. This process is applied independently to each component of the input data.
+
+Given the diffusion process, a Neural Network $\boldsymbol{\tilde{p}}_{\boldsymbol \theta} : \{0, 1\}^K \times \mathbb R \to [0, 1]^K$ parameterized by $\boldsymbol \theta$ is trained to reverse the corruption process. The network is trained to output a categorical distribution, such that it is able to identify which state each component was initially. The reverse transition step is then computed by marginalizing over this prediction:
+$$
+p_{\boldsymbol \theta} (\boldsymbol x_{t - 1} \mid \boldsymbol x_t) = \sum_{\boldsymbol{\tilde{x}}_0 \in \{0, 1\}^K} q(\boldsymbol x_{t-1} \mid \boldsymbol x_t, \boldsymbol{\tilde{x}}_0) \left( \boldsymbol{\tilde{p}}_{\boldsymbol \theta}(\boldsymbol x_t, t)^\top \boldsymbol{\tilde{x}}_0 \right),
+$$ {#eq-3}
+where the true forward posterior $q(\boldsymbol x_{t-1} \mid \boldsymbol x_t, \boldsymbol x_0)$ is calculated using Bayes' rule and the Markov transition matrices:
+$$
+q(\boldsymbol x_{t-1} \mid \boldsymbol x_t, \boldsymbol x_0) = \frac{q(\boldsymbol x_t \mid \boldsymbol x_{t-1}) q(\boldsymbol x_{t-1} \mid \boldsymbol x_0)}{q(\boldsymbol x_t \mid \boldsymbol x_0)} = \frac{(\boldsymbol x_t^\top \boldsymbol Q_t \boldsymbol x_{t-1})(\boldsymbol x_{t-1}^\top \boldsymbol{\overline{Q}}_{t-1} \boldsymbol x_0)}{\boldsymbol x_t^\top \boldsymbol{\overline{Q}}_t \boldsymbol x_0}.
+$$ {#eq-4}
+
+To optimize the network, D3PM minimized the Variational Lower Bound (VLB) adapted for discrete spaces. The training objective is to minimize the expected Kullback-Leibler (KL) divergence between the true discrete posterior and the parameterized reverse step:
+$$
+\mathcal{L}(\boldsymbol \theta) = \mathbb{E}_{t, \boldsymbol{x}_0, \boldsymbol{x}_t} \left[ D_{\text{KL}} \left( q(\boldsymbol{x}_{t-1} \mid \boldsymbol{x}_t, \boldsymbol{x}_0) \parallel p_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1} \mid \boldsymbol{x}_t) \right) - \lambda\log p_{\boldsymbol{\theta}}(\boldsymbol{x}_0 \mid \boldsymbol{x}_t) \right],
+$$ {#eq-5}
+where $\lambda \in \mathbb R_{\ge 0}$ is a weighting parameter for the cross-entropy between the original data and the predicted output of the network.
+
+### Code
+
+{{< embed theoretical_foundation_assets/d3pm.ipynb >}}

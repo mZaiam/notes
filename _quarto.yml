@@ -49,6 +49,7 @@ website:
           - diffusion_models/theoretical_foundation/sde.qmd
           - diffusion_models/theoretical_foundation/edm.qmd
           - diffusion_models/theoretical_foundation/cold_diffusion.qmd
+          - diffusion_models/theoretical_foundation/d3pm.qmd
           - diffusion_models/samplers/sde_samplers.qmd
           - diffusion_models/samplers/ode_samplers.qmd
           

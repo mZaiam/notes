@@ -17,7 +17,7 @@ $$
 $$ {#eq-3}
 where $\alpha_t = 1 - \beta_t$, $\overline{\alpha}_t = \prod_{s=1}^t \alpha_s$ and $\boldsymbol{\epsilon}\sim \mathcal N(\boldsymbol{\epsilon}\mid\boldsymbol{0}, \boldsymbol{I})$, with $\boldsymbol{\epsilon} \in \mathbb R^n$. 
 
-The reverse process was defined as a Markov chain where the Gaussian transitions were learned via a parametrized Neural Network (NN). Starting with $\boldsymbol x_T\in \mathbb R^n$, where $\boldsymbol{x}_T\sim\mathcal N(\boldsymbol{x}_T\mid \boldsymbol{0}, \boldsymbol{I}) $, the NN parametrized by $\boldsymbol{\theta}$ approximated the following chain:
+The reverse process was defined as a Markov chain where the Gaussian transitions were learned via a parametrized Neural Network (NN). Starting with $\boldsymbol x_T\in \mathbb R^n$, where $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{x}_T \mid \boldsymbol{0}, \boldsymbol{I})$, the NN parametrized by $\boldsymbol{\theta}$ approximated the following chain:
 $$
 p_{\boldsymbol{\theta}}\left(\boldsymbol{x}_{0:T}\right) = p(\boldsymbol x_T) \prod_{t=1}^T p_{\boldsymbol \theta}(\boldsymbol x_{t-1}\mid \boldsymbol x_t).
 $$ {#eq-4}

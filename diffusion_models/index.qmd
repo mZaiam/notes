@@ -19,6 +19,8 @@ The various definitions of the diffusion and flow-based generative learning proc
 
 ### [1.5. Cold-Diffusion (CD)](theoretical_foundation/cold_diffusion.qmd)
 
+### [1.6. Discrete Denoising Diffusion Probabilistic Models (D3PMs)](theoretical_foundation/d3pm.qmd)
+
 --- 
 
 ## 2. Samplers
