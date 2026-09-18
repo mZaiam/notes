@@ -1,5 +1,5 @@
 ---
-title: "1.4. Elucidated Diffusion Models (EDMs)"
+title: "1.5. Elucidated Diffusion Models (EDMs)"
 bibliography: ../../references.bib
 ---
 

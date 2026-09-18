@@ -1,9 +1,9 @@
 ---
-title: "1.6. Discrete Denoising Diffusion Probabilistic Models (D3PMs)"
+title: "1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)"
 bibliography: ../../references.bib
 ---
 
-Previous diffusion formulations focused on continuous variables, adding Gaussian noise to corrupt data. In this context, Discrete Denoising Diffusion Probabilistic Models (D3PMs) [@dm:d3pm] introduced a diffusion paradigm for discrete data, enabling the application to text, graphs and more general categorical data. 
+While [Cold Diffusion (CD)](cd.qmd) showed that diffusion could be performed with more general corruption patterns, previous formulations focused exclusively on continuous variables, adding Gaussian noise to corrupt data. In this context, Discrete Denoising Diffusion Probabilistic Models (D3PMs) [@dm:d3pm] introduced a diffusion paradigm for discrete data, enabling the application to text, graphs and more general categorical data. 
 
 Let a single data component at diffusion step $t$ be represented by a one-hot vector $\boldsymbol x_t \in \{0, 1\}^K$ with $K \in \mathbb N$ discrete states. The forward diffusion process in D3PM was defined as:
 $$

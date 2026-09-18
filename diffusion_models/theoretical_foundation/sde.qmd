@@ -9,7 +9,7 @@ Let $\{\boldsymbol{x}(t)\}_{t=0}^T$ be a sequence of data $\boldsymbol x(t) \in 
 $$
 d\boldsymbol{x} = \boldsymbol{f}(\boldsymbol{x}, t) dt + g(t)d\boldsymbol{w},
 $$ {#eq-1}
-where $\boldsymbol{w} \in \mathbb R^n$ is the Wiener process, $\boldsymbol{f}(\cdot, t) \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x}(t)$ and $g(t) : \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$. To denote the probability density of $\boldsymbol{x}(t)$ the notation $p_t$ is going to be used, which also holds for the transition kernels $p_{st} (\boldsymbol{x}(s) \mid \boldsymbol{x}(t))$, with $0\leq s < t \leq T$. 
+where $\boldsymbol{w} \in \mathbb R^n$ is the Wiener process, $\boldsymbol{f}: \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x}(t)$ and $g : \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$. To denote the probability density of $\boldsymbol{x}(t)$ the notation $p_t$ is going to be used, which also holds for the transition kernels $p_{st} (\boldsymbol{x}(s) \mid \boldsymbol{x}(t))$, with $0\leq s < t \leq T$. 
 
 Then, by taking $\boldsymbol{x}(T) \sim p_T$ and reversing the diffusion process, samples can be obtained from the data distribution. This is modelled by a reverse diffusion process, given by:
 $$

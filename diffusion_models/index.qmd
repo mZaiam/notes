@@ -15,11 +15,13 @@ The various definitions of the diffusion and flow-based generative learning proc
 
 ### [1.3. Stochastic Differential Equations (SDEs) Formulation](theoretical_foundation/sde.qmd)
 
-### [1.4. Elucidated Diffusion Models (EDMs)](theoretical_foundation/edm.qmd)
+### [1.4. Graph Diffusion via the System of SDEs (GDSS)](theoretical_foundation/gdss.qmd)
 
-### [1.5. Cold-Diffusion (CD)](theoretical_foundation/cold_diffusion.qmd)
+### [1.5. Elucidated Diffusion Models (EDMs)](theoretical_foundation/edm.qmd)
 
-### [1.6. Discrete Denoising Diffusion Probabilistic Models (D3PMs)](theoretical_foundation/d3pm.qmd)
+### [1.6. Cold-Diffusion (CD)](theoretical_foundation/cd.qmd)
+
+### [1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)](theoretical_foundation/d3pm.qmd)
 
 --- 
 
