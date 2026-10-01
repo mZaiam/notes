@@ -1,5 +1,5 @@
 ---
-title: "1.4. Graph Diffusion via the System of SDEs (GDSS)"
+title: "1.1.4. Graph Diffusion via the System of SDEs (GDSS)"
 bibliography: ../../references.bib
 ---
 

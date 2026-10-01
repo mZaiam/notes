@@ -41,7 +41,7 @@ website:
       
       - text: "---"
       
-      - section: "Diffusion Models (DM) and Flow-Matching (FM)"
+      - section: "Diffusion Models (DM) and Flow Matching (FM)"
         href: "diffusion_models/index.qmd"
         contents:
           - diffusion_models/theoretical_foundation/smld.qmd
@@ -53,6 +53,7 @@ website:
           - diffusion_models/theoretical_foundation/d3pm.qmd
           - diffusion_models/samplers/sde_samplers.qmd
           - diffusion_models/samplers/ode_samplers.qmd
+          - diffusion_models/conditioning_data_consistency/dps.qmd
           
 format:
   html:

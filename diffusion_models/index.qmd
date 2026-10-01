@@ -1,34 +1,48 @@
 ---
-title: "Diffusion Models (DMs) and Flow-Matching (FM)"
+title: "Diffusion Models (DMs) and Flow Matching (FM)"
 toc: true
 ---
 
 This section covers the theoretical and mathematical foundations of diffusion and flow-based generative models.
 
-## 1. Theoretical Foundation
+# 1. Theoretical Foundation
 
 The various definitions of the diffusion and flow-based generative learning process.
 
-### [1.1. Score Matching with Langevin Dynamics (SMLD)](theoretical_foundation/smld.qmd)
+## 1.1. Diffusion Models (DMs)
 
-### [1.2. Denoising Diffusion Probabilistic Models (DDPM)](theoretical_foundation/ddpm.qmd)
+### [1.1.1. Score Matching with Langevin Dynamics (SMLD)](theoretical_foundation/smld.qmd)
 
-### [1.3. Stochastic Differential Equations (SDEs) Formulation](theoretical_foundation/sde.qmd)
+### [1.1.2. Denoising Diffusion Probabilistic Models (DDPM)](theoretical_foundation/ddpm.qmd)
 
-### [1.4. Graph Diffusion via the System of SDEs (GDSS)](theoretical_foundation/gdss.qmd)
+### [1.1.3. Stochastic Differential Equations (SDEs) Formulation](theoretical_foundation/sde.qmd)
 
-### [1.5. Elucidated Diffusion Models (EDMs)](theoretical_foundation/edm.qmd)
+### [1.1.4. Graph Diffusion via the System of SDEs (GDSS)](theoretical_foundation/gdss.qmd)
 
-### [1.6. Cold-Diffusion (CD)](theoretical_foundation/cd.qmd)
+### [1.1.5. Elucidated Diffusion Models (EDMs)](theoretical_foundation/edm.qmd)
 
-### [1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)](theoretical_foundation/d3pm.qmd)
+### [1.1.6. Cold-Diffusion (CD)](theoretical_foundation/cd.qmd)
+
+### [1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)](theoretical_foundation/d3pm.qmd)
+
+## 1.2. Flow Matching (FM)
 
 --- 
 
-## 2. Samplers
+# 2. Samplers
 
 Algorithms for generating samples from the learned generative model.
 
 ### [2.1. Samplers based on Stochastic Differential Equations (SDEs)](samplers/sde_samplers.qmd)
 
 ### [2.2. Samplers based on Ordinary Differential Equations (ODEs)](samplers/ode_samplers.qmd)
+
+## 3. Conditioning and Data Consistency
+
+Methods for conditional generation and data consistency in inverse problems.
+
+## 3.1. Conditioning
+
+## 3.2. Data Consistency
+
+### [3.2.1. Diffusion Posterior Sampling (DPS)](conditioning_data_consistency/dps.qmd)

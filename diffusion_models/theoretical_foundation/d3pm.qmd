@@ -1,5 +1,5 @@
 ---
-title: "1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)"
+title: "1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)"
 bibliography: ../../references.bib
 ---
 

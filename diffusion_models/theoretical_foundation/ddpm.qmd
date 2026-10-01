@@ -1,5 +1,5 @@
 ---
-title: "1.2. Denoising Diffusion Probabilistic Models (DDPM)"
+title: "1.1.2. Denoising Diffusion Probabilistic Models (DDPM)"
 bibliography: ../../references.bib
 ---
 

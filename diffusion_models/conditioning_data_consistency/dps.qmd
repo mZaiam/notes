@@ -1,0 +1,28 @@
+---
+title: "3.2.1. Diffusion Posterior Sampling (DPS)"
+bibliography: ../../references.bib
+---
+
+Diffusion Posterior Sampling (DPS) [@dm:dps] is a method for sampling from the posterior distribution in an inverse problem. To estimate the intractable likelihood term $p_t(\boldsymbol{y} \mid \boldsymbol{x}_t)$, with $\boldsymbol x \in \mathbb R^n$ and $\boldsymbol y \in \mathbb R^m$ DPS first factored the distribution by marginalizing over the clean data $\boldsymbol{x}_0$:
+$$
+p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) = \int p(\boldsymbol{y} \mid \boldsymbol{x}_0) p_t(\boldsymbol{x}_0 \mid \boldsymbol{x}_t) d\boldsymbol{x}_0 = \mathbb{E}_{\boldsymbol{x}_0 \sim p_t(\boldsymbol{x}_0 \mid \boldsymbol{x}_t)} \left[ p(\boldsymbol{y} \mid \boldsymbol{x}_0) \right].
+$$ {#eq-1}
+This indicates that the likelihood of observing $\boldsymbol{y}$ given a noisy image $\boldsymbol{x}_t$ is the expected value of the clean data likelihood, weighted by the posterior $p_t(\boldsymbol{x}_0 \mid \boldsymbol{x}_t)$. Because evaluating this expectation directly is intractable in practice, DPS proposed approximating it using the likelihood of the expected clean image:
+$$
+p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) \simeq p(\boldsymbol{y} \mid \boldsymbol{\hat{x}}_0),
+$$ {#eq-2}
+where $\boldsymbol{\hat{x}}_0 \in \mathbb R^n$ is the posterior mean estimator computed via Tweedie's formula:
+$$
+\boldsymbol{\hat{x}}_0 = \mathbb{E}[\boldsymbol{x}_0 \mid \boldsymbol{x}_t] = \frac{1}{\sqrt{\overline{\alpha}_t}} \left( \boldsymbol{x}_t + (1 - \overline{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{x}_t, t) \right),
+$$ {#eq-3}
+where $\overline{\alpha} \in \mathbb R$ is a parameter from the noise schedule.
+
+Geometrically, while the score function $\boldsymbol{s}_{\boldsymbol{\theta}} \in \mathbb R^n$ points in the direction orthogonal to the data manifold, the gradient of the likelihood term points in the tangent direction of the manifold. The specific form of the likelihood depends on the distribution of the measurement noise $\boldsymbol{\epsilon}$, but it can be written in general as:
+$$
+\nabla_{\boldsymbol{x}_t} \log p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) \simeq - \rho \nabla_{\boldsymbol{x}_t} \left\| \boldsymbol{y} - \mathcal{A}(\boldsymbol{\hat{x}}_0) \right\|,
+$$ {#eq-4}
+where $\|\cdot, \cdot\| : \mathbb R^{m\times m} \to \mathbb R_{\ge 0}$ is a norm and $\rho \in \mathbb R$ is a step size.
+
+### Code
+
+{{< embed conditioning_data_consistency_assets/dps.ipynb >}}

@@ -15,7 +15,7 @@ The Annealed Langevin Dynamics method was proposed in [Score-Matching with Lange
 $$
 \boldsymbol{x}_{t}^{m} = \boldsymbol{x}_{t}^{m-1} + \frac{\sigma'_t}{2} \boldsymbol{s}_{\boldsymbol{\theta}} \left(\boldsymbol{x}_{t}^{m-1}, \sigma_t \right) + \sqrt{\sigma'_t}\boldsymbol{\epsilon}^{m-1},
 $$ {#eq-2}
-where $\sigma'_t = \\kappa \cdot (\sigma_t^2 / \sigma_1^2)$ is the step size corresponding to the current noise scale $\sigma_t$ with fixed parameter $\\kappa$, and $\boldsymbol \epsilon \in \mathbb R^n$ with $\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$. After $M$ steps, the noise level is annealed to $\sigma_{t-1}$, and the process repeats until $\sigma_1$. @alg:annealed_langevin presents the Annealed Langevin Dynamic Algorithm.
+where $\sigma'_t = \kappa \cdot (\sigma_t^2 / \sigma_1^2)$ is the step size corresponding to the current noise scale $\sigma_t$ with fixed parameter $\kappa$, and $\boldsymbol \epsilon \in \mathbb R^n$ with $\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$. After $M$ steps, the noise level is annealed to $\sigma_{t-1}$, and the process repeats until $\sigma_1$. @alg:annealed_langevin presents the Annealed Langevin Dynamic Algorithm.
 
 ```pseudocode
 #| label: alg:annealed_langevin
@@ -54,7 +54,7 @@ where $\sigma'_t = \\kappa \cdot (\sigma_t^2 / \sigma_1^2)$ is the step size cor
 
 ## Ancestral Sampling
 
-The Ancestral Sampling method was proposed in [Denoising Diffusion Probabilistic Models (DDPMs)](../theoretical_foundation/ddpm.qmd) [@dm:ddpm] as its sampling algorithm. Let the noise network be $\boldsymbol{\epsilon}_{\boldsymbol{\theta}} : \mathbb R^{n \times 1} \to \mathbb R^n$, $T \in \mathbb N$ be the number of reverse diffusion steps, and $\boldsymbol{x}_T \in \mathbb R^n$ be noise sampled from $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$. Additionally, let the diffusion SDE from DDPM be defined as:
+The Ancestral Sampling method was proposed in [Denoising Diffusion Probabilistic Models (DDPMs)](../theoretical_foundation/ddpm.qmd) [@dm:ddpm] as its sampling algorithm. Let the noise network be $\boldsymbol{\epsilon}_{\boldsymbol{\theta}} (\boldsymbol x_t, t): \mathbb R^{n \times 1} \to \mathbb R^n$, $T \in \mathbb N$ be the number of reverse diffusion steps, and $\boldsymbol{x}_T \in \mathbb R^n$ be noise sampled from $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$. Additionally, let the diffusion SDE from DDPM be defined as:
 $$
 d\boldsymbol{x} = -\frac{1}{2}\beta(t) \boldsymbol{x} dt + \sqrt{\beta(t)}d\boldsymbol{w},
 $$ {#eq-4}
