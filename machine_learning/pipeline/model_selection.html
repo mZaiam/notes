@@ -312,7 +312,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models (DM) and Flow-Matching (FM)</span></a>
+ <span class="menu-text">Diffusion Models (DM) and Flow Matching (FM)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -321,37 +321,61 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/smld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
+ <span class="menu-text">1.1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/ddpm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
+ <span class="menu-text">1.1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/sde.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+ <span class="menu-text">1.1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/gdss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.4. Graph Diffusion via the System of SDEs (GDSS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/edm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.4. Elucidated Diffusion Models (EDMs)</span></a>
+ <span class="menu-text">1.1.5. Elucidated Diffusion Models (EDMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.5. Cold-Diffusion (CD)</span></a>
+  <a href="../../diffusion_models/theoretical_foundation/cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.6. Cold-Diffusion (CD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/d3pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/samplers/ode_samplers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2. Samplers based on Ordinary Differential Equations (ODEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
       </ul>
@@ -399,7 +423,7 @@ window.Quarto = {
 <p>One of the most important steps in a Machine Learning (ML) pipeline is to select the best available model to deploy in the desired task. This is closely related to hyperparameter tuning (HP-tuning), which is the process of finding the best hyperparameters (HPs) of the model for the given problem. These problems involve estimating the performance of a model on unseen data – data that was not available at training time <span class="citation" data-cites="ml:raschka">(<a href="#ref-ml:raschka" role="doc-biblioref">Raschka 2018</a>)</span>. For clarity, model evaluation is the process of estimating how well a model generalizes on unseen data; model selection is the process of choosing the best hyperparameters for a given model; and Model comparison is the process of comparing the performance of different models.</p>
 <section id="holdout-method" class="level2">
 <h2 class="anchored" data-anchor-id="holdout-method">Holdout Method</h2>
-<p>The most used method for model evaluation is the holdout method. This involves splitting the dataset <span class="math inline">\(\mathcal D = \{(\boldsymbol x_i, \boldsymbol y_i)\}_{i=1}^N\)</span> with <span class="math inline">\(N\)</span> observations into two disjoint splits, called train <span class="math inline">\(\mathcal D_{\text{Train}}\)</span> and test <span class="math inline">\(\mathcal D_{\text{Test}}\)</span> split. The train split is used for training the model, while the test set is used only to evaluate the model performance. Generally, the test split contains about <span class="math inline">\(10-30\%\)</span> of the total amount of data. This method is visually depicted in <a href="#fig-holdout" class="quarto-xref">Fig.&nbsp;1</a>.</p>
+<p>The most used method for model evaluation is the holdout method. This involves splitting the dataset <span class="math inline">\(\mathcal D = \{(\boldsymbol x_i, \boldsymbol y_i)\}_{i=1}^N\)</span> with <span class="math inline">\(N\)</span> observations into two disjoint splits, called train <span class="math inline">\(\mathcal D_{\text{Train}}\)</span> and test <span class="math inline">\(\mathcal D_{\text{Test}}\)</span> split. The train split is used for training the model, while the test set is used only to evaluate the model performance. Generally, the test split contains about <span class="math inline">\(10-30\%\)</span> of the total amount of data. This method is visually depicted in <a href="#fig-holdout" class="quarto-xref">Figure&nbsp;1</a>.</p>
 <div id="fig-holdout" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-holdout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -411,7 +435,7 @@ Figure&nbsp;1: Diagram of the holdout method.
 </figure>
 </div>
 <p>The test set effectively simulates the behavior of the model when seeing data that was not in training. If the model generalized well, it should maintain a similar performance as it did on the training split. Note that this assumes that both splits were sampled from the same distribution, therefore, the model was able to learn patterns that are representative for that dataset. If new data is provided to the model, which possesses completely different statistics than the training data, the model is going to perform worse than expected – this is known as the Out-Of Distribution (OOD) problem.</p>
-<p>A variant of the holdout method is the stratified holdout method, which is important for classification problems. In this setup, the splits can not be randomly sampled from the original dataset, as the splits need to have the same class frequencies as the original data. For that, stratified holdout makes the sampling obey this condition, which leads to the train and test split presenting approximately the same class proportions as the initial dataset. This is depicted in <a href="#fig-holdout_stratified" class="quarto-xref">Fig.&nbsp;2</a>.</p>
+<p>A variant of the holdout method is the stratified holdout method, which is important for classification problems. In this setup, the splits can not be randomly sampled from the original dataset, as the splits need to have the same class frequencies as the original data. For that, stratified holdout makes the sampling obey this condition, which leads to the train and test split presenting approximately the same class proportions as the initial dataset. This is depicted in <a href="#fig-holdout_stratified" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <div id="fig-holdout_stratified" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-holdout_stratified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -430,7 +454,7 @@ Figure&nbsp;2: Diagram of the stratified holdout method. The darker colors repre
 <p>To address these issues, <span class="math inline">\(k\)</span>-fold Cross-Validation (CV) is employed. First, the method applies the holdout technique to create a training and testing split. Then, using the training set, it generates <span class="math inline">\(k\)</span> disjoint sets <span class="math inline">\(\mathcal D_i \subset \mathcal D_{\text{Train}}\)</span>, such that: <span id="eq-1"><span class="math display">\[
 \bigcup_{i=1}^k \mathcal D_i = D_{\text{Train}}.
 \tag{1}\]</span></span> Subsequently, the <span class="math inline">\(k\)</span>-fold CV trains the model multiple times, once for each HP configuration. For each iteration, the model is trained on <span class="math inline">\(k-1\)</span> sets, using the remaining set as the validation set – analogous to the test set. Finally, the model yields <span class="math inline">\(k\)</span> performance values, and the mean of these values is used to estimate the model’s true performance. This average performance is then used to select the best possible HP configuration from a predetermined search space.</p>
-<p>Note that by utilizing different splits, <span class="math inline">\(k\)</span>-fold CV effectively reduces split bias. Typically, <span class="math inline">\(k=10\)</span> is used for this method, although the choice depends on factors such as dataset size, computational cost, and other considerations. Visually, the CV process is depicted in <a href="#fig-cv" class="quarto-xref">Fig.&nbsp;3</a>.</p>
+<p>Note that by utilizing different splits, <span class="math inline">\(k\)</span>-fold CV effectively reduces split bias. Typically, <span class="math inline">\(k=10\)</span> is used for this method, although the choice depends on factors such as dataset size, computational cost, and other considerations. Visually, the CV process is depicted in <a href="#fig-cv" class="quarto-xref">Figure&nbsp;3</a>.</p>
 <div id="fig-cv" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

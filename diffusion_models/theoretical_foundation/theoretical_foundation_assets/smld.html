@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models (DM) and Flow-Matching (FM)</span></a>
+ <span class="menu-text">Diffusion Models (DM) and Flow Matching (FM)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -270,37 +270,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../diffusion_models/theoretical_foundation/smld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
+ <span class="menu-text">1.1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../diffusion_models/theoretical_foundation/ddpm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
+ <span class="menu-text">1.1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../diffusion_models/theoretical_foundation/sde.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+ <span class="menu-text">1.1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../diffusion_models/theoretical_foundation/gdss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.4. Graph Diffusion via the System of SDEs (GDSS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../diffusion_models/theoretical_foundation/edm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.4. Elucidated Diffusion Models (EDMs)</span></a>
+ <span class="menu-text">1.1.5. Elucidated Diffusion Models (EDMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.5. Cold-Diffusion (CD)</span></a>
+  <a href="../../../diffusion_models/theoretical_foundation/cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.6. Cold-Diffusion (CD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../diffusion_models/theoretical_foundation/d3pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../diffusion_models/samplers/ode_samplers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2. Samplers based on Ordinary Differential Equations (ODEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
       </ul>
@@ -333,12 +357,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Importing the packages.</p>
 <div id="cell-2" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision <span class="im">import</span> transforms</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision.datasets <span class="im">import</span> MNIST</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusers <span class="im">import</span> UNet2DModel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision <span class="im">import</span> transforms</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision.datasets <span class="im">import</span> MNIST</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Plotting the noise schedule of SMLD.</p>
 <div id="cell-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:407}}" data-outputid="346a5617-9608-4199-b8b9-fcb2e9fd76f9" data-execution_count="3">

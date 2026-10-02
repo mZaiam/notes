@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1.4. Elucidated Diffusion Models (EDMs)</title>
+<title>1.1.5. Elucidated Diffusion Models (EDMs)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" rel="next">
-<link href="../../diffusion_models/theoretical_foundation/sde.html" rel="prev">
+<link href="../../diffusion_models/theoretical_foundation/cd.html" rel="next">
+<link href="../../diffusion_models/theoretical_foundation/gdss.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -186,7 +186,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow-Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/theoretical_foundation/edm.html">1.4. Elucidated Diffusion Models (EDMs)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/theoretical_foundation/edm.html">1.1.5. Elucidated Diffusion Models (EDMs)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -312,7 +312,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models (DM) and Flow-Matching (FM)</span></a>
+ <span class="menu-text">Diffusion Models (DM) and Flow Matching (FM)</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -321,37 +321,61 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/smld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
+ <span class="menu-text">1.1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/ddpm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
+ <span class="menu-text">1.1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/sde.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+ <span class="menu-text">1.1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/gdss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.4. Graph Diffusion via the System of SDEs (GDSS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/edm.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">1.4. Elucidated Diffusion Models (EDMs)</span></a>
+ <span class="menu-text">1.1.5. Elucidated Diffusion Models (EDMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.5. Cold-Diffusion (CD)</span></a>
+  <a href="../../diffusion_models/theoretical_foundation/cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.6. Cold-Diffusion (CD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/d3pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/samplers/ode_samplers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2. Samplers based on Ordinary Differential Equations (ODEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
       </ul>
@@ -373,9 +397,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow-Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/theoretical_foundation/edm.html">1.4. Elucidated Diffusion Models (EDMs)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/theoretical_foundation/edm.html">1.1.5. Elucidated Diffusion Models (EDMs)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">1.4. Elucidated Diffusion Models (EDMs)</h1>
+<h1 class="title">1.1.5. Elucidated Diffusion Models (EDMs)</h1>
 </div>
 
 
@@ -393,11 +417,11 @@ window.Quarto = {
 
 
 <p>After the <a href="../../diffusion_models/theoretical_foundation/sde.html">Stochastic Differential Equations (SDEs)</a> general framework for Diffusion Models (DMs), Elucidated Diffusion Models (EDMs) <span class="citation" data-cites="dm:edm">(<a href="#ref-dm:edm" role="doc-biblioref">Karras et al. 2022</a>)</span> focused on simplifying the diffusion framework, decoupling the choices of parametrization such as noise schedules and other important hyperparameters that were jointly defined in previous approaches.</p>
-<p>Given the data distribution <span class="math inline">\(p_0(\boldsymbol x)\)</span>, with <span class="math inline">\(\boldsymbol x \in \mathbb R\)</span>, and its standard deviation <span class="math inline">\(\sigma_0 \in \mathbb R\)</span>, let <span class="math inline">\(p(\boldsymbol x,  \sigma)\)</span> denote a modified data distribution with noise scale <span class="math inline">\(\sigma \in \mathbb R\)</span>. Using the general <a href="../../diffusion_models/theoretical_foundation/sde.html">Probability Flow ODE</a> equation, EDM formulates diffusion with <span class="math inline">\(\boldsymbol{f}(\boldsymbol x, t) = \boldsymbol 0\)</span> and <span class="math inline">\(g(t)^2 = 2 \frac{d\sigma(t)}{dt} \sigma(t)\)</span>, that is: <span id="eq-1"><span class="math display">\[
-d\boldsymbol{x} = - \frac{d\sigma(t)}{dt} \sigma(t) \nabla_{\boldsymbol x} \log p(\boldsymbol x; \sigma(t)) dt,
+<p>Given the data distribution <span class="math inline">\(p_0(\boldsymbol x)\)</span>, with <span class="math inline">\(\boldsymbol x \in \mathbb R\)</span>, and its standard deviation <span class="math inline">\(\sigma_0 \in \mathbb R\)</span>, let <span class="math inline">\(p(\boldsymbol x,  \sigma)\)</span> denote a modified data distribution with noise scale <span class="math inline">\(\sigma \in \mathbb R\)</span>. Using the general Probability Flow ODE equation, EDM formulates diffusion with <span class="math inline">\(\boldsymbol{f}(\boldsymbol x, t) = \boldsymbol 0\)</span> and <span class="math inline">\(g(t)^2 = 2 \frac{d\sigma(t)}{dt} \sigma(t)\)</span>, that is: <span id="eq-1"><span class="math display">\[
+d\boldsymbol{x} = - \frac{d\sigma(t)}{dt} \sigma(t) \nabla_{\boldsymbol x} \log p(\boldsymbol x, \sigma(t)) dt,
 \tag{1}\]</span></span> where <span class="math inline">\(\sigma(t) : \mathbb R \to \mathbb R\)</span> is a noise scale. Running forward in time goes away from the data, while the opposite goes towards the data distribution. These choices imply that the diffusion process has no drift coefficient, therefore, the Markov chain only adds noise throughout the iterations.</p>
 <p>Given a trained denoiser <span class="math inline">\(\boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{x}, \sigma(t)) : \mathbb R^{n \times 1} \to \mathbb R^n\)</span>, parametrized by <span class="math inline">\(\boldsymbol{\theta}\)</span>, that minimizes the expected <span class="math inline">\(\ell_2\)</span> error to the clean data, the score function can be expressed in terms of the optimal denoiser <span class="math inline">\(\boldsymbol{D} : \mathbb R^{n \times 1} \to \mathbb R^n\)</span>: <span id="eq-2"><span class="math display">\[
-\nabla_{\boldsymbol x} \log p(\boldsymbol x; \sigma(t)) = \frac{\boldsymbol{D}(\boldsymbol{x}, \sigma(t)) - \boldsymbol{x}}{\sigma(t)^2}.
+\nabla_{\boldsymbol x} \log p(\boldsymbol x, \sigma(t)) = \frac{\boldsymbol{D}(\boldsymbol{x}, \sigma(t)) - \boldsymbol{x}}{\sigma(t)^2}.
 \tag{2}\]</span></span> Substituting the denoiser into the Probability Flow ODE yields: <span id="eq-3"><span class="math display">\[
 d\boldsymbol{x} = -\frac{d\sigma(t)}{dt} \frac{\boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{x}, \sigma(t)) - \boldsymbol{x}}{\sigma(t)} dt.
 \tag{3}\]</span></span> In particular, EDM employed <span class="math inline">\(\sigma(t) = t\)</span>, simplifying the ODE to: <span id="eq-4"><span class="math display">\[
@@ -408,6 +432,7 @@ d\boldsymbol{x} = \frac{\boldsymbol{x} - \boldsymbol{D}_{\boldsymbol{\theta}}(\b
 \tag{5}\]</span></span> where the noise <span class="math inline">\(\boldsymbol{\epsilon} \in \mathbb R^n\)</span> is sampled from <span class="math inline">\(\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \sigma^2 \boldsymbol{I})\)</span>. The weighting function <span class="math inline">\(\lambda(\sigma) : \mathbb R \to \mathbb R\)</span> is defined as: <span id="eq-6"><span class="math display">\[
 \lambda(\sigma) = \frac{\sigma^2 + \sigma_0^2}{\sigma^2\cdot \sigma_0^2}.
 \tag{6}\]</span></span> Overall, EDM simplified the design choices of implementing DMs, including the noise schedules, network pre-conditioning, among other practical aspects.</p>
+<p>For sampling, EDM proposed a <a href="../../diffusion_models/samplers/ode_samplers.html">Stochastic Churn Sampler</a> by using the Probability Flow ODE.</p>
 <section id="code" class="level3">
 <h3 class="anchored" data-anchor-id="code">Code</h3>
 <div class="quarto-embed-nb-cell">
@@ -888,13 +913,13 @@ Karras, Tero, Miika Aittala, Timo Aila, and Samuli Laine. 2022. <span>“Elucida
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../diffusion_models/theoretical_foundation/sde.html" class="pagination-link" aria-label="1.3. Stochastic Differential Equations (SDEs) Formulation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1.3. Stochastic Differential Equations (SDEs) Formulation</span>
+      <a href="../../diffusion_models/theoretical_foundation/gdss.html" class="pagination-link" aria-label="1.1.4. Graph Diffusion via the System of SDEs (GDSS)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1.1.4. Graph Diffusion via the System of SDEs (GDSS)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="pagination-link" aria-label="1.5. Cold-Diffusion (CD)">
-        <span class="nav-page-text">1.5. Cold-Diffusion (CD)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../diffusion_models/theoretical_foundation/cd.html" class="pagination-link" aria-label="1.1.6. Cold-Diffusion (CD)">
+        <span class="nav-page-text">1.1.6. Cold-Diffusion (CD)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

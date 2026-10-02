@@ -311,7 +311,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models (DM) and Flow-Matching (FM)</span></a>
+ <span class="menu-text">Diffusion Models (DM) and Flow Matching (FM)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -320,37 +320,61 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/smld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
+ <span class="menu-text">1.1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/ddpm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
+ <span class="menu-text">1.1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/sde.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+ <span class="menu-text">1.1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/gdss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.4. Graph Diffusion via the System of SDEs (GDSS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/edm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.4. Elucidated Diffusion Models (EDMs)</span></a>
+ <span class="menu-text">1.1.5. Elucidated Diffusion Models (EDMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.5. Cold-Diffusion (CD)</span></a>
+  <a href="../../diffusion_models/theoretical_foundation/cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.6. Cold-Diffusion (CD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/d3pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/samplers/ode_samplers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2. Samplers based on Ordinary Differential Equations (ODEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
       </ul>
@@ -391,7 +415,7 @@ window.Quarto = {
 </header>
 
 
-<p>Deep Learning (DL) is a subarea of Machine Learning (ML) based on models composed of artificial Neural Networks (NNs) <span class="citation" data-cites="book:dlbengio">(<a href="#ref-book:dlbengio" role="doc-biblioref">LeCun, Bengio, and Hinton 2015</a>)</span>. These architectures are general function approximators inspired by biological neural processing <span class="citation" data-cites="book:understanddl">(<a href="#ref-book:understanddl" role="doc-biblioref">Prince 2023</a>)</span>. The foundation of NNs began with the mathematical model of the biological neuron <span class="citation" data-cites="dl:neuron">(<a href="#ref-dl:neuron" role="doc-biblioref">McCulloch and Pitts 1943</a>)</span>. This later inspired the Perceptron <span class="citation" data-cites="dl:perceptron">(<a href="#ref-dl:perceptron" role="doc-biblioref">Rosenblatt 1958</a>)</span>, depicted in <a href="#fig-perceptron" class="quarto-xref">Fig.&nbsp;1</a>. The Perceptron introduced learnable parameters composed of weights <span class="math inline">\(\boldsymbol{w}\in\mathbb R^n\)</span> and a bias <span class="math inline">\(b\in \mathbb R\)</span>. Given an input <span class="math inline">\(\boldsymbol{x} \in \mathbb R^n\)</span>, the output <span class="math inline">\(\hat{y} \in \mathbb R\)</span> of the Perceptron was defined as: <span id="eq-1"><span class="math display">\[
+<p>Deep Learning (DL) is a subarea of Machine Learning (ML) based on models composed of artificial Neural Networks (NNs) <span class="citation" data-cites="book:dlbengio">(<a href="#ref-book:dlbengio" role="doc-biblioref">LeCun, Bengio, and Hinton 2015</a>)</span>. These architectures are general function approximators inspired by biological neural processing <span class="citation" data-cites="book:understanddl">(<a href="#ref-book:understanddl" role="doc-biblioref">Prince 2023</a>)</span>. The foundation of NNs began with the mathematical model of the biological neuron <span class="citation" data-cites="dl:neuron">(<a href="#ref-dl:neuron" role="doc-biblioref">McCulloch and Pitts 1943</a>)</span>. This later inspired the Perceptron <span class="citation" data-cites="dl:perceptron">(<a href="#ref-dl:perceptron" role="doc-biblioref">Rosenblatt 1958</a>)</span>, depicted in <a href="#fig-perceptron" class="quarto-xref">Figure&nbsp;1</a>. The Perceptron introduced learnable parameters composed of weights <span class="math inline">\(\boldsymbol{w}\in\mathbb R^n\)</span> and a bias <span class="math inline">\(b\in \mathbb R\)</span>. Given an input <span class="math inline">\(\boldsymbol{x} \in \mathbb R^n\)</span>, the output <span class="math inline">\(\hat{y} \in \mathbb R\)</span> of the Perceptron was defined as: <span id="eq-1"><span class="math display">\[
 \hat{y} = f\left(b + \sum_{i=1}^n w_i x_i\right) = f\left(\boldsymbol{w}^T \boldsymbol{x} + b\right),
 \tag{1}\]</span></span> where <span class="math inline">\(f(z) = \text{sgn}(z)\)</span> was a step function.</p>
 <div id="fig-perceptron" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -436,7 +460,7 @@ b_2 \\
 \vdots \\
 b_m
 \end{bmatrix} \right).
-\tag{6}\]</span></span> The activation function <span class="math inline">\(\sigma(\cdot)\)</span> is applied element-wise. In an MLP, multiple layers are composed sequentially to parameterize a function <span class="math inline">\(f_{\boldsymbol{\Theta}}: \mathcal{X} \to \mathcal{Y}\)</span> that maps the input space <span class="math inline">\(\mathcal{X}\)</span> to the target space <span class="math inline">\(\mathcal{Y}\)</span>. Intermediate layers between input and output are called hidden layers. <a href="#fig-mlp" class="quarto-xref">Fig.&nbsp;2</a> depicts a diagram of the MLP architecture.</p>
+\tag{6}\]</span></span> The activation function <span class="math inline">\(\sigma(\cdot)\)</span> is applied element-wise. In an MLP, multiple layers are composed sequentially to parameterize a function <span class="math inline">\(f_{\boldsymbol{\Theta}}: \mathcal{X} \to \mathcal{Y}\)</span> that maps the input space <span class="math inline">\(\mathcal{X}\)</span> to the target space <span class="math inline">\(\mathcal{Y}\)</span>. Intermediate layers between input and output are called hidden layers. <a href="#fig-mlp" class="quarto-xref">Figure&nbsp;2</a> depicts a diagram of the MLP architecture.</p>
 <div id="fig-mlp" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mlp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -449,12 +473,7 @@ Figure&nbsp;2: Diagram of an MLP.
 </div>
 <p>The learnable parameters are optimized in a Supervised Learning framework using a labeled dataset <span class="math inline">\(\mathcal{D} = \{(\boldsymbol{x}_i, \boldsymbol{y}_i)\}_{i=1}^N\)</span>. Given a loss function <span class="math inline">\(\mathcal{L} : \mathcal Y \times \mathcal Y \to \mathbb R\)</span>, the learnable parameter set <span class="math inline">\(\boldsymbol{\Theta} = \{\boldsymbol{W}^{(l)}, \boldsymbol{b}^{(l)}\}_{l=1}^L\)</span> is updated iteratively via backpropagation: <span id="eq-7"><span class="math display">\[
 \boldsymbol{\Theta}^{(k+1)} = \boldsymbol{\Theta}^{(k)} - \eta \nabla_{\boldsymbol{\Theta}^{(k)}} \mathcal{L}\left(\boldsymbol{y}_i, f_{\boldsymbol{\Theta}^{(k)}}(\boldsymbol{x}_i)\right),
-\tag{7}\]</span></span> where <span class="math inline">\(k\)</span> denotes the optimization step index and <span class="math inline">\(\eta \in \mathbb{R}^+\)</span> represents the learning rate. Finally, the MLP has some important hyperparameters that need to be tuned:</p>
-<ul>
-<li>Number of hidden layers <span class="math inline">\(L\)</span>,</li>
-<li>Number of neurons in each hidden layer <span class="math inline">\(m^{(l)}\)</span> for <span class="math inline">\(l \in \{1, \dots, L\}\)</span>,</li>
-<li>Activation functions for each hidden layer <span class="math inline">\(\sigma^{(l)}\)</span> for <span class="math inline">\(l \in \{1, \dots, L\}\)</span>.</li>
-</ul>
+\tag{7}\]</span></span> where <span class="math inline">\(k\)</span> denotes the optimization step index and <span class="math inline">\(\eta \in \mathbb{R}^+\)</span> represents the learning rate. Finally, the MLP has some important hyperparameters that need to be tuned: number of hidden layers <span class="math inline">\(L\)</span>, number of neurons in each hidden layer <span class="math inline">\(m^{(l)}\)</span> for <span class="math inline">\(l \in \{1, \dots, L\}\)</span>, activation functions for each hidden layer <span class="math inline">\(\sigma^{(l)}\)</span> for <span class="math inline">\(l \in \{1, \dots, L\}\)</span>.</p>
 <section id="code" class="level3">
 <h3 class="anchored" data-anchor-id="code">Code</h3>
 <div class="quarto-embed-nb-cell">
