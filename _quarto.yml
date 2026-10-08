@@ -54,6 +54,7 @@ website:
           - diffusion_models/samplers/sde_samplers.qmd
           - diffusion_models/samplers/ode_samplers.qmd
           - diffusion_models/conditioning_data_consistency/dps.qmd
+          - diffusion_models/conditioning_data_consistency/psld.qmd
           
 format:
   html:

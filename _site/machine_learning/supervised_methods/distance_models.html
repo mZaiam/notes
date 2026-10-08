@@ -312,7 +312,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models (DM) and Flow-Matching (FM)</span></a>
+ <span class="menu-text">Diffusion Models (DM) and Flow Matching (FM)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -321,37 +321,61 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/smld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
+ <span class="menu-text">1.1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/ddpm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
+ <span class="menu-text">1.1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/sde.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+ <span class="menu-text">1.1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/gdss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.4. Graph Diffusion via the System of SDEs (GDSS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/edm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.4. Elucidated Diffusion Models (EDMs)</span></a>
+ <span class="menu-text">1.1.5. Elucidated Diffusion Models (EDMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.5. Cold-Diffusion (CD)</span></a>
+  <a href="../../diffusion_models/theoretical_foundation/cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.6. Cold-Diffusion (CD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/d3pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/samplers/ode_samplers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2. Samplers based on Ordinary Differential Equations (ODEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
       </ul>
@@ -404,7 +428,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="k-nearest-neighbors-k-nn"><span class="math inline">\(k\)</span>-Nearest Neighbors (<span class="math inline">\(k\)</span>-NN)</h2>
 <p>The <span class="math inline">\(k\)</span>-Nearest Neighbors (<span class="math inline">\(k\)</span>-NN) <span class="citation" data-cites="ml:knn">(<a href="#ref-ml:knn" role="doc-biblioref">Cover and Hart 1967</a>)</span> algorithm is a distance-based algorithm. This models is a lazy learner, meaning it does not require training. <span class="math inline">\(k\)</span>-NN stores tha training data, and at inference time, uses the closest <span class="math inline">\(k\)</span> observations to predict the target of a new data point. The algorithm has three major hyperparameters (HPs): the distance function <span class="math inline">\(d: \mathbb R^{n\times n} \to \mathbb R_{\geq 0}\)</span>, the number of neighbors <span class="math inline">\(k\)</span> and the aggregation function <span class="math inline">\(g: \mathbb R^{k\times n} \to \mathbb R_{\geq 0}\)</span>. The distance function determines how to calculate distance in feature space, while <span class="math inline">\(k\)</span> is the number of neighbors used to calculate the targets during inference. Lastly, the aggregation function combines the <span class="math inline">\(k\)</span> closest neighbors to generate the prediction. That is, for a test data <span class="math inline">\(\boldsymbol x^{(\text{Test})} \in \mathcal D_{\text{Test}}\)</span> its prediction <span class="math inline">\(\hat y^{(\text{Test})}\)</span> is given by: <span id="eq-1"><span class="math display">\[
 \hat{y}^{(\text{Test})} = g\left(\boldsymbol{x}^{(\text{Train})}_{d_1}, \boldsymbol{x}^{(\text{Train})}_{d_2}, \dots, \boldsymbol{x}^{(\text{Train})}_{d_k}\right),
-\tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{x}^{(\text{Train})}_{d_i}\)</span> is the <span class="math inline">\(i\)</span>-th closest observation to <span class="math inline">\(\boldsymbol{x}^{(\text{Test})}\)</span> in the training data. according to the distance function <span class="math inline">\(d\)</span>. <a href="#fig-knn" class="quarto-xref">Fig.&nbsp;1</a> depicts a scheme of <span class="math inline">\(k\)</span>-NN during inference.</p>
+\tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{x}^{(\text{Train})}_{d_i}\)</span> is the <span class="math inline">\(i\)</span>-th closest observation to <span class="math inline">\(\boldsymbol{x}^{(\text{Test})}\)</span> in the training data. according to the distance function <span class="math inline">\(d\)</span>. <a href="#fig-knn" class="quarto-xref">Figure&nbsp;1</a> depicts a scheme of <span class="math inline">\(k\)</span>-NN during inference.</p>
 <div id="fig-knn" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -559,7 +583,7 @@ y_i(\boldsymbol{w}^T\boldsymbol{x}_i + b) \geq 1, \quad \forall i = 1, \dots, N,
 \tag{3}\]</span></span> where <span class="math inline">\(y_i\in\{-1, 1\}\)</span>.</p>
 <p>In most scenarios, the dataset <span class="math inline">\(\mathcal{D}\)</span> is not perfectly linearly separable – making the previous problem mathematically infeasible. To address overlapping classes, the optimization problem is relaxed through the introduction of slack variables <span class="math inline">\(\xi_i \geq 0\)</span>, which allow for margin violations and misclassifications. The objective function becomes: <span id="eq-4"><span class="math display">\[
 \min_{\boldsymbol{w}, b, \boldsymbol{\xi}} \frac{1}{2} ||\boldsymbol{w}||^2 + C \sum_{i=1}^N \xi_i,
-\tag{4}\]</span></span> subject to <span class="math inline">\(y_i(\boldsymbol{w}^T\boldsymbol{x}_i + b) \geq 1 - \xi_i\)</span>. The hyperparameter <span class="math inline">\(C &gt; 0\)</span> controls the tradeoff between maximizing the margin and minimizing the classification errors. A smaller <span class="math inline">\(C\)</span> encourages a wider margin with more violations, while a larger <span class="math inline">\(C\)</span> heavily penalizes misclassifications, leading to a narrower margin. <a href="#fig-svm" class="quarto-xref">Fig.&nbsp;2</a> depicts an example of the SVM decision boundaries.</p>
+\tag{4}\]</span></span> subject to <span class="math inline">\(y_i(\boldsymbol{w}^T\boldsymbol{x}_i + b) \geq 1 - \xi_i\)</span>. The hyperparameter <span class="math inline">\(C &gt; 0\)</span> controls the tradeoff between maximizing the margin and minimizing the classification errors. A smaller <span class="math inline">\(C\)</span> encourages a wider margin with more violations, while a larger <span class="math inline">\(C\)</span> heavily penalizes misclassifications, leading to a narrower margin. <a href="#fig-svm" class="quarto-xref">Figure&nbsp;2</a> depicts an example of the SVM decision boundaries.</p>
 <div id="fig-svm" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-svm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

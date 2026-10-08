@@ -67,7 +67,7 @@ $$
 $$ {#eq-5}
 which is used to obtain a first-order prediction at $t_{i+1}$. A second evaluation of the denoiser is then used to correct this prediction through the average of the two directions.
 
-The stochastic perturbation allows the sampler to explore different denoising trajectories instead of following a single deterministic trajectory. With $\gamma_i = 0$, $\hat{t}_i=t_i$ and the stochastic perturbation does not occur, recovering the deterministic Heun solver. Larger values of $\gamma_i$ increase the temporary noise level and consequently introduce greater stochasticity into the generated trajectory. The full algorithm is presented in @alg:edm_churn.
+The stochastic perturbation allows the sampler to explore different denoising trajectories instead of following a single deterministic trajectory. With $\gamma_i = 0$, the stochastic perturbation does not occur, recovering the deterministic Heun solver. Larger values of $\gamma_i$ increase the temporary noise level and consequently introduce greater stochasticity into the generated trajectory. The full algorithm is presented in @alg:edm_churn.
 
 ```pseudocode
 #| label: alg:edm_churn
@@ -103,3 +103,4 @@ The stochastic perturbation allows the sampler to explore different denoising tr
 \RETURN $\boldsymbol{x}_T$
 \end{algorithmic}
 \end{algorithm}
+```

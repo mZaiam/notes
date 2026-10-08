@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -50,7 +85,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" rel="prev">
+<link href="../../diffusion_models/samplers/ode_samplers.html" rel="next">
+<link href="../../diffusion_models/theoretical_foundation/d3pm.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -150,7 +186,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow-Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/samplers/sde_samplers.html">2.1. Samplers based on Stochastic Differential Equations (SDEs)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/samplers/sde_samplers.html">2.1. Samplers based on Stochastic Differential Equations (SDEs)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -276,7 +312,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models (DM) and Flow-Matching (FM)</span></a>
+ <span class="menu-text">Diffusion Models (DM) and Flow Matching (FM)</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -285,37 +321,61 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/smld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
+ <span class="menu-text">1.1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/ddpm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
+ <span class="menu-text">1.1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/sde.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+ <span class="menu-text">1.1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/gdss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.4. Graph Diffusion via the System of SDEs (GDSS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/edm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.4. Elucidated Diffusion Models (EDMs)</span></a>
+ <span class="menu-text">1.1.5. Elucidated Diffusion Models (EDMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.5. Cold-Diffusion (CD)</span></a>
+  <a href="../../diffusion_models/theoretical_foundation/cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.6. Cold-Diffusion (CD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/d3pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/samplers/ode_samplers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2. Samplers based on Ordinary Differential Equations (ODEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
       </ul>
@@ -337,12 +397,12 @@ window.Quarto = {
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="samplers_assets/sde_samplers-preview.html"><i class="bi bi-journal-code"></i>sde_samplers.ipynb</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow-Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/samplers/sde_samplers.html">2.1. Samplers based on Stochastic Differential Equations (SDEs)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/samplers/sde_samplers.html">2.1. Samplers based on Stochastic Differential Equations (SDEs)</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">2.1. Samplers based on Stochastic Differential Equations (SDEs)</h1>
 </div>
@@ -363,13 +423,13 @@ window.Quarto = {
 
 <p>One approach to sampling data from a diffusion generative model is to simulate the reverse diffusion <a href="../../diffusion_models/theoretical_foundation/sde.html">Stochastic Differential Equation (SDE)</a>. Let the reverse SDE be: <span id="eq-1"><span class="math display">\[
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt + g(t)d\boldsymbol{\overline w},
-\tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{f}(\cdot, t) : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> is the drift coefficient of <span class="math inline">\(\boldsymbol{x}(t) \in \mathbb R^n\)</span>, <span class="math inline">\(g(t): \mathbb R \to \mathbb R\)</span> is the diffusion coefficient of <span class="math inline">\(\boldsymbol{x}(t)\)</span> and <span class="math inline">\(\boldsymbol{\overline w} \in \mathbb R^n\)</span> is the Wiener process running from <span class="math inline">\(T\)</span> to <span class="math inline">\(0\)</span>. Then, by discretizing <a href="#eq-1" class="quarto-xref">Eq.&nbsp;1</a>, one can iteratively move from <span class="math inline">\(p_T\)</span> to <span class="math inline">\(p_0\)</span>, effectively sampling from the data distribution given an initial tractable distribution.</p>
+\tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{f}(\cdot, t) : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> is the drift coefficient of <span class="math inline">\(\boldsymbol{x}(t) \in \mathbb R^n\)</span>, <span class="math inline">\(g(t): \mathbb R \to \mathbb R\)</span> is the diffusion coefficient of <span class="math inline">\(\boldsymbol{x}(t)\)</span> and <span class="math inline">\(\boldsymbol{\overline w} \in \mathbb R^n\)</span> is the Wiener process running from <span class="math inline">\(T\)</span> to <span class="math inline">\(0\)</span>. Then, by discretizing <a href="#eq-1" class="quarto-xref">Equation&nbsp;1</a>, one can iteratively move from <span class="math inline">\(p_T\)</span> to <span class="math inline">\(p_0\)</span>, effectively sampling from the data distribution given an initial tractable distribution. One important aspect from this approach is that trajectories are stochastic, that is, the same initial noise sample can lead to different generated samples.</p>
 <section id="annealed-langevin-dynamics" class="level2">
 <h2 class="anchored" data-anchor-id="annealed-langevin-dynamics">Annealed Langevin Dynamics</h2>
 <p>The Annealed Langevin Dynamics method was proposed in <a href="../../diffusion_models/theoretical_foundation/smld.html">Score-Matching with Langevin Dynamics (SMLD)</a> <span class="citation" data-cites="dm:smld">(<a href="#ref-dm:smld" role="doc-biblioref">Song and Ermon 2019</a>)</span> as a sampling algorithm for SMLD. Let the score network be <span class="math inline">\(\boldsymbol{s}_{\boldsymbol{\theta}} : \mathbb R^{n \times 1} \to \mathbb R^n\)</span>, <span class="math inline">\(T \in \mathbb N\)</span> be the number of noise levels and <span class="math inline">\(\boldsymbol{x}_T \in \mathbb R^n\)</span> be noise sampled from <span class="math inline">\(\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2 \boldsymbol{I})\)</span>, where <span class="math inline">\(\sigma_T \in \mathbb R\)</span> is the highest noise level. Starting from the initial noise sample, the algorithm iteratively walks along the estimated score vectors, moving towards regions of higher data density. To prevent the generated data from collapsing into local maxima, a stochastic step is performed at each iteration. For a given noise level <span class="math inline">\(\sigma_t\)</span>, the algorithm performs <span class="math inline">\(M\)</span> gradient steps in the direction of the estimated score. The update rule for the <span class="math inline">\(m\)</span>-th inner step is given by: <span id="eq-2"><span class="math display">\[
 \boldsymbol{x}_{t}^{m} = \boldsymbol{x}_{t}^{m-1} + \frac{\sigma'_t}{2} \boldsymbol{s}_{\boldsymbol{\theta}} \left(\boldsymbol{x}_{t}^{m-1}, \sigma_t \right) + \sqrt{\sigma'_t}\boldsymbol{\epsilon}^{m-1},
-\tag{2}\]</span></span> where <span class="math inline">\(\sigma'_t = \\kappa \cdot (\sigma_t^2 / \sigma_1^2)\)</span> is the step size corresponding to the current noise scale <span class="math inline">\(\sigma_t\)</span> with fixed parameter <span class="math inline">\(\\kappa\)</span>, and <span class="math inline">\(\boldsymbol \epsilon \in \mathbb R^n\)</span> with <span class="math inline">\(\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})\)</span>. After <span class="math inline">\(M\)</span> steps, the noise level is annealed to <span class="math inline">\(\sigma_{t-1}\)</span>, and the process repeats until <span class="math inline">\(\sigma_1\)</span>. <a href="#alg:annealed_langevin" class="quarto-xref">Algorithm 1</a> presents the Annealed Langevin Dynamic Algorithm.</p>
-<div id="alg:annealed_langevin" class="pseudocode-container quarto-float" data-line-number="true" data-indent-lines="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//">
+\tag{2}\]</span></span> where <span class="math inline">\(\sigma'_t = \kappa \cdot (\sigma_t^2 / \sigma_1^2)\)</span> is the step size corresponding to the current noise scale <span class="math inline">\(\sigma_t\)</span> with fixed parameter <span class="math inline">\(\kappa\)</span>, and <span class="math inline">\(\boldsymbol \epsilon \in \mathbb R^n\)</span> with <span class="math inline">\(\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})\)</span>. After <span class="math inline">\(M\)</span> steps, the noise level is annealed to <span class="math inline">\(\sigma_{t-1}\)</span>, and the process repeats until <span class="math inline">\(\sigma_1\)</span>. <a href="#alg:annealed_langevin" class="quarto-xref">Algorithm 1</a> presents the Annealed Langevin Dynamic Algorithm.</p>
+<div id="alg:annealed_langevin" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-line-number-punc=":" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-lines="false" data-pseudocode-number="1" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Annealed Langevin Dynamics} \begin{algorithmic} \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise levels $\{\sigma_t\}_{t=1}^{T}$, step-size parameter $\kappa$, number of Langevin steps $M$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2\boldsymbol{I})$ \FOR{$t = T,\ldots,1$} \STATE $\sigma'_t \gets \kappa \cdot \left(\frac{\sigma_t^2}{\sigma_1^2}\right)$ \STATE $\boldsymbol{x}_t^0 \gets \boldsymbol{x}_t$ \FOR{$m = 1,\ldots,M$} \STATE $\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{0},\boldsymbol{I})$ \STATE $\boldsymbol{x}_t^m \gets \boldsymbol{x}_t^{m-1} + \frac{\sigma'_t}{2} \boldsymbol{s}_{\boldsymbol{\theta}} \left(\boldsymbol{x}_t^{m-1},\sigma_t\right) + \sqrt{\sigma'_t}\boldsymbol{\epsilon}^{m-1}$ \ENDFOR \IF{$t &gt; 1$} \STATE $\boldsymbol{x}_{t-1} \gets \boldsymbol{x}_t^M$ \ELSE \STATE $\boldsymbol{x}_1 \gets \boldsymbol{x}_t^M$ \ENDIF \ENDFOR \STATE $\boldsymbol{x}_0 \gets \boldsymbol{x}_1$ \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
 </div>
@@ -377,12 +437,12 @@ d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - g(t)^2 \nabla_{\bold
 </section>
 <section id="ancestral-sampling" class="level2">
 <h2 class="anchored" data-anchor-id="ancestral-sampling">Ancestral Sampling</h2>
-<p>The Ancestral Sampling method was proposed in <a href="../../diffusion_models/theoretical_foundation/ddpm.html">Denoising Diffusion Probabilistic Models (DDPMs)</a> <span class="citation" data-cites="dm:ddpm">(<a href="#ref-dm:ddpm" role="doc-biblioref">Ho, Jain, and Abbeel 2020</a>)</span> as its sampling algorithm. Let the noise network be <span class="math inline">\(\boldsymbol{\epsilon}_{\boldsymbol{\theta}} : \mathbb R^{n \times 1} \to \mathbb R^n\)</span>, <span class="math inline">\(T \in \mathbb N\)</span> be the number of reverse diffusion steps, and <span class="math inline">\(\boldsymbol{x}_T \in \mathbb R^n\)</span> be noise sampled from <span class="math inline">\(\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})\)</span>. Additionally, let the diffusion SDE from DDPM be defined as: <span id="eq-4"><span class="math display">\[
+<p>The Ancestral Sampling method was proposed in <a href="../../diffusion_models/theoretical_foundation/ddpm.html">Denoising Diffusion Probabilistic Models (DDPMs)</a> <span class="citation" data-cites="dm:ddpm">(<a href="#ref-dm:ddpm" role="doc-biblioref">Ho, Jain, and Abbeel 2020</a>)</span> as its sampling algorithm. Let the noise network be <span class="math inline">\(\boldsymbol{\epsilon}_{\boldsymbol{\theta}} (\boldsymbol x_t, t): \mathbb R^{n \times 1} \to \mathbb R^n\)</span>, <span class="math inline">\(T \in \mathbb N\)</span> be the number of reverse diffusion steps, and <span class="math inline">\(\boldsymbol{x}_T \in \mathbb R^n\)</span> be noise sampled from <span class="math inline">\(\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})\)</span>. Additionally, let the diffusion SDE from DDPM be defined as: <span id="eq-4"><span class="math display">\[
 d\boldsymbol{x} = -\frac{1}{2}\beta(t) \boldsymbol{x} dt + \sqrt{\beta(t)}d\boldsymbol{w},
-\tag{3}\]</span></span> where <span class="math inline">\(\beta(t): \mathbb R \to \mathbb R^{+}\)</span> is a parameter from the noise schedule. Then, Ancestral Sampling iteratively follows: <span id="eq-5"><span class="math display">\[
+\tag{3}\]</span></span> where <span class="math inline">\(\beta(t): \mathbb R \to \mathbb R_{&gt;0}\)</span> is a parameter from the noise schedule. Then, Ancestral Sampling iteratively follows: <span id="eq-5"><span class="math display">\[
 \boldsymbol{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(\boldsymbol{x}_t - \frac{\beta_t}{\sqrt{1-\overline{\alpha}_t}} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)\right) + \sigma_t\boldsymbol{\epsilon},
 \tag{4}\]</span></span> where the noise <span class="math inline">\(\boldsymbol \epsilon \in \mathbb R^n\)</span> is sampled as <span class="math inline">\(\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})\)</span> for <span class="math inline">\(t &gt; 1\)</span>, <span class="math inline">\(\alpha_t = 1-\beta_t\)</span>, <span class="math inline">\(\overline{\alpha}_t = \prod_{s=1}^{t}\alpha_s\)</span>, and <span class="math inline">\(\sigma_t^2 = \frac{1-\overline{\alpha}_{t-1}}{1-\overline{\alpha}_t}\beta_t\)</span>. At the final step when <span class="math inline">\(t = 1\)</span>, <span class="math inline">\(\boldsymbol{\epsilon} = \boldsymbol{0}\)</span> was set to output the deterministic mean, as adding noise at the very end would degrade the final image. The algorithm is presented in <a href="#alg:ancestral_sampling" class="quarto-xref">Algorithm 2</a>.</p>
-<div id="alg:ancestral_sampling" class="pseudocode-container quarto-float" data-line-number="true" data-indent-lines="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="2" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//">
+<div id="alg:ancestral_sampling" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-line-number-punc=":" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-lines="false" data-pseudocode-number="2" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Ancestral Sampling} \begin{algorithmic} \REQUIRE Noise network $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}$, number of diffusion steps $T$, noise schedule $\{\beta_t\}_{t=1}^{T}$ \STATE $\alpha_t \gets 1-\beta_t$ for $t=1,\ldots,T$ \STATE $\overline{\alpha}_t \gets \prod_{s=1}^{t}\alpha_s$ for $t=1,\ldots,T$ \STATE $\sigma_t^2 \gets \frac{1-\overline{\alpha}_{t-1}} {1-\overline{\alpha}_t}\beta_t, \ \ \forall t\in \{1,\ldots,T\}$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0},\boldsymbol{I})$ \FOR{$t=T,\ldots,1$} \STATE $\boldsymbol{\mu}_t \gets \frac{1}{\sqrt{\alpha_t}} \left(\boldsymbol{x}_t - \frac{\beta_t}{\sqrt{1-\overline{\alpha}_t}} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t,t) \right)$ \IF{$t &gt; 1$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0},\boldsymbol{I})$ \ELSE \STATE $\boldsymbol{\epsilon} \gets \boldsymbol{0}$ \ENDIF \STATE $\boldsymbol{x}_{t-1} \gets \boldsymbol{\mu}_t + \sigma_t\boldsymbol{\epsilon}$ \ENDFOR \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
 </div>
@@ -390,27 +450,72 @@ d\boldsymbol{x} = -\frac{1}{2}\beta(t) \boldsymbol{x} dt + \sqrt{\beta(t)}d\bold
 </section>
 <section id="predictor-corrector-pc" class="level2">
 <h2 class="anchored" data-anchor-id="predictor-corrector-pc">Predictor-Corrector (PC)</h2>
-<p>The <a href="../../diffusion_models/theoretical_foundation/sde.html">SDEs</a> formulation also generalized previous sampling methods into a unified Predictor-Corrector (PC) family of algorithms. These methods are divided into two distinct steps. The first is the predictor, which provides an estimate of the next denoised data point along the reverse diffusion trajectory. Then, the corrector step is applied via a score-based Markov Chain Monte Carlo (MCMC) approach to project the estimate back onto the data manifold. It was noted by the authors that DDPM relied solely on a predictor step, while SMLD relied entirely on a corrector step. Consequently, generalized PC algorithms were proposed for both the SMLD and DDPM SDEs, presented respectively in <a href="#alg:pc_smld" class="quarto-xref">Algorithm 3</a> and <a href="#alg:pc_ddpm" class="quarto-xref">Algorithm 4</a>. These algorithms used the numerical discretization of the reverse-time SDE as the predictor, and Annealed Langevin Dynamics as the corrector.</p>
-<div id="alg:pc_smld" class="pseudocode-container quarto-float" data-line-number="true" data-indent-lines="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="3" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//">
+<p>The <a href="../../diffusion_models/theoretical_foundation/sde.html">SDEs</a> formulation also generalized previous sampling methods into a unified Predictor-Corrector (PC) family of algorithms. These methods are divided into two distinct steps. The first is the predictor, which provides an estimate of the next denoised data point along the reverse diffusion trajectory. Then, the corrector step is applied via a score-based Markov Chain Monte Carlo (MCMC) approach to project the estimate back onto the data manifold. It was noted by the authors that DDPM relied solely on a predictor step, while SMLD relied entirely on a corrector step. Consequently, generalized PC algorithms were proposed for both the Variance Exploding (VE) and Variance Preserving (VP) SDEs, presented respectively in <a href="#alg:pc_smld" class="quarto-xref">Algorithm 3</a> and <a href="#alg:pc_ddpm" class="quarto-xref">Algorithm 4</a>. These algorithms used the numerical discretization of the reverse-time SDE as the predictor, and Annealed Langevin Dynamics as the corrector.</p>
+<div id="alg:pc_smld" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-line-number-punc=":" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-lines="false" data-pseudocode-number="3" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
-\begin{algorithm} \caption{Predictor-Corrector for SMLD} \begin{algorithmic} \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise levels $\{\sigma_t\}_{t=0}^{T}$, corrector step sizes $\{\kappa_t\}_{t=1}^{T}$, number of corrector steps $M$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2\boldsymbol{I})$ \FOR{$t = T,\ldots,1$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \STATE $\boldsymbol{x}_{t-1}' \gets \boldsymbol{x}_t + (\sigma_t^2 - \sigma_{t-1}^2) \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, \sigma_t) + \sqrt{\sigma_t^2 - \sigma_{t-1}^2} \boldsymbol{\epsilon}$ \STATE $\boldsymbol{x}_{t-1}^0 \gets \boldsymbol{x}_{t-1}'$ \FOR{$m = 1,\ldots,M$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \STATE $\boldsymbol{x}_{t-1}^m \gets \boldsymbol{x}_{t-1}^{m-1} + \frac{\kappa_{t-1}}{2} \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1}^{m-1}, \sigma_{t-1}) + \sqrt{\kappa_{t-1}} \boldsymbol{\epsilon}$ \ENDFOR \STATE $\boldsymbol{x}_{t-1} \gets \boldsymbol{x}_{t-1}^M$ \ENDFOR \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{VE Predictor-Corrector} \begin{algorithmic} \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise levels $\{\sigma_t\}_{t=0}^{T}$, corrector step sizes $\{\kappa_t\}_{t=1}^{T}$, number of corrector steps $M$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2\boldsymbol{I})$ \FOR{$t = T,\ldots,1$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \STATE $\boldsymbol{x}_{t-1}' \gets \boldsymbol{x}_t + (\sigma_t^2 - \sigma_{t-1}^2) \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, \sigma_t) + \sqrt{\sigma_t^2 - \sigma_{t-1}^2} \boldsymbol{\epsilon}$ \STATE $\boldsymbol{x}_{t-1}^0 \gets \boldsymbol{x}_{t-1}'$ \FOR{$m = 1,\ldots,M$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \STATE $\boldsymbol{x}_{t-1}^m \gets \boldsymbol{x}_{t-1}^{m-1} + \frac{\kappa_{t-1}}{2} \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1}^{m-1}, \sigma_{t-1}) + \sqrt{\kappa_{t-1}} \boldsymbol{\epsilon}$ \ENDFOR \STATE $\boldsymbol{x}_{t-1} \gets \boldsymbol{x}_{t-1}^M$ \ENDFOR \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
-<div id="alg:pc_ddpm" class="pseudocode-container quarto-float" data-line-number="true" data-indent-lines="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="4" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//">
+<div id="alg:pc_ddpm" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-line-number-punc=":" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-lines="false" data-pseudocode-number="4" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
-\begin{algorithm} \caption{Predictor-Corrector for DDPM} \begin{algorithmic} \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise schedule $\{\beta_t\}_{t=1}^{T}$, corrector step sizes $\{\kappa_t\}_{t=1}^{T}$, number of corrector steps $M$ \STATE $\alpha_t \gets 1-\beta_t$ for $t=1,\ldots,T$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \FOR{$t = T,\ldots,1$} \IF{$t &gt; 1$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \ELSE \STATE $\boldsymbol{\epsilon} \gets \boldsymbol{0}$ \ENDIF \STATE $\boldsymbol{x}_{t-1}' \gets \frac{1}{\sqrt{\alpha_t}} \left( \boldsymbol{x}_t + \beta_t \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) \right) + \sqrt{\beta_t} \boldsymbol{\epsilon}$ \STATE $\boldsymbol{x}_{t-1}^0 \gets \boldsymbol{x}_{t-1}'$ \FOR{$m = 1,\ldots,M$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \STATE $\boldsymbol{x}_{t-1}^m \gets \boldsymbol{x}_{t-1}^{m-1} + \frac{\kappa_{t-1}}{2} \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1}^{m-1}, t-1) + \sqrt{\kappa_{t-1}} \boldsymbol{\epsilon}$ \ENDFOR \STATE $\boldsymbol{x}_{t-1} \gets \boldsymbol{x}_{t-1}^M$ \ENDFOR \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{VP Predictor-Corrector} \begin{algorithmic} \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise schedule $\{\beta_t\}_{t=1}^{T}$, corrector step sizes $\{\kappa_t\}_{t=1}^{T}$, number of corrector steps $M$ \STATE $\alpha_t \gets 1-\beta_t$ for $t=1,\ldots,T$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \FOR{$t = T,\ldots,1$} \IF{$t &gt; 1$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \ELSE \STATE $\boldsymbol{\epsilon} \gets \boldsymbol{0}$ \ENDIF \STATE $\boldsymbol{x}_{t-1}' \gets \frac{1}{\sqrt{\alpha_t}} \left( \boldsymbol{x}_t + \beta_t \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) \right) + \sqrt{\beta_t} \boldsymbol{\epsilon}$ \STATE $\boldsymbol{x}_{t-1}^0 \gets \boldsymbol{x}_{t-1}'$ \FOR{$m = 1,\ldots,M$} \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \STATE $\boldsymbol{x}_{t-1}^m \gets \boldsymbol{x}_{t-1}^{m-1} + \frac{\kappa_{t-1}}{2} \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1}^{m-1}, t-1) + \sqrt{\kappa_{t-1}} \boldsymbol{\epsilon}$ \ENDFOR \STATE $\boldsymbol{x}_{t-1} \gets \boldsymbol{x}_{t-1}^M$ \ENDFOR \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
 <section id="code" class="level3">
-
-<!-- {{< embed samplers_assets/sde_samplers.ipynb >}} -->
+<h3 class="anchored" data-anchor-id="code">Code</h3>
+<div class="quarto-embed-nb-cell">
+<p>Importing the packages.</p>
+<div id="cell-2" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusers <span class="im">import</span> (</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    DDPMPipeline,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    DDPMScheduler,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    ScoreSdeVePipeline,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    ScoreSdeVeScheduler</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Loading pre-trained models and using Ancestral Sampling and VE PC.</p>
+<div id="cell-4" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> <span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>vp_pipeline <span class="op">=</span> DDPMPipeline.from_pretrained(<span class="st">"google/ddpm-cifar10-32"</span>).to(device)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>vp_pipeline.scheduler <span class="op">=</span> DDPMScheduler.from_config(vp_pipeline.scheduler.config)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ancestral_image <span class="op">=</span> vp_pipeline(num_inference_steps<span class="op">=</span><span class="dv">1000</span>).images[<span class="dv">0</span>]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ve_pipeline <span class="op">=</span> ScoreSdeVePipeline.from_pretrained(<span class="st">"google/ncsnpp-celebahq-256"</span>).to(device)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ve_pipeline.scheduler <span class="op">=</span> ScoreSdeVeScheduler.from_config(ve_pipeline.scheduler.config)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pc_ve_image <span class="op">=</span> ve_pipeline(num_inference_steps<span class="op">=</span><span class="dv">1000</span>).images[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Plotting the results.</p>
+<div id="cell-6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:411}}" data-outputid="d457d97f-adcc-46c0-c720-071e3c3ed817" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].imshow(ancestral_image)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">"Ancestral Sampling"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].imshow(pc_ve_image)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">"VE-PC"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axs:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="sde_samplers_files/figure-html/samplers_assets-sde_samplers-cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-1" href="samplers_assets/sde_samplers-preview.html#cell-0">Source: sde_samplers.ipynb</a></div>
 
 
 
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Code</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-dm:ddpm" class="csl-entry" role="listitem">
 Ho, Jonathan, Ajay Jain, and Pieter Abbeel. 2020. <span>“Denoising Diffusion Probabilistic Models.”</span> <em>Advances in Neural Information Processing Systems</em> 33: 6840–51.
 </div>
@@ -820,11 +925,14 @@ Song, Yang, and Stefano Ermon. 2019. <span>“Generative Modeling by Estimating 
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="pagination-link" aria-label="1.5. Cold-Diffusion (CD)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1.5. Cold-Diffusion (CD)</span>
+      <a href="../../diffusion_models/theoretical_foundation/d3pm.html" class="pagination-link" aria-label="1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../diffusion_models/samplers/ode_samplers.html" class="pagination-link" aria-label="2.2. Samplers based on Ordinary Differential Equations (ODEs)">
+        <span class="nav-page-text">2.2. Samplers based on Ordinary Differential Equations (ODEs)</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

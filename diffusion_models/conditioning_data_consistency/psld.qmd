@@ -1,0 +1,22 @@
+---
+title: "3.2.2. Posterior Sampling with Latent Diffusion (PSLD)"
+bibliography: ../../references.bib
+---
+
+While [Diffusion Posterior Sampling (DPS)](dps.qmd) performed posterior sampling in pixel-space Diffusion Models (DMs), its application to Latent Diffusion Models (LDMs) presented some problems. The reason was that the diffusion process is performed in a compressed latent space, while the inverse problem is defined in pixel-space. To extend posterior sampling into LDMs, Posterior Sampling with Latent Diffusion (PSLD) [@dm:psld] introduced a new approximation of the likelihood term considering diffusion in latent space.
+
+Let $\boldsymbol x \in \mathbb R^n$ be the data space, $\boldsymbol y \in \mathbb R^m$ be the measurement space, and $\boldsymbol z \in \mathbb R^d$ be the latent space. The data and latent spaces are connected via a Variational Autoencoder (VAE), such that the encoder $\mathcal E: \mathbb R^n \to \mathbb R^d$ maps data into latents and the decoder $\mathcal D: \mathbb R^d \to \mathbb R^n$ performs the opposite mapping. A naive application of posterior sampling for LDMs would be to consider:
+$$
+\nabla_{\boldsymbol{z}_t} \log p_t(\boldsymbol{y} \mid \boldsymbol{z}_t) \simeq \nabla_{\boldsymbol{z}_t} \log p_t(\boldsymbol{y} \mid \mathcal D(\boldsymbol{\hat{z}}_0)),
+$$ {#eq-1}
+where $\boldsymbol{\hat{z}}_0 = \mathbb E[\boldsymbol z_0 \mid \boldsymbol z_t]$ is the Tweedie's estimator. However, the latent space contains many possible encoded data points that explain the measurements. Therefore, this likelihood approximation could pull the latent variables into any of these possible solutions, and possibly into many of them at once. This conflicts with the LDM, which is pulling the trajectory towards a specific $\boldsymbol z_0$ via the iterative denoising.
+
+This observation led to the addition of a new term for the likelihood approximation. This term penalized latents that were not continuous after the decoding step, making sure that both the LDM, the DPS term, and the latent correction pointed towards the same direction. Therefore, with this new gluing term, PSLD can be described as:
+$$
+\nabla_{\boldsymbol{z}_t} \log p_t(\boldsymbol{y} \mid \boldsymbol{z}_t) \simeq - \eta \nabla_{\boldsymbol{z}_t} \| \boldsymbol y - \mathcal A(\mathcal D(\boldsymbol{\hat{z}}_0)) \| - \gamma \nabla_{\boldsymbol z_t} \| \boldsymbol{\hat{z}}_0 - \mathcal E (\mathcal{A}^T(\boldsymbol y) + (\boldsymbol I - \mathcal{A}^T\mathcal{A}) \mathcal D(\boldsymbol{\hat{z}}_0)) \|,
+$$ {#eq-2}
+where $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ and $\mathcal{A}^T : \mathbb R^m \to \mathbb R^n$ are the forward and adjoint operators of the inverse problem, $\| \cdot \| : \mathbb R^{m} \to \mathbb R_{\ge 0}$ is a norm, and $\eta, \gamma \in \mathbb R$ are tunable step sizes.
+
+### Code
+
+{{< embed conditioning_data_consistency_assets/psld.ipynb >}}

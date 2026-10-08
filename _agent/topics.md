@@ -5,7 +5,6 @@ Diffusion Models
     - Flow-Matching (and others)
 - Samplers
     - ODE-based Diffusion Samplers
-        - Probability Flow ODE
         - PNDM
         - DPM-Solver
         - DPM-Solver++
@@ -20,9 +19,6 @@ Diffusion Models
     - ControlNet
     - Image Prompt Adapter
     - Degradation-Restoration
-    - MCG
-    - DPS
-    - PSLD
     - ReSample
     - SILO
     - DDRM

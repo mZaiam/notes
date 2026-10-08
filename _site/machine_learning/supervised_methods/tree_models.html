@@ -315,7 +315,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../diffusion_models/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Diffusion Models (DM) and Flow-Matching (FM)</span></a>
+ <span class="menu-text">Diffusion Models (DM) and Flow Matching (FM)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -324,37 +324,61 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/smld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
+ <span class="menu-text">1.1.1. Score Matching with Langevin Dynamics (SMLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/ddpm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
+ <span class="menu-text">1.1.2. Denoising Diffusion Probabilistic Models (DDPM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/sde.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+ <span class="menu-text">1.1.3. Stochastic Differential Equations (SDEs) Formulation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/gdss.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.4. Graph Diffusion via the System of SDEs (GDSS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/theoretical_foundation/edm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.4. Elucidated Diffusion Models (EDMs)</span></a>
+ <span class="menu-text">1.1.5. Elucidated Diffusion Models (EDMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../diffusion_models/theoretical_foundation/cold_diffusion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1.5. Cold-Diffusion (CD)</span></a>
+  <a href="../../diffusion_models/theoretical_foundation/cd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.6. Cold-Diffusion (CD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/d3pm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/samplers/ode_samplers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2.2. Samplers based on Ordinary Differential Equations (ODEs)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
       </ul>
@@ -413,7 +437,7 @@ window.Quarto = {
 <p>In <a href="../../machine_learning/supervised_methods/linear_models.html">Linear Models</a>, the Explainable Boosting Machine (EBM) algorithm was presented. As mentioned, it used decision trees to approximate the functions from the Generalized Additive Models (GAMs) using decision trees. Here, more tree-based models are going to be introduced.</p>
 <section id="decision-tree-dt" class="level2">
 <h2 class="anchored" data-anchor-id="decision-tree-dt">Decision Tree (DT)</h2>
-<p>A Decision Tree (DT) is formally defined as a directed acyclic graph – also called a tree –, possessing two types of nodes: decision and leaf nodes. Decision nodes present conditional tests based on a certain feature. Observations that satisfy the condition moves to the left child node, while the other go to the right child. Each decision node separates the observations in two subsets, doing the same in feature space. On the other hand, leaf nodes represent a certain region in feature space, without having child nodes. They are at the end of the trees and represent the regions formed by specific paths generated by following the decision nodes. <a href="#fig-dt" class="quarto-xref">Fig.&nbsp;1</a> depicts a DT.</p>
+<p>A Decision Tree (DT) is formally defined as a directed acyclic graph – also called a tree –, possessing two types of nodes: decision and leaf nodes. Decision nodes present conditional tests based on a certain feature. Observations that satisfy the condition moves to the left child node, while the other go to the right child. Each decision node separates the observations in two subsets, doing the same in feature space. On the other hand, leaf nodes represent a certain region in feature space, without having child nodes. They are at the end of the trees and represent the regions formed by specific paths generated by following the decision nodes. <a href="#fig-dt" class="quarto-xref">Figure&nbsp;1</a> depicts a DT.</p>
 <div id="fig-dt" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -923,7 +947,7 @@ weighted avg       0.93      0.92      0.92       171
 <section id="random-forest-rf" class="level2">
 <h2 class="anchored" data-anchor-id="random-forest-rf">Random Forest (RF)</h2>
 <p>A DT is a model with low bias and high variance, overfitting the training data. To avoid this, the Random Forest (RF) <span class="citation" data-cites="ml:rf">(<a href="#ref-ml:rf" role="doc-biblioref">Breiman 2001</a>)</span> model ensembles various DTs, aggregating their predictions. This increases bias and decreases variance, leading to more robust models.</p>
-<p>RF operates through a process called Bootstrap Aggregating – also know as bagging. Multiple subsets of the training data <span class="math inline">\(\mathcal D^{(\text{Train})}_{i}\subseteq \mathcal D^{(\text{Train})}\)</span> are created by drawing random samples with replacement. Each subset is used to train a separate decision tree. During the construction of each tree, the algorithm is not allowed to choose from all features. Instead, it must select from a random subset of features, forcing the trees to be different. Then, each tree is grown to its maximum depth, to ensure each one has low bias. Finally, the predictions of each tree are combined using a suitable operator. <a href="#fig-rf" class="quarto-xref">Fig.&nbsp;2</a> depicts a RF.</p>
+<p>RF operates through a process called Bootstrap Aggregating – also know as bagging. Multiple subsets of the training data <span class="math inline">\(\mathcal D^{(\text{Train})}_{i}\subseteq \mathcal D^{(\text{Train})}\)</span> are created by drawing random samples with replacement. Each subset is used to train a separate decision tree. During the construction of each tree, the algorithm is not allowed to choose from all features. Instead, it must select from a random subset of features, forcing the trees to be different. Then, each tree is grown to its maximum depth, to ensure each one has low bias. Finally, the predictions of each tree are combined using a suitable operator. <a href="#fig-rf" class="quarto-xref">Figure&nbsp;2</a> depicts a RF.</p>
 <div id="fig-rf" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1473,7 +1497,7 @@ r_{i}^{(t)} = -\left[ \frac{\partial \mathcal L(y_i, \mathcal F_{t-1}(\boldsymbo
 <section id="symbolic-regression-sr" class="level2">
 <h2 class="anchored" data-anchor-id="symbolic-regression-sr">Symbolic Regression (SR)</h2>
 <p>Tree-based models can also be utilized to Symbolic Regression (SR). It searches the space of mathematical expressions to simultaneously discover both the structure of the model and its parameters.</p>
-<p>Given a training set <span class="math inline">\(\mathcal{D}^{(\text{Train})} = \{(\boldsymbol{x}_i^{(\text{Train})}, y_i^{(\text{Train})})\}_{i=1}^N\)</span>, SR seeks an optimal function <span class="math inline">\(f\)</span> from a space of possible mathematical expressions <span class="math inline">\(\mathcal{E}\)</span>. This space is constructed by combining mathematical primitives, which include the features, constants and a predefined set of operators. They are combined in trees, such as depicted in <a href="#fig-sr" class="quarto-xref">Fig.&nbsp;3</a>.</p>
+<p>Given a training set <span class="math inline">\(\mathcal{D}^{(\text{Train})} = \{(\boldsymbol{x}_i^{(\text{Train})}, y_i^{(\text{Train})})\}_{i=1}^N\)</span>, SR seeks an optimal function <span class="math inline">\(f\)</span> from a space of possible mathematical expressions <span class="math inline">\(\mathcal{E}\)</span>. This space is constructed by combining mathematical primitives, which include the features, constants and a predefined set of operators. They are combined in trees, such as depicted in <a href="#fig-sr" class="quarto-xref">Figure&nbsp;3</a>.</p>
 <div id="fig-sr" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
