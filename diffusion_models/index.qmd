@@ -48,3 +48,5 @@ Methods for conditional generation and data consistency in inverse problems.
 ### [3.2.1. Diffusion Posterior Sampling (DPS)](conditioning_data_consistency/dps.qmd)
 
 ### [3.2.2. Posterior Sampling with Latent Diffusion (PSLD)](conditioning_data_consistency/psld.qmd)
+
+### [3.2.3. ReSample](conditioning_data_consistency/resample.qmd)

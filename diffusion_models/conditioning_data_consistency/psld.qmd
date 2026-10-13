@@ -15,7 +15,34 @@ This observation led to the addition of a new term for the likelihood approximat
 $$
 \nabla_{\boldsymbol{z}_t} \log p_t(\boldsymbol{y} \mid \boldsymbol{z}_t) \simeq - \eta \nabla_{\boldsymbol{z}_t} \| \boldsymbol y - \mathcal A(\mathcal D(\boldsymbol{\hat{z}}_0)) \| - \gamma \nabla_{\boldsymbol z_t} \| \boldsymbol{\hat{z}}_0 - \mathcal E (\mathcal{A}^T(\boldsymbol y) + (\boldsymbol I - \mathcal{A}^T\mathcal{A}) \mathcal D(\boldsymbol{\hat{z}}_0)) \|,
 $$ {#eq-2}
-where $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ and $\mathcal{A}^T : \mathbb R^m \to \mathbb R^n$ are the forward and adjoint operators of the inverse problem, $\| \cdot \| : \mathbb R^{m} \to \mathbb R_{\ge 0}$ is a norm, and $\eta, \gamma \in \mathbb R$ are tunable step sizes.
+where $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ and $\mathcal{A}^T : \mathbb R^m \to \mathbb R^n$ are the forward and adjoint operators of the inverse problem, $\| \cdot \| : \mathbb R^{m} \to \mathbb R_{\ge 0}$ is a norm, and $\eta, \gamma \in \mathbb R$ are tunable step sizes. PSLD can be implemented following @alg:psld.
+
+```pseudocode
+#| label: alg:psld
+#| html-indent-size: "1.2em"
+#| html-line-number: true
+
+\begin{algorithm}
+\caption{PSLD algorithm.}
+\begin{algorithmic}
+\REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, VAE encoder $\mathcal{E}$, VAE decoder $\mathcal{D}$, measurement $\boldsymbol{y}$, forward operator $\mathcal{A}$, PSLD step sizes $\eta, \gamma$, noise schedule $\{t\}_{t=1}^{T}$, generic sampler $\text{Sampler}$
+
+\STATE $\boldsymbol{z}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+
+\FOR{$t = T, \dots, 1$}
+    \STATE $\boldsymbol{\hat{z}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{z}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{z}_t, t) \right)$
+
+    \STATE $\boldsymbol{g}_{\text{DPS}} \gets \nabla_{\boldsymbol{z}_t} \| \boldsymbol y - \mathcal A(\mathcal D(\boldsymbol{\hat{z}}_0)) \|_2^2$
+
+    \STATE $\boldsymbol{g}_{\text{Glue}} \gets \nabla_{\boldsymbol{z}_t} \| \boldsymbol{\hat{z}}_0 - \mathcal E (\mathcal{A}^T(\boldsymbol y) + (\boldsymbol I - \mathcal{A}^T\mathcal{A}) \mathcal D(\boldsymbol{\hat{z}}_0)) \|_2^2$
+
+    \STATE $\boldsymbol{z}_{t-1} \gets \text{Sampler}(\boldsymbol{z}_t, \boldsymbol{s}_{\boldsymbol{\theta}}, t) - \eta \boldsymbol{g}_{\text{DPS}} - \gamma \boldsymbol{g}_{\text{Glue}}$
+\ENDFOR
+
+\RETURN $\mathcal{D}(\boldsymbol{z}_0)$
+\end{algorithmic}
+\end{algorithm}
+```
 
 ### Code
 

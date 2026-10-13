@@ -1,0 +1,65 @@
+---
+title: "3.2.3. ReSample"
+bibliography: ../../references.bib
+---
+
+After the introduction of [Posterior Sampling with Latent Diffusion (PSLD)](psld.qmd), it was noted that under noisy measurements, the method could underperform. In this context, ReSample [@dm:resample] proposed to incorporate hard data consistency steps during some of the iterations of the inference process of a Latent Diffusion Model (LDM), instead of approximating the likelihood term under some assumptions.
+
+Let $\boldsymbol x \in \mathbb R^n$ be the data space, $\boldsymbol y \in \mathbb R^m$ be the measurement space, and $\boldsymbol z \in \mathbb R^d$ be the latent space. The data and latent spaces are connected via a Variational Autoencoder (VAE), such that the encoder $\mathcal E: \mathbb R^n \to \mathbb R^d$ maps data into latents and the decoder $\mathcal D: \mathbb R^d \to \mathbb R^n$ performs the opposite mapping. ReSample proposed to solve the following sub-problem:
+$$
+\boldsymbol{\tilde{z}}_0 = \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \|\boldsymbol y - \mathcal A(\mathcal D(\boldsymbol z)) \|_2^2,
+$$ {#eq-1}
+where $\boldsymbol{\tilde{z}}_0$ is the sample consistent with the measurements and $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ is the forward operator of the inverse problem. Because the decoder $\mathcal{D}$ is a non-linear mapping, solving this sub-problem directly is unstable. That is, starting from a random guess $\boldsymbol z \in \mathbb R^d$ leads to solutions that might be unrealistic. ReSample addresses this by initializing with the current Tweedie's estimate $\boldsymbol{\hat{z}}_0 = \mathbb E[\boldsymbol z_0 \mid \boldsymbol z_t]$, and then performing $K$ steps of gradient descent to find $\boldsymbol{\tilde{z}}_0$.
+
+Once this measurement-consistent sample is found, it must be mapped back onto the noisy data manifold, given that this image does not follow the variance pattern from the diffusion process. Re-noising $\boldsymbol{\tilde{z}}_0$ via forward diffusion introduces high variance, potentially pushing the trajectory out of the data manifold. To adjust this additional variance, ReSample introduced a stochastic resampling step, that was modeled by a Gaussian distribution conditioned on the denoised sample $\boldsymbol{z}_{t-1}^{\prime}$. The stochastic resampling distribution was given by:
+$$
+p(\boldsymbol{z}_{t-1} \mid \boldsymbol{z}_{t-1}^{\prime}, \boldsymbol{\tilde{z}}_0, \boldsymbol{y}) = \mathcal{N} \left( \frac{\sigma_{t-1}^2 \sqrt{\bar{\alpha}_{t-1}} \boldsymbol{\tilde{z}}_0 + (1 - \bar{\alpha}_{t-1}) \boldsymbol{z}_{t-1}^{\prime}}{\sigma_{t-1}^2 + (1 - \bar{\alpha}_{t-1})}, \frac{\sigma_{t-1}^2 (1 - \bar{\alpha}_{t-1})}{\sigma_{t-1}^2 + (1 - \bar{\alpha}_{t-1})} \boldsymbol{I} \right),
+$$ {#eq-2}
+where $\overline{\alpha}_t \in \mathbb R$ is the cumulative variance of the diffusion process and $\sigma_{t-1}^2$ is a tunable variance hyperparameter. The form of this hyperparameter was chosen as:
+$$
+\sigma_t^2 = \zeta \left(\frac{1 - \overline{\alpha}_t}{\overline{\alpha}_t}\right)\left(1 - \frac{\overline{\alpha}_t}{\overline{\alpha}_{t - 1}}\right).
+$$ {#eq-3}
+Here, $\zeta \in \mathbb R_{\ge 0}$ controls the trade-off between prior consistency, where $\zeta \to 0$ recovers unconditional sampling. Conversely, as $\zeta \to \infty$, the distribution approaches stochastic encoding of the optimized latent.
+
+Finally, it was noted that the sub-problem did not need to be applied at every time step $t$. For $t\approx T$, the optimization problem does not yield reasonable results, because the data points are still very noisy. Therefore, ReSample only applies the hard data consistency at the latter time steps, approximately every $10$ iterations, or more generally, in a set $C$ of iterations. @alg:resample presents the ReSample algorithm.
+
+```pseudocode
+#| label: alg:resample
+#| html-indent-size: "1.2em"
+#| html-line-number: true
+
+\begin{algorithm}
+\caption{ReSample algorithm.}
+\begin{algorithmic}
+\REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, VAE decoder $\mathcal{D}$, measurement $\boldsymbol{y}$, forward operator $\mathcal{A}$, ReSample hyperparameter $\zeta$, noise schedule $\{t\}_{t=1}^{T}$, generic sampler $\text{Sampler}$, resampling schedule $C$
+
+\STATE $\boldsymbol{z}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+
+\FOR{$t = T, \dots, 1$}
+    \STATE $\boldsymbol{z}_{t-1}^{\prime} \gets \text{Sampler}(\boldsymbol{z}_t, \boldsymbol{s}_{\boldsymbol{\theta}}, t)$
+
+    \IF{$t \in C$}
+        \STATE $\boldsymbol{\hat{z}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{z}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{z}_t, t) \right)$
+        
+        \STATE $\boldsymbol{\tilde{z}}_0 \gets \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \| \boldsymbol y - \mathcal A(\mathcal D(\boldsymbol{z})) \|_2^2$
+
+        \STATE $\sigma_{t-1}^2 \gets \zeta \left(\frac{1 - \overline{\alpha}_{t-1}}{\overline{\alpha}_{t-1}}\right)\left(1 - \frac{\overline{\alpha}_{t-1}}{\overline{\alpha}_t}\right)$
+        
+        \STATE $\boldsymbol{\mu} \gets \frac{\sigma_{t-1}^2\sqrt{\overline{\alpha}_{t-1}}\boldsymbol{\tilde{z}}_0 + (1-\overline{\alpha}_{t-1})\boldsymbol{z}_{t-1}^{\prime}}{\sigma_{t-1}^2 + (1-\overline{\alpha}_{t-1})}$
+        
+        \STATE $\boldsymbol{\Sigma} \gets \frac{\sigma_{t-1}^2(1-\overline{\alpha}_{t-1})}{\sigma_{t-1}^2 + (1-\overline{\alpha}_{t-1})} \boldsymbol{I}$
+        
+        \STATE $\boldsymbol{z}_{t-1} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
+    \ELSE
+        \STATE $\boldsymbol{z}_{t-1} \gets \boldsymbol{z}_{t-1}^{\prime}$
+    \ENDIF
+\ENDFOR
+
+\RETURN $\mathcal{D}(\boldsymbol{z}_0)$
+\end{algorithmic}
+\end{algorithm}
+```
+
+### Code
+
+{{< embed conditioning_data_consistency_assets/resample.ipynb >}}

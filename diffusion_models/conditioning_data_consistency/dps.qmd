@@ -22,7 +22,32 @@ The specific form of the likelihood depends on the distribution of the measureme
 $$
 \nabla_{\boldsymbol{x}_t} \log p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) \simeq - \rho \nabla_{\boldsymbol{x}_t} \left\| \boldsymbol{y} - \mathcal{A}(\boldsymbol{\hat{x}}_0) \right\|,
 $$ {#eq-4}
-where $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ is the forward operator of the inverse problem, $\| \cdot \| : \mathbb R^{m} \to \mathbb R_{\ge 0}$ is an appropriate norm matching the noise distribution and $\rho \in \mathbb R$ is a tunable step size.
+where $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ is the forward operator of the inverse problem, $\| \cdot \| : \mathbb R^{m} \to \mathbb R_{\ge 0}$ is an appropriate norm matching the noise distribution and $\rho \in \mathbb R$ is a tunable step size. @alg:dps presents the overall DPS algorithm.
+
+```pseudocode
+#| label: alg:dps
+#| html-indent-size: "1.2em"
+#| html-line-number: true
+
+\begin{algorithm}
+\caption{DPS algorithm.}
+\begin{algorithmic}
+\REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, measurement $\boldsymbol{y}$, forward operator $\mathcal{A}$, DPS step size $\rho$, noise schedule $\{t\}_{t=1}^{T}$, generic sampler $\text{Sampler}$
+
+\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+
+\FOR{$t = T, \dots, 1$}
+    \STATE $\boldsymbol{\hat{x}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{x}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{x}_t, t) \right)$
+
+    \STATE $\boldsymbol{g}_{\text{DPS}} \gets \nabla_{\boldsymbol{x}_t} \left\| \boldsymbol{y} - \mathcal{A}(\boldsymbol{\hat{x}}_0) \right\|_2_2$
+
+    \STATE $\boldsymbol{x}_{t-1} \gets \text{Sampler}(\boldsymbol{x}_t, \boldsymbol{s}_{\boldsymbol{\theta}}, t) - \rho \boldsymbol{g}_{\text{DPS}}$
+\ENDFOR
+
+\RETURN $\boldsymbol{x}_0$
+\end{algorithmic}
+\end{algorithm}
+```
 
 ### Code
 
