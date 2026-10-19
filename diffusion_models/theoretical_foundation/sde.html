@@ -362,6 +362,18 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/rf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.2.1. Rectified Flow (RF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/fm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.2.2. Flow Matching (FM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
   </div>
@@ -376,6 +388,18 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -417,7 +441,7 @@ window.Quarto = {
 
 
 <p>After both <a href="../../diffusion_models/theoretical_foundation/smld.html">Score Matching with Langevin Dynamics (SMLD)</a> and <a href="../../diffusion_models/theoretical_foundation/ddpm.html">Denoising Diffusion Probabilistic Models (DDPMs)</a> were introduced, research focused on unifying these formulations under the same theoretical basis. For that, it was noted that both approaches used noise to perturb data. With that, a connection with Stochastic Differential Equations (SDEs) was done, extending the corruption process to a continuous version <span class="citation" data-cites="dm:sde">(<a href="#ref-dm:sde" role="doc-biblioref">Song et al. 2021</a>)</span>.</p>
-<p>Let <span class="math inline">\(\{\boldsymbol{x}(t)\}_{t=0}^T\)</span> be a sequence of data <span class="math inline">\(\boldsymbol x(t) \in \mathbb R^n\)</span> with <span class="math inline">\(t\in[0,1]\)</span> being a continuous time index. The goal is to obtain a way to sample <span class="math inline">\(\boldsymbol{x}(0) \sim p_0\)</span>, for which <span class="math inline">\(p_0\)</span> is the data distribution, while <span class="math inline">\(p_T\)</span> is the prior distribution. The diffusion process can be described as the solution of an Itô SDE: <span id="eq-1"><span class="math display">\[
+<p>Let <span class="math inline">\(\{\boldsymbol{x}(t)\}_{t=0}^T\)</span> be a sequence of data <span class="math inline">\(\boldsymbol x(t) \in \mathbb R^n\)</span> with <span class="math inline">\(t \in [0,1]\)</span> being a continuous time index. The goal is to obtain a way to sample <span class="math inline">\(\boldsymbol{x}(0) \sim p_0\)</span>, for which <span class="math inline">\(p_0\)</span> is the data distribution, while <span class="math inline">\(p_T\)</span> is the prior distribution. The diffusion process can be described as the solution of an Itô SDE: <span id="eq-1"><span class="math display">\[
 d\boldsymbol{x} = \boldsymbol{f}(\boldsymbol{x}, t) dt + g(t)d\boldsymbol{w},
 \tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{w} \in \mathbb R^n\)</span> is the Wiener process, <span class="math inline">\(\boldsymbol{f}: \mathbb R^{n \times 1} \to \mathbb R^n\)</span> is the drift coefficient of <span class="math inline">\(\boldsymbol{x}(t)\)</span> and <span class="math inline">\(g : \mathbb R \to \mathbb R\)</span> is the diffusion coefficient of <span class="math inline">\(\boldsymbol{x}(t)\)</span>. To denote the probability density of <span class="math inline">\(\boldsymbol{x}(t)\)</span> the notation <span class="math inline">\(p_t\)</span> is going to be used, which also holds for the transition kernels <span class="math inline">\(p_{st} (\boldsymbol{x}(s) \mid \boldsymbol{x}(t))\)</span>, with <span class="math inline">\(0\leq s &lt; t \leq T\)</span>.</p>
 <p>Then, by taking <span class="math inline">\(\boldsymbol{x}(T) \sim p_T\)</span> and reversing the diffusion process, samples can be obtained from the data distribution. This is modelled by a reverse diffusion process, given by: <span id="eq-2"><span class="math display">\[
@@ -450,7 +474,6 @@ d\boldsymbol{x} = -\frac{1}{2}\beta(t) \boldsymbol{x} dt + \sqrt{\beta(t)\left(1
 <p>It was also shown that every diffusion process has a deterministic process that shares the same marginal probability densities <span class="math inline">\(p_t(\boldsymbol{x})\)</span> for all <span class="math inline">\(t\)</span>. This is modelled by an Ordinary Differential Equation (ODE), known as the Probability Flow ODE, given by: <span id="eq-9"><span class="math display">\[
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt.
 \tag{9}\]</span></span> Because this formulation removes the stochastic Wiener process, the generative trajectory becomes entirely deterministic.</p>
-<p>The SDE formulation also decoupled the learning process of the prior with the inference time sampling process. While <a href="../../diffusion_models/theoretical_foundation/ddpm.html">DDPM</a> used <a href="../../diffusion_models/samplers/sde_samplers.html">Ancestral Sampling</a> and <a href="../../diffusion_models/theoretical_foundation/smld.html">SMLD</a> employed <a href="../../diffusion_models/samplers/sde_samplers.html">Annealed Langevin Dynamics</a>, the authors</p>
 <p>The SDE formulation also decoupled the training of the generative model from the inference-time sampling process. While frameworks relied on fixed schemes – such as <a href="../../diffusion_models/theoretical_foundation/ddpm.html">DDPM</a> using <a href="../../diffusion_models/samplers/sde_samplers.html">Ancestral Sampling</a> and <a href="../../diffusion_models/theoretical_foundation/smld.html">SMLD</a> employing <a href="../../diffusion_models/samplers/sde_samplers.html">Annealed Langevin Dynamics</a> – the continuous-time formulation demonstrated that given a trained score network, different samplers could be used to generate the data, without retraining the model. In the work, a new <a href="../../diffusion_models/samplers/sde_samplers.html">Predictor-Corrector (PC)</a> algorithm was also proposed.</p>
 <section id="code" class="level3">
 <h3 class="anchored" data-anchor-id="code">Code</h3>

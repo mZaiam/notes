@@ -277,6 +277,18 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../diffusion_models/theoretical_foundation/rf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.2.1. Rectified Flow (RF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion_models/theoretical_foundation/fm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.2.2. Flow Matching (FM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
   </div>
@@ -291,6 +303,18 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -317,7 +341,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#cold-diffusion-cd" id="toc-cold-diffusion-cd" class="nav-link" data-scroll-target="#cold-diffusion-cd">1.1.6. Cold-Diffusion (CD)</a></li>
   <li><a href="#discrete-denoising-diffusion-probabilistic-models-d3pms" id="toc-discrete-denoising-diffusion-probabilistic-models-d3pms" class="nav-link" data-scroll-target="#discrete-denoising-diffusion-probabilistic-models-d3pms">1.1.7. Discrete Denoising Diffusion Probabilistic Models (D3PMs)</a></li>
   </ul></li>
-  <li><a href="#flow-matching-fm" id="toc-flow-matching-fm" class="nav-link" data-scroll-target="#flow-matching-fm">1.2. Flow Matching (FM)</a></li>
+  <li><a href="#flow-matching-fm" id="toc-flow-matching-fm" class="nav-link" data-scroll-target="#flow-matching-fm">1.2. Flow Matching (FM)</a>
+  <ul class="collapse">
+  <li><a href="#rectified-flow-rf" id="toc-rectified-flow-rf" class="nav-link" data-scroll-target="#rectified-flow-rf">1.2.1 Rectified Flow (RF)</a></li>
+  <li><a href="#flow-matching-fm-1" id="toc-flow-matching-fm-1" class="nav-link" data-scroll-target="#flow-matching-fm-1">1.2.2 Flow Matching (FM)</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#samplers" id="toc-samplers" class="nav-link" data-scroll-target="#samplers">2. Samplers</a>
   <ul class="collapse">
@@ -328,6 +356,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#data-consistency" id="toc-data-consistency" class="nav-link" data-scroll-target="#data-consistency">3.2. Data Consistency</a>
   <ul class="collapse">
   <li><a href="#diffusion-posterior-sampling-dps" id="toc-diffusion-posterior-sampling-dps" class="nav-link" data-scroll-target="#diffusion-posterior-sampling-dps">3.2.1. Diffusion Posterior Sampling (DPS)</a></li>
+  <li><a href="#posterior-sampling-with-latent-diffusion-psld" id="toc-posterior-sampling-with-latent-diffusion-psld" class="nav-link" data-scroll-target="#posterior-sampling-with-latent-diffusion-psld">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</a></li>
+  <li><a href="#resample" id="toc-resample" class="nav-link" data-scroll-target="#resample">3.2.3. ReSample</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -385,7 +415,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="flow-matching-fm" class="level2">
 <h2 class="anchored" data-anchor-id="flow-matching-fm">1.2. Flow Matching (FM)</h2>
+<section id="rectified-flow-rf" class="level3">
+<h3 class="anchored" data-anchor-id="rectified-flow-rf"><a href="../diffusion_models/theoretical_foundation/rf.html">1.2.1 Rectified Flow (RF)</a></h3>
+</section>
+<section id="flow-matching-fm-1" class="level3">
+<h3 class="anchored" data-anchor-id="flow-matching-fm-1"><a href="../diffusion_models/theoretical_foundation/fm.html">1.2.2 Flow Matching (FM)</a></h3>
 <hr>
+</section>
 </section>
 </section>
 <section id="samplers" class="level1">
@@ -408,6 +444,12 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="data-consistency">3.2. Data Consistency</h2>
 <section id="diffusion-posterior-sampling-dps" class="level3">
 <h3 class="anchored" data-anchor-id="diffusion-posterior-sampling-dps"><a href="../diffusion_models/conditioning_data_consistency/dps.html">3.2.1. Diffusion Posterior Sampling (DPS)</a></h3>
+</section>
+<section id="posterior-sampling-with-latent-diffusion-psld" class="level3">
+<h3 class="anchored" data-anchor-id="posterior-sampling-with-latent-diffusion-psld"><a href="../diffusion_models/conditioning_data_consistency/psld.html">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</a></h3>
+</section>
+<section id="resample" class="level3">
+<h3 class="anchored" data-anchor-id="resample"><a href="../diffusion_models/conditioning_data_consistency/resample.html">3.2.3. ReSample</a></h3>
 
 
 </section>
