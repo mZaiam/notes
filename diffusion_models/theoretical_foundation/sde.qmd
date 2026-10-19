@@ -5,7 +5,7 @@ bibliography: ../../references.bib
 
 After both [Score Matching with Langevin Dynamics (SMLD)](smld.qmd) and [Denoising Diffusion Probabilistic Models (DDPMs)](ddpm.qmd) were introduced, research focused on unifying these formulations under the same theoretical basis. For that, it was noted that both approaches used noise to perturb data. With that, a connection with Stochastic Differential Equations (SDEs) was done, extending the corruption process to a continuous version [@dm:sde].
 
-Let $\{\boldsymbol{x}(t)\}_{t=0}^T$ be a sequence of data $\boldsymbol x(t) \in \mathbb R^n$ with $t\in[0,1]$ being a continuous time index. The goal is to obtain a way to sample $\boldsymbol{x}(0) \sim p_0$, for which $p_0$ is the data distribution, while $p_T$ is the prior distribution. The diffusion process can be described as the solution of an Itô SDE:
+Let $\{\boldsymbol{x}(t)\}_{t=0}^T$ be a sequence of data $\boldsymbol x(t) \in \mathbb R^n$ with $t \in [0,1]$ being a continuous time index. The goal is to obtain a way to sample $\boldsymbol{x}(0) \sim p_0$, for which $p_0$ is the data distribution, while $p_T$ is the prior distribution. The diffusion process can be described as the solution of an Itô SDE:
 $$
 d\boldsymbol{x} = \boldsymbol{f}(\boldsymbol{x}, t) dt + g(t)d\boldsymbol{w},
 $$ {#eq-1}
@@ -52,8 +52,6 @@ $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt.
 $$ {#eq-9}
 Because this formulation removes the stochastic Wiener process, the generative trajectory becomes entirely deterministic. 
-
-The SDE formulation also decoupled the learning process of the prior with the inference time sampling process. While [DDPM](ddpm.qmd) used [Ancestral Sampling](../samplers/sde_samplers.qmd) and [SMLD](smld.qmd) employed [Annealed Langevin Dynamics](../samplers/sde_samplers.qmd), the authors 
 
 The SDE formulation also decoupled the training of the generative model from the inference-time sampling process. While frameworks relied on fixed schemes -- such as [DDPM](ddpm.qmd) using [Ancestral Sampling](../samplers/sde_samplers.qmd) and [SMLD](smld.qmd) employing [Annealed Langevin Dynamics](../samplers/sde_samplers.qmd) -- the continuous-time formulation demonstrated that given a trained score network, different samplers could be used to generate the data, without retraining the model. In the work, a new [Predictor-Corrector (PC)](../samplers/sde_samplers.qmd) algorithm was also proposed.
 

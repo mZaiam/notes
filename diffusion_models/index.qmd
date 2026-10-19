@@ -27,6 +27,10 @@ The various definitions of the diffusion and flow-based generative learning proc
 
 ## 1.2. Flow Matching (FM)
 
+### [1.2.1 Rectified Flow (RF)](theoretical_foundation/rf.qmd)
+
+### [1.2.2 Flow Matching (FM)](theoretical_foundation/fm.qmd)
+
 --- 
 
 # 2. Samplers

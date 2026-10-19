@@ -30,9 +30,16 @@ By sharing the topological structure as input, the estimation of the node and ed
 
 The models were trained using a joint denoising score matching objective, which minimized:
 $$
-\mathcal{L}(\boldsymbol{\theta}, \boldsymbol{\phi}) = \mathbb{E}_{t, \boldsymbol{G}_0, \boldsymbol{G}_t} \left[ \lambda_{\boldsymbol{X}}(t) \left\| \boldsymbol{s}_{\boldsymbol{\theta}} - \nabla_{\boldsymbol{X}_t} \log q_{0t}(\boldsymbol{X}_t \mid \boldsymbol{X}_0) \right\|_2^2 + \lambda_{\boldsymbol{A}}(t) \left\| \boldsymbol{s}_{\boldsymbol{\phi}} - \nabla_{\boldsymbol{A}_t} \log q_{0t}(\boldsymbol{A}_t \mid \boldsymbol{A}_0) \right\|_2^2 \right],
+\mathcal{L}(\boldsymbol{\theta}, \boldsymbol{\phi}) = \mathbb{E}_{t, \boldsymbol{G}_0, \boldsymbol{G}_t} \left[  \mathcal L(\boldsymbol \theta) + \mathcal L(\boldsymbol \phi) \right],
 $$ {#eq-5}
-where $q_{0t}$ represents the perturbation kernel of the forward SDEs and $\lambda_{\boldsymbol{X}}(t) : \mathbb R \to \mathbb R$ and $\lambda_{\boldsymbol{A}}(t) : \mathbb R \to \mathbb R$ are positive weighting functions.
+where:
+$$
+\mathcal L(\boldsymbol \theta) = \lambda_{\boldsymbol{X}}(t) \left\| \boldsymbol{s}_{\boldsymbol{\theta}} - \nabla_{\boldsymbol{X}_t} \log q_{0t}(\boldsymbol{X}_t \mid \boldsymbol{X}_0) \right\|_2^2,
+$$ {#eq-6}
+$$
+\mathcal L(\boldsymbol \phi) = \lambda_{\boldsymbol{A}}(t) \left\| \boldsymbol{s}_{\boldsymbol{\phi}} - \nabla_{\boldsymbol{A}_t} \log q_{0t}(\boldsymbol{A}_t \mid \boldsymbol{A}_0) \right\|_2^2,
+$$ {#eq-7}
+$q_{0t}$ represents the perturbation kernel of the forward SDEs and $\lambda_{\boldsymbol{X}}(t) : \mathbb R \to \mathbb R$ and $\lambda_{\boldsymbol{A}}(t) : \mathbb R \to \mathbb R$ are positive weighting functions.
 
 In order to sample from the model, a two-step procedure was employed. First, the size of the graph was sampled from the empirical distribution of graph sizes in the training data. Given $N$, algorithms based on [Predictor-Corrector (PC)](../samplers/sde_samplers.qmd) were developed to sample from the system of revere time SDEs.
 

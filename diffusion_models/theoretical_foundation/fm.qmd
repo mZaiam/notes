@@ -1,0 +1,50 @@
+---
+title: "1.2.2. Flow Matching (FM)"
+bibliography: ../../references.bib
+---
+
+Flow Matching (FM) [@dm:fm] was a concurrent work to [Rectified Flow (RF)](rf.qmd) that also employed Ordinary Differential Equations (ODEs) to model generative processes. While RF started from a geometric intuition of drawing straight lines between distributions, FM established a broader mathematical framework for the training of Continuous Normalizing Flows (CNFs).
+
+FM used the following ODE to define a probability density path that smoothly transforms a prior distribution $p_0$ into a target data distribution $p_1$:
+$$
+d\boldsymbol{x} = \boldsymbol{u}(\boldsymbol{x}, t) dt,
+$$ {#eq-1}
+with the time index $t \in [0, 1]$, where $\boldsymbol{u}: \mathbb R^{n\times 1} \to \mathbb R^n$ is the time-dependent marginal vector field driving the transformation. To generate data, a neural network $\boldsymbol{v}_{\boldsymbol{\theta}} \mathbb R^{n\times 1} \to \mathbb R^n$ is trained to approximate this vector field. The ideal training objective, known as the Flow Matching objective, minimized the difference between the network and the vector field:
+$$
+\mathcal{L}_{\text{FM}}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}} \left[ \left\| \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}, t) - \boldsymbol{u}(\boldsymbol{x}, t) \right\|^2 \right],
+$$ {#eq-2}
+with $t \in [0,1]$ and $\boldsymbol x \sim p_t$. However, this objective is intractable because the marginal vector field $\boldsymbol{u}(\boldsymbol{x}, t)$ and the marginal probability path $p_t(\boldsymbol{x})$ are unknown and cannot be computed directly.
+
+To overcome this limitation, FM introduced Conditional Flow Matching (CFM). By conditioning the probability path on a single data sample $\boldsymbol{x}_1 \sim p_1$, the conditional vector field $\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1)$ becomes tractable. The CFM objective is defined as:
+$$
+\mathcal{L}_{\text{CFM}}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}_1, \boldsymbol{x}} \left[ \left\| \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}, t) - \boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) \right\|^2 \right],
+$$ {#eq-3}
+where $t \in [0,1]$, $\boldsymbol x_1 \sim p_1$ and $\boldsymbol x \sim p_t(\boldsymbol x \mid \boldsymbol x_1)$. FM further proved that if $p_t(\boldsymbol x) > 0$ for all $\boldsymbol x \in \mathbb R^n$ and $t \in [0, 1]$, it is true that $\nabla_{\boldsymbol \theta} \mathcal L_{\text{FM}} = \nabla_{\boldsymbol \theta} \mathcal L_{\text{CFM}}$. Therefore, CFM not only is a tractable objective function, but also presented the same gradients as the original FM loss function, up to a constant that does not depend on $\boldsymbol \theta$.
+
+In practice, CFM is usually employed using a Gaussian distribution as $p_0$, and the dataset of interest as $p_1$. That leads to a closed formula for the probability paths:
+$$
+p_t(\boldsymbol{x} \mid \boldsymbol{x}_1) = \mathcal{N}(\boldsymbol{x} \mid \boldsymbol\mu(\boldsymbol{x}_1, t), \boldsymbol\sigma(\boldsymbol{x}_1, t)^2 \boldsymbol{I}),
+$$ {#eq-4}
+with $\boldsymbol \mu, \boldsymbol \sigma : \mathbb R^{n\times 1} \to \mathbb R^n$ being the mean and standard deviation. Its corresponding vector field is given by:
+$$
+\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) = \boldsymbol\mu\prime(\boldsymbol{x}_1, t) + \frac{\boldsymbol\sigma\prime(\boldsymbol{x}_1, t)}{\boldsymbol\sigma(\boldsymbol{x}_1, t)} (\boldsymbol{x} - \boldsymbol\mu(\boldsymbol{x}_1, t)).
+$$ {#eq-5}
+If this path is defined with $\boldsymbol\mu(\boldsymbol{x}_1, t) = t\boldsymbol{x}_1$ and $\boldsymbol\sigma(\boldsymbol{x}_1, t) = 1 - t$, the vector field simplifies to:
+$$
+\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) = \frac{\boldsymbol{x}_1 - \boldsymbol{x}}{1 - t}.
+$$ {#eq-6}
+When evaluated along the interpolated path $\boldsymbol{x}_t = t\boldsymbol{x}_1 + (1 - t)\boldsymbol{x}_0$, this target yields exactly $\boldsymbol{x}_1 - \boldsymbol{x}_0$. Under these specific conditions, the CFM objective reduces directly to the [Rectified Flow](rf.qmd) objective, showing that RF is a particular case of the FM framework. In fact, this linear interpolant choice is the Optimal Transport (OT) between the two distributions, which makes the model move in a straight trajectory wih constant speed.
+
+The CFM framework is also related to diffusion processes. Standard [Diffusion Models](sde.qmd) construct probability paths by gradually adding noise to data, which can similarly be formulated as Gaussian conditional paths. As the marginal distribution of all diffusion processes follow a [Probability Flow ODE](sde.qmd), it is possible to relate the vector field learned by FM and the diffusion approach, by setting:
+$$
+\boldsymbol u(\boldsymbol x, t) = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right],
+$$ {#eq-7}
+where $\boldsymbol f: \mathbb R^{n\times 1} \to \mathbb R^n$ is the drift coefficient, $g: \mathbb R \to \mathbb R$ is the diffusion coefficient and $\nabla_{\boldsymbol{x}}  \log p_t(\boldsymbol{x}) \in \mathbb R^n$ is the score function. For instance, the Variance Preserving (VP) diffusion path is described by $\boldsymbol\mu(\boldsymbol{x}_1, t) = \alpha_t \boldsymbol{x}_1$ and $\boldsymbol\sigma(\boldsymbol{x}_1, 1) = \sqrt{1 - \alpha_t^2}$, with $\alpha_t \in \mathbb R$ being a fixed parameter schedule, leading to a curved vector field. Therefore, FM demonstrated that score-matching in diffusion models is mathematically equivalent to vector field regression.
+
+Similarly to ReFlow in [Rectified Flow](rf.qmd), FM introduced Optimal Transport (OT) to mitigate the crossing paths generated by randomly pairing noise and data during training. OT-CFM coupled each noise sample $\boldsymbol{x}_0$ with the closest data sample $\boldsymbol{x}_1$ by minimizing the $2$-Wasserstein distance within each training batch. 
+
+To sample from FM models, standard [ODE samplers](../samplers/ode_samplers.qmd) are employed, such as Euler of Heun, for example.
+
+### Code
+
+{{< embed theoretical_foundation_assets/fm.ipynb >}}

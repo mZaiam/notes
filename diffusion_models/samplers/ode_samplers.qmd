@@ -7,7 +7,60 @@ Another approach to sampling using Diffusion Models (DMs) is to use the Probabil
 $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt,
 $$ {#eq-1}
-where $\boldsymbol{f}(\boldsymbol{x}, t) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient, $g(t): \mathbb R\to \mathbb R$ is the diffusion coefficient and $\nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x}) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the score function. As mentioned in the [Stochastic Differential Equations (SDEs)](../theoretical_foundation/sde.qmd) formulation, the Probability Flow ODE is a deterministic process that shares the same marginal distributions as the forward SDE. This allows for sampling from the data distribution by solving an ODE instead of simulating a stochastic process, while also making the process deterministic.
+where $\boldsymbol{f}(\boldsymbol{x}, t) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient, $g(t): \mathbb R\to \mathbb R$ is the diffusion coefficient and $\nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x}) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the score function. As mentioned in the [Stochastic Differential Equations (SDEs)](../theoretical_foundation/sde.qmd) formulation, the Probability Flow ODE is a deterministic process that shares the same marginal distributions as the forward SDE. This allows for sampling from the data distribution by solving an ODE instead of simulating a stochastic process, while also making the process deterministic. 
+
+As mentioned in [Flow Matching (FM)](../theoretical_foundation/fm.qmd), flow models are directly related to the Probability Flow ODE, with that, ODE samplers can also be used to sample from flow models. On the other hand, although diffusion is a specific case of FM, it presents curved probability paths, which requires more specific samplers for few-step generation.
+
+## Euler and Heun Samplers
+
+One of the most basic samplers for ODEs are the Euler and Heun numerical integration methods. The reason is that generation is simply the integration of the learned velocity field $\boldsymbol{v}_{\boldsymbol{\theta}} : \mathbb R^{n\times 1} \to \mathbb R^n$ over $t \in [0, 1]$ in flow models, and the Probability Flow ODE in diffusion. For that, classical numerical integration methods such as Euler and Heun can be employed to sample from these learned priors. @alg:euler and @alg:heun presents these algorithms.
+
+```pseudocode
+#| label: alg:euler
+#| html-indent-size: "1.2em"
+#| html-line-number: true
+
+\begin{algorithm}
+\caption{Euler Sampler}
+\begin{algorithmic}
+\REQUIRE Velocity field $\boldsymbol{v}_{\boldsymbol{\theta}}$, time steps $\{t_i\}_{i=0}^{N}$ with $t_0=0$ and $t_N=1$
+
+\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+
+\FOR{$i = 0,\ldots,N-1$}
+    \STATE $\Delta t \gets t_{i+1} - t_i$
+    \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{x}_i + \Delta t \cdot \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}_i, t_i)$
+\ENDFOR
+
+\RETURN $\boldsymbol{x}_N$
+\end{algorithmic}
+\end{algorithm}
+```
+
+```pseudocode
+#| label: alg:heun
+#| html-indent-size: "1.2em"
+#| html-line-number: true
+
+\begin{algorithm}
+\caption{Heun Sampler}
+\begin{algorithmic}
+\REQUIRE Velocity field $\boldsymbol{v}_{\boldsymbol{\theta}}$, time steps $\{t_i\}_{i=0}^{N}$ with $t_0=0$ and $t_N=1$
+
+\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+
+\FOR{$i = 0,\ldots,N-1$}
+    \STATE $\Delta t \gets t_{i+1} - t_i$
+    \STATE $\boldsymbol{k}_1 \gets \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}_i, t_i)$
+    \STATE $\boldsymbol{\tilde{x}}_{i+1} \gets \boldsymbol{x}_i + \Delta t \cdot \boldsymbol{k}_1$
+    \STATE $\boldsymbol{k}_2 \gets \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{\tilde{x}}_{i+1}, t_{i+1})$
+    \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{x}_i + \frac{\Delta t}{2} (\boldsymbol{k}_1 + \boldsymbol{k}_2)$
+\ENDFOR
+
+\RETURN $\boldsymbol{x}_N$
+\end{algorithmic}
+\end{algorithm}
+```
 
 ## Denoising Diffusion Implicit Models (DDIMs)
 
@@ -104,3 +157,7 @@ The stochastic perturbation allows the sampler to explore different denoising tr
 \end{algorithmic}
 \end{algorithm}
 ```
+
+## Diffusion Probabilistic Models Solver (DPM-Solver)
+
+## Unified Predictor-Corrector (UniPC)

@@ -39,7 +39,7 @@ where $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ is the forward operator of the
 \FOR{$t = T, \dots, 1$}
     \STATE $\boldsymbol{\hat{x}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{x}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{x}_t, t) \right)$
 
-    \STATE $\boldsymbol{g}_{\text{DPS}} \gets \nabla_{\boldsymbol{x}_t} \left\| \boldsymbol{y} - \mathcal{A}(\boldsymbol{\hat{x}}_0) \right\|_2_2$
+    \STATE $\boldsymbol{g}_{\text{DPS}} \gets \nabla_{\boldsymbol{x}_t} \left\| \boldsymbol{y} - \mathcal{A}(\boldsymbol{\hat{x}}_0) \right\|$
 
     \STATE $\boldsymbol{x}_{t-1} \gets \text{Sampler}(\boldsymbol{x}_t, \boldsymbol{s}_{\boldsymbol{\theta}}, t) - \rho \boldsymbol{g}_{\text{DPS}}$
 \ENDFOR

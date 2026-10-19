@@ -51,6 +51,8 @@ website:
           - diffusion_models/theoretical_foundation/edm.qmd
           - diffusion_models/theoretical_foundation/cd.qmd
           - diffusion_models/theoretical_foundation/d3pm.qmd
+          - diffusion_models/theoretical_foundation/rf.qmd
+          - diffusion_models/theoretical_foundation/fm.qmd
           - diffusion_models/samplers/sde_samplers.qmd
           - diffusion_models/samplers/ode_samplers.qmd
           - diffusion_models/conditioning_data_consistency/dps.qmd
