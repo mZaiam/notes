@@ -5,7 +5,7 @@ bibliography: ../../references.bib
 
 Flow Matching (FM) [@dm:fm] was a concurrent work to [Rectified Flow (RF)](rf.qmd) that also employed Ordinary Differential Equations (ODEs) to model generative processes. While RF started from a geometric intuition of drawing straight lines between distributions, FM established a broader mathematical framework for the training of Continuous Normalizing Flows (CNFs).
 
-FM used the following ODE to define a probability density path that smoothly transforms a prior distribution $p_0$ into a target data distribution $p_1$:
+FM used the following ODE to define a probability density path that smoothly transforms a prior distribution $p_0$ into a target data distribution $p_1(\boldsymbol x)$:
 $$
 d\boldsymbol{x} = \boldsymbol{u}(\boldsymbol{x}, t) dt,
 $$ {#eq-1}
@@ -13,21 +13,21 @@ with the time index $t \in [0, 1]$, where $\boldsymbol{u}: \mathbb R^{n\times 1}
 $$
 \mathcal{L}_{\text{FM}}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}} \left[ \left\| \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}, t) - \boldsymbol{u}(\boldsymbol{x}, t) \right\|^2 \right],
 $$ {#eq-2}
-with $t \in [0,1]$ and $\boldsymbol x \sim p_t$. However, this objective is intractable because the marginal vector field $\boldsymbol{u}(\boldsymbol{x}, t)$ and the marginal probability path $p_t(\boldsymbol{x})$ are unknown and cannot be computed directly.
+with $t \in [0,1]$ and $\boldsymbol x \sim p_t(\boldsymbol x)$. However, this objective is intractable because the marginal vector field $\boldsymbol{u}(\boldsymbol{x}, t)$ and the marginal probability path $p_t(\boldsymbol{x})$ are unknown and cannot be computed directly.
 
-To overcome this limitation, FM introduced Conditional Flow Matching (CFM). By conditioning the probability path on a single data sample $\boldsymbol{x}_1 \sim p_1$, the conditional vector field $\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1)$ becomes tractable. The CFM objective is defined as:
+To overcome this limitation, FM introduced Conditional Flow Matching (CFM). By conditioning the probability path on a single data sample $\boldsymbol{x}_1 \sim p_1(\boldsymbol x)$, the conditional vector field $\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1)$ becomes tractable. The CFM objective is defined as:
 $$
 \mathcal{L}_{\text{CFM}}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}_1, \boldsymbol{x}} \left[ \left\| \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}, t) - \boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) \right\|^2 \right],
 $$ {#eq-3}
-where $t \in [0,1]$, $\boldsymbol x_1 \sim p_1$ and $\boldsymbol x \sim p_t(\boldsymbol x \mid \boldsymbol x_1)$. FM further proved that if $p_t(\boldsymbol x) > 0$ for all $\boldsymbol x \in \mathbb R^n$ and $t \in [0, 1]$, it is true that $\nabla_{\boldsymbol \theta} \mathcal L_{\text{FM}} = \nabla_{\boldsymbol \theta} \mathcal L_{\text{CFM}}$. Therefore, CFM not only is a tractable objective function, but also presented the same gradients as the original FM loss function, up to a constant that does not depend on $\boldsymbol \theta$.
+where $t \in [0,1]$, $\boldsymbol x_1 \sim p_1(\boldsymbol x)$ and $\boldsymbol x \sim p_t(\boldsymbol x \mid \boldsymbol x_1)$. FM further proved that if $p_t(\boldsymbol x) > 0$ for all $\boldsymbol x \in \mathbb R^n$ and $t \in [0, 1]$, it is true that $\nabla_{\boldsymbol \theta} \mathcal L_{\text{FM}} = \nabla_{\boldsymbol \theta} \mathcal L_{\text{CFM}}$. Therefore, CFM not only is a tractable objective function, but also presented the same gradients as the original FM loss function, up to a constant that does not depend on $\boldsymbol \theta$.
 
-In practice, CFM is usually employed using a Gaussian distribution as $p_0$, and the dataset of interest as $p_1$. That leads to a closed formula for the probability paths:
+In practice, CFM is usually employed using a Gaussian distribution as $p_0(\boldsymbol x)$, and the dataset of interest as $p_1(\boldsymbol x)$. That leads to a closed formula for the probability paths:
 $$
 p_t(\boldsymbol{x} \mid \boldsymbol{x}_1) = \mathcal{N}(\boldsymbol{x} \mid \boldsymbol\mu(\boldsymbol{x}_1, t), \boldsymbol\sigma(\boldsymbol{x}_1, t)^2 \boldsymbol{I}),
 $$ {#eq-4}
 with $\boldsymbol \mu, \boldsymbol \sigma : \mathbb R^{n\times 1} \to \mathbb R^n$ being the mean and standard deviation. Its corresponding vector field is given by:
 $$
-\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) = \boldsymbol\mu\prime(\boldsymbol{x}_1, t) + \frac{\boldsymbol\sigma\prime(\boldsymbol{x}_1, t)}{\boldsymbol\sigma(\boldsymbol{x}_1, t)} (\boldsymbol{x} - \boldsymbol\mu(\boldsymbol{x}_1, t)).
+\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) = \boldsymbol\mu^\prime(\boldsymbol{x}_1, t) + \frac{\boldsymbol\sigma^\prime(\boldsymbol{x}_1, t)}{\boldsymbol\sigma(\boldsymbol{x}_1, t)} (\boldsymbol{x} - \boldsymbol\mu(\boldsymbol{x}_1, t)).
 $$ {#eq-5}
 If this path is defined with $\boldsymbol\mu(\boldsymbol{x}_1, t) = t\boldsymbol{x}_1$ and $\boldsymbol\sigma(\boldsymbol{x}_1, t) = 1 - t$, the vector field simplifies to:
 $$

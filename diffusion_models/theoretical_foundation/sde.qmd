@@ -5,13 +5,13 @@ bibliography: ../../references.bib
 
 After both [Score Matching with Langevin Dynamics (SMLD)](smld.qmd) and [Denoising Diffusion Probabilistic Models (DDPMs)](ddpm.qmd) were introduced, research focused on unifying these formulations under the same theoretical basis. For that, it was noted that both approaches used noise to perturb data. With that, a connection with Stochastic Differential Equations (SDEs) was done, extending the corruption process to a continuous version [@dm:sde].
 
-Let $\{\boldsymbol{x}(t)\}_{t=0}^T$ be a sequence of data $\boldsymbol x(t) \in \mathbb R^n$ with $t \in [0,1]$ being a continuous time index. The goal is to obtain a way to sample $\boldsymbol{x}(0) \sim p_0$, for which $p_0$ is the data distribution, while $p_T$ is the prior distribution. The diffusion process can be described as the solution of an Itô SDE:
+Let $\{\boldsymbol{x}(t)\}_{t=0}^T$ be a sequence of data $\boldsymbol x(t) \in \mathbb R^n$ with $t \in [0, T]$ being a continuous time index. The goal is to obtain a way to sample $\boldsymbol{x}(0) \sim p_0(\boldsymbol x)$, for which $p_0$ is the data distribution, while $p_T(\boldsymbol x)$ is the prior distribution. The diffusion process can be described as the solution of an Itô SDE:
 $$
 d\boldsymbol{x} = \boldsymbol{f}(\boldsymbol{x}, t) dt + g(t)d\boldsymbol{w},
 $$ {#eq-1}
-where $\boldsymbol{w} \in \mathbb R^n$ is the Wiener process, $\boldsymbol{f}: \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x}(t)$ and $g : \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$. To denote the probability density of $\boldsymbol{x}(t)$ the notation $p_t$ is going to be used, which also holds for the transition kernels $p_{st} (\boldsymbol{x}(s) \mid \boldsymbol{x}(t))$, with $0\leq s < t \leq T$. 
+where $\boldsymbol{w} \in \mathbb R^n$ is the Wiener process, $\boldsymbol{f}: \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x}(t)$ and $g : \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$. To denote the probability density of $\boldsymbol{x}(t)$ the notation $p_t(\boldsymbol x)$ is going to be used, which also holds for the transition kernels $p_{st} (\boldsymbol{x}(s) \mid \boldsymbol{x}(t))$, with $0\leq s < t \leq T$. 
 
-Then, by taking $\boldsymbol{x}(T) \sim p_T$ and reversing the diffusion process, samples can be obtained from the data distribution. This is modelled by a reverse diffusion process, given by:
+Then, by taking $\boldsymbol{x}(T) \sim p_T(\boldsymbol x)$ and reversing the diffusion process, samples can be obtained from the data distribution. This is modelled by a reverse diffusion process, given by:
 $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt + g(t)d\boldsymbol{\overline w},
 $$ {#eq-2}
@@ -45,7 +45,7 @@ The objective functions of both SMLDs and DDPMs were also unified. That is, the 
 $$
 \mathcal{L}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}_0, \boldsymbol{\epsilon}} \left[ \lambda(t) \left\| \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) + \frac{\boldsymbol{\epsilon}}{\sigma_t} \right\|_2^2 \right],
 $$ {#eq-8}
-where $\lambda(t) : \mathbb R \to \mathbb R$ is a weighting function introduced to balance the gradient magnitudes across different noise scales. If one sets $\lambda(t) = \sigma_t^2$ to the respective forward processes of SMLDs and DDPMs, one gets their original objective functions.
+where $t\sim \mathcal U(0, T)$, $\boldsymbol x_0 \sim p_0(\boldsymbol x)$, $\boldsymbol x_t \sim p_t(\boldsymbol x)$, $\boldsymbol \epsilon \sim \mathcal N(\boldsymbol \epsilon \mid \boldsymbol 0, \boldsymbol I)$ and $\lambda(t) : \mathbb R \to \mathbb R$ is a weighting function introduced to balance the gradient magnitudes across different noise scales. If one sets $\lambda(t) = \sigma_t^2$ to the respective forward processes of SMLDs and DDPMs, one gets their original objective functions.
 
 It was also shown that every diffusion process has a deterministic process that shares the same marginal probability densities $p_t(\boldsymbol{x})$ for all $t$. This is modelled by an Ordinary Differential Equation (ODE), known as the Probability Flow ODE, given by:
 $$

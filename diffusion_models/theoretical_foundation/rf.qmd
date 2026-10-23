@@ -5,15 +5,15 @@ bibliography: ../../references.bib
 
 While Diffusion Models (DMs) constructed a generative process by reversing a Stochastic Differential Equation (SDE) that gradually added noise to data, Rectified Flows (RFs) [@dm:fm] introduced a deterministic framework based on Ordinary Differential Equations (ODEs). RFs attempted to build a straight path between a noise distribution and the data distribution.
 
-Let $p_0$ and $p_1$ be empirical distributions. RF introduced an ODE that connected both distributions, described by:
+Let $p_0(\boldsymbol x)$ and $p_1(\boldsymbol x)$ be empirical distributions. RF introduced an ODE that connected both distributions, described by:
 $$
 d\boldsymbol{x} = \boldsymbol{v}(\boldsymbol{x}, t) dt,
 $$ {#eq-1}
-with the time index $t \in [0, 1]$. Here, the time-dependent velocity field $\boldsymbol{v} : \mathbb{R}^{n\times 1} \to \mathbb{R}^n$ drives the distribution $p_0$ towards $p_1$, aiming to follow the straight path $\boldsymbol{x}_1 - \boldsymbol{x}_0$. To achieve this, the velocity field was parameterized by a neural network $\boldsymbol{\theta}$, trained with the following objective:
+with the time index $t \in [0, 1]$. Here, the time-dependent velocity field $\boldsymbol{v} : \mathbb{R}^{n\times 1} \to \mathbb{R}^n$ drives the distribution $p_0(\boldsymbol x)$ towards $p_1(\boldsymbol x)$, aiming to follow the straight path $\boldsymbol{x}_1 - \boldsymbol{x}_0$. To achieve this, the velocity field was parameterized by a neural network $\boldsymbol{\theta}$, trained with the following objective:
 $$
 \mathcal{L}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}_0, \boldsymbol{x}_1} \left[ \left\| (\boldsymbol{x}_1 - \boldsymbol{x}_0) - \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) \right\|^2 \right],
 $$ {#eq-2}
-where $\boldsymbol{x}_t = t\boldsymbol{x}_1 + (1-t)\boldsymbol{x}_0$ is the linear interpolation of the two samples, representing the ideal RF ODE path. Here, $t\sim \mathcal U(0, 1)$, $\boldsymbol x_0 \sim p_0$ and $\boldsymbol x_1 \sim p_1$. By optimizing the network output against $(\boldsymbol{x}_1 - \boldsymbol{x}_0)$ at various interpolated points $\boldsymbol{x}_t$, the velocity field learns a causal transport map that starts from $p_0$ and points towards $p_1$.
+where $\boldsymbol{x}_t = t\boldsymbol{x}_1 + (1-t)\boldsymbol{x}_0$ is the linear interpolation of the two samples, representing the ideal RF ODE path. Here, $t\sim \mathcal U(0, 1)$, $\boldsymbol x_0 \sim p_0(\boldsymbol x)$ and $\boldsymbol x_1 \sim p_1$. By optimizing the network output against $(\boldsymbol{x}_1 - \boldsymbol{x}_0)$ at various interpolated points $\boldsymbol{x}_t$, the velocity field learns a causal transport map that starts from $p_0(\boldsymbol x)$ and points towards $p_1(\boldsymbol x)$.
 
 One issue with sampling both noise and data points independently is that their interpolated paths might cross, creating a non-linear vector field. In order to rectify the learned vector field, RF introduced a two-step training approach called Reflow to build on top of a pre-trained RF model. After pre-training with crossing paths, the model is used to simulate generative trajectories from the noise distribution to the data distribution using general-purpose [ODE solvers](../samplers/ode_samplers.qmd). By storing the exact starting noise $\boldsymbol{x}_0$ and the final generated output $\boldsymbol{x}_1$ for each trajectory, a new dataset of coupled pairs is created. Then, a second RF model is trained from scratch using these pairs, instead of independent random samples. Because these new trajectories are untangled, ReFlow forces the second model to learn non-intersecting trajectories, rectifying the flow and enabling few-step inference.
 

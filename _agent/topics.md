@@ -1,11 +1,5 @@
 Diffusion Models
-- Samplers
-    - ODE-based Diffusion Samplers
-        - DPM-Solver
-        - DPM-Solver++
-        - UniPC
 - Conditioning and Data-Consistency
-    - Classifier Guidance
     - Classifier-Free Guidance
     - ControlNet
     - Image Prompt Adapter

@@ -1,5 +1,5 @@
 ---
-title: "3.2.3. ReSample"
+title: "4.2.3. ReSample"
 bibliography: ../../references.bib
 ---
 
@@ -7,7 +7,7 @@ After the introduction of [Posterior Sampling with Latent Diffusion (PSLD)](psld
 
 Let $\boldsymbol x \in \mathbb R^n$ be the data space, $\boldsymbol y \in \mathbb R^m$ be the measurement space, and $\boldsymbol z \in \mathbb R^d$ be the latent space. The data and latent spaces are connected via a Variational Autoencoder (VAE), such that the encoder $\mathcal E: \mathbb R^n \to \mathbb R^d$ maps data into latents and the decoder $\mathcal D: \mathbb R^d \to \mathbb R^n$ performs the opposite mapping. ReSample proposed to solve the following sub-problem:
 $$
-\boldsymbol{\tilde{z}}_0 = \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \|\boldsymbol y - \mathcal A(\mathcal D(\boldsymbol z)) \|_2^2,
+\boldsymbol{\tilde{z}}_0 = \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \|\boldsymbol y - \mathcal A(\mathcal D(\boldsymbol z)) \|,
 $$ {#eq-1}
 where $\boldsymbol{\tilde{z}}_0$ is the sample consistent with the measurements and $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ is the forward operator of the inverse problem. Because the decoder $\mathcal{D}$ is a non-linear mapping, solving this sub-problem directly is unstable. That is, starting from a random guess $\boldsymbol z \in \mathbb R^d$ leads to solutions that might be unrealistic. ReSample addresses this by initializing with the current Tweedie's estimate $\boldsymbol{\hat{z}}_0 = \mathbb E[\boldsymbol z_0 \mid \boldsymbol z_t]$, and then performing $K$ steps of gradient descent to find $\boldsymbol{\tilde{z}}_0$.
 
@@ -33,7 +33,7 @@ Finally, it was noted that the sub-problem did not need to be applied at every t
 \begin{algorithmic}
 \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, VAE decoder $\mathcal{D}$, measurement $\boldsymbol{y}$, forward operator $\mathcal{A}$, ReSample hyperparameter $\zeta$, noise schedule $\{t\}_{t=1}^{T}$, generic sampler $\text{Sampler}$, resampling schedule $C$
 
-\STATE $\boldsymbol{z}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+\STATE $\boldsymbol{z}_T \sim \mathcal{N}(\boldsymbol z_T \mid \boldsymbol{0}, \boldsymbol{I})$
 
 \FOR{$t = T, \dots, 1$}
     \STATE $\boldsymbol{z}_{t-1}^{\prime} \gets \text{Sampler}(\boldsymbol{z}_t, \boldsymbol{s}_{\boldsymbol{\theta}}, t)$
@@ -41,7 +41,7 @@ Finally, it was noted that the sub-problem did not need to be applied at every t
     \IF{$t \in C$}
         \STATE $\boldsymbol{\hat{z}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{z}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{z}_t, t) \right)$
         
-        \STATE $\boldsymbol{\tilde{z}}_0 \gets \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \| \boldsymbol y - \mathcal A(\mathcal D(\boldsymbol{z})) \|_2^2$
+        \STATE $\boldsymbol{\tilde{z}}_0 \gets \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \| \boldsymbol y - \mathcal A(\mathcal D(\boldsymbol{z})) \|$
 
         \STATE $\sigma_{t-1}^2 \gets \zeta \left(\frac{1 - \overline{\alpha}_{t-1}}{\overline{\alpha}_{t-1}}\right)\left(1 - \frac{\overline{\alpha}_{t-1}}{\overline{\alpha}_t}\right)$
         
@@ -49,7 +49,7 @@ Finally, it was noted that the sub-problem did not need to be applied at every t
         
         \STATE $\boldsymbol{\Sigma} \gets \frac{\sigma_{t-1}^2(1-\overline{\alpha}_{t-1})}{\sigma_{t-1}^2 + (1-\overline{\alpha}_{t-1})} \boldsymbol{I}$
         
-        \STATE $\boldsymbol{z}_{t-1} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
+        \STATE $\boldsymbol{z}_{t-1} \sim \mathcal{N}(\boldsymbol z_{t - 1} \mid \boldsymbol{\mu}, \boldsymbol{\Sigma})$
     \ELSE
         \STATE $\boldsymbol{z}_{t-1} \gets \boldsymbol{z}_{t-1}^{\prime}$
     \ENDIF

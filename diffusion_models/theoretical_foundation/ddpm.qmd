@@ -54,12 +54,13 @@ where $C \in \mathbb R$ is a constant independent of $\boldsymbol{\theta}$. With
 $$
 \mathcal L_{t-1} = \mathbb E_{\boldsymbol{x}_0, \boldsymbol{\epsilon}} \left[ \frac{\beta_t^2}{2\sigma_t^2 \alpha_t (1 - \overline{\alpha}_t)} \left\| \boldsymbol{\epsilon} - \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) \right\|^2 \right],
 $$ {#eq-9}
-where $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the noise predicted by the NN. It was observed that ignoring the weighting term lead to better results. This results in the final simplified objective function used to train DDPMs:
+where $\boldsymbol{\epsilon}_{\boldsymbol{\theta}} : \mathbb R^{n \times 1} \to \mathbb R^n$ is the noise predicted by the NN. It was observed that ignoring the weighting term lead to better results. This results in the final simplified objective function used to train DDPMs:
 $$
-\mathcal L(\boldsymbol{\theta}) = \mathbb E_{t, \boldsymbol{x}_0, \boldsymbol{\epsilon}} \left[ \left\| \boldsymbol{\epsilon} - \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) \right\|^2 \right].
+\mathcal L(\boldsymbol{\theta}) = \mathbb E_{t, \boldsymbol{x}_0, \boldsymbol{\epsilon}} \left[ \left\| \boldsymbol{\epsilon} - \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) \right\|^2 \right],
 $$ {#eq-10}
+where $t\sim \mathcal U(0, T)$, $\boldsymbol x_0 \sim p_0(\boldsymbol x)$, $\boldsymbol x_t \sim q(\boldsymbol{x}_t \mid \boldsymbol{x}_0)$ and $\boldsymbol \epsilon \sim \mathcal N(\boldsymbol \epsilon \mid \boldsymbol 0, \boldsymbol I)$.
 
-To generate samples from $p_0$, DDPM employed the [Ancestral Sampling](../samplers/sde_samplers.qmd) algorithm to iteratively denoise random noise $\boldsymbol x_T \sim p_T$.
+To generate samples from $p_0(\boldsymbol x)$, DDPM employed the [Ancestral Sampling](../samplers/sde_samplers.qmd) algorithm to iteratively denoise random noise $\boldsymbol x_T \sim p_T(\boldsymbol x)$.
 
 ### Code
 

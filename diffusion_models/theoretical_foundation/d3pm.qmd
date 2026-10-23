@@ -28,7 +28,7 @@ To optimize the network, D3PM minimized the Variational Lower Bound (VLB) adapte
 $$
 \mathcal{L}(\boldsymbol \theta) = \mathbb{E}_{t, \boldsymbol{x}_0, \boldsymbol{x}_t} \left[ D_{\text{KL}} \left( q(\boldsymbol{x}_{t-1} \mid \boldsymbol{x}_t, \boldsymbol{x}_0) \parallel p_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1} \mid \boldsymbol{x}_t) \right) - \lambda\log p_{\boldsymbol{\theta}}(\boldsymbol{x}_0 \mid \boldsymbol{x}_t) \right],
 $$ {#eq-5}
-where $\lambda \in \mathbb R_{\ge 0}$ is a weighting parameter for the cross-entropy between the original data and the predicted output of the network.
+where $t\sim \mathcal U(0, T)$, $\boldsymbol x_0 \sim p(\boldsymbol x_0)$, $\boldsymbol x_t \sim q(\boldsymbol{x}_t \mid \boldsymbol{x}_0)$ and $\lambda \in \mathbb R_{\ge 0}$ is a weighting parameter for the cross-entropy between the original data and the predicted output of the network.
 
 ### Code
 

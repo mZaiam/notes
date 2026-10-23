@@ -41,16 +41,20 @@ Algorithms for generating samples from the learned generative model.
 
 ### [2.2. Samplers based on Ordinary Differential Equations (ODEs)](samplers/ode_samplers.qmd)
 
-## 3. Conditioning and Data Consistency
+## 3. Architectures
+
+## 4. Conditioning and Data Consistency
 
 Methods for conditional generation and data consistency in inverse problems.
 
-## 3.1. Conditioning
+## 4.1. Conditioning
 
-## 3.2. Data Consistency
+### [4.1.1. Classifier Guidance (CG)](conditioning_data_consistency/cg.qmd)
 
-### [3.2.1. Diffusion Posterior Sampling (DPS)](conditioning_data_consistency/dps.qmd)
+## 4.2. Data Consistency
 
-### [3.2.2. Posterior Sampling with Latent Diffusion (PSLD)](conditioning_data_consistency/psld.qmd)
+### [4.2.1. Diffusion Posterior Sampling (DPS)](conditioning_data_consistency/dps.qmd)
 
-### [3.2.3. ReSample](conditioning_data_consistency/resample.qmd)
+### [4.2.2. Posterior Sampling with Latent Diffusion (PSLD)](conditioning_data_consistency/psld.qmd)
+
+### [4.2.3. ReSample](conditioning_data_consistency/resample.qmd)

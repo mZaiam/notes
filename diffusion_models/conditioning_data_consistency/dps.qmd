@@ -1,5 +1,5 @@
 ---
-title: "3.2.1. Diffusion Posterior Sampling (DPS)"
+title: "4.2.1. Diffusion Posterior Sampling (DPS)"
 bibliography: ../../references.bib
 ---
 
@@ -34,7 +34,7 @@ where $\mathcal{A} : \mathbb R^n \to \mathbb R^m$ is the forward operator of the
 \begin{algorithmic}
 \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, measurement $\boldsymbol{y}$, forward operator $\mathcal{A}$, DPS step size $\rho$, noise schedule $\{t\}_{t=1}^{T}$, generic sampler $\text{Sampler}$
 
-\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol x_T \mid \boldsymbol{0}, \boldsymbol{I})$
 
 \FOR{$t = T, \dots, 1$}
     \STATE $\boldsymbol{\hat{x}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{x}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{x}_t, t) \right)$

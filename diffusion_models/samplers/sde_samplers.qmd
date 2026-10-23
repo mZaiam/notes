@@ -7,15 +7,15 @@ One approach to sampling data from a diffusion generative model is to simulate t
 $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt + g(t)d\boldsymbol{\overline w},
 $$ {#eq-1}
-where $\boldsymbol{f}(\cdot, t) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x}(t) \in \mathbb R^n$, $g(t): \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$ and $\boldsymbol{\overline w} \in \mathbb R^n$ is the Wiener process running from $T$ to $0$. Then, by discretizing @eq-1, one can iteratively move from $p_T$ to $p_0$, effectively sampling from the data distribution given an initial tractable distribution. One important aspect from this approach is that trajectories are stochastic, that is, the same initial noise sample can lead to different generated samples.
+where $\boldsymbol{f} : \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient of $\boldsymbol{x} \in \mathbb R^n$, $g: \mathbb R \to \mathbb R$ is the diffusion coefficient of $\boldsymbol{x}(t)$ and $\boldsymbol{\overline w} \in \mathbb R^n$ is the Wiener process running from $T$ to $0$. Then, by discretizing @eq-1, one can iteratively move from $p_T$ to $p_0$, effectively sampling from the data distribution given an initial tractable distribution. One important aspect from this approach is that trajectories are stochastic, that is, the same initial noise sample can lead to different generated samples.
 
 ## Annealed Langevin Dynamics
 
-The Annealed Langevin Dynamics method was proposed in [Score-Matching with Langevin Dynamics (SMLD)](../theoretical_foundation/smld.qmd) [@dm:smld] as a sampling algorithm for SMLD. Let the score network be $\boldsymbol{s}_{\boldsymbol{\theta}} : \mathbb R^{n \times 1} \to \mathbb R^n$, $T \in \mathbb N$ be the number of noise levels and $\boldsymbol{x}_T \in \mathbb R^n$ be noise sampled from $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2 \boldsymbol{I})$, where $\sigma_T \in \mathbb R$ is the highest noise level. Starting from the initial noise sample, the algorithm iteratively walks along the estimated score vectors, moving towards regions of higher data density. To prevent the generated data from collapsing into local maxima, a stochastic step is performed at each iteration. For a given noise level $\sigma_t$, the algorithm performs $M$ gradient steps in the direction of the estimated score. The update rule for the $m$-th inner step is given by:
+The Annealed Langevin Dynamics method was proposed in [Score-Matching with Langevin Dynamics (SMLD)](../theoretical_foundation/smld.qmd) [@dm:smld] as a sampling algorithm for SMLD. Let the score network be $\boldsymbol{s}_{\boldsymbol{\theta}} : \mathbb R^{n \times 1} \to \mathbb R^n$, $T \in \mathbb N$ be the number of noise levels and $\boldsymbol{x}_T \in \mathbb R^n$ be noise sampled from $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{x}_T \mid \boldsymbol{0}, \sigma_T^2 \boldsymbol{I})$, where $\sigma_T \in \mathbb R$ is the highest noise level. Starting from the initial noise sample, the algorithm iteratively walks along the estimated score vectors, moving towards regions of higher data density. To prevent the generated data from collapsing into local maxima, a stochastic step is performed at each iteration. For a given noise level $\sigma_t$, the algorithm performs $M$ gradient steps in the direction of the estimated score. The update rule for the $m$-th inner step is given by:
 $$
 \boldsymbol{x}_{t}^{m} = \boldsymbol{x}_{t}^{m-1} + \frac{\sigma'_t}{2} \boldsymbol{s}_{\boldsymbol{\theta}} \left(\boldsymbol{x}_{t}^{m-1}, \sigma_t \right) + \sqrt{\sigma'_t}\boldsymbol{\epsilon}^{m-1},
 $$ {#eq-2}
-where $\sigma'_t = \kappa \cdot (\sigma_t^2 / \sigma_1^2)$ is the step size corresponding to the current noise scale $\sigma_t$ with fixed parameter $\kappa$, and $\boldsymbol \epsilon \in \mathbb R^n$ with $\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$. After $M$ steps, the noise level is annealed to $\sigma_{t-1}$, and the process repeats until $\sigma_1$. @alg:annealed_langevin presents the Annealed Langevin Dynamic Algorithm.
+where $\sigma'_t = \kappa \cdot (\sigma_t^2 / \sigma_1^2)$ is the step size corresponding to the current noise scale $\sigma_t$ with fixed parameter $\kappa$, and $\boldsymbol \epsilon \in \mathbb R^n$ with $\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{\epsilon}^{m-1} \mid \boldsymbol{0}, \boldsymbol{I})$. After $M$ steps, the noise level is annealed to $\sigma_{t-1}$, and the process repeats until $\sigma_1$. @alg:annealed_langevin presents the Annealed Langevin Dynamic Algorithm.
 
 ```pseudocode
 #| label: alg:annealed_langevin
@@ -27,14 +27,14 @@ where $\sigma'_t = \kappa \cdot (\sigma_t^2 / \sigma_1^2)$ is the step size corr
 \begin{algorithmic}
 \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise levels $\{\sigma_t\}_{t=1}^{T}$, step-size parameter $\kappa$, number of Langevin steps $M$
 
-\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2\boldsymbol{I})$
+\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol x_T \mid \boldsymbol{0}, \sigma_T^2\boldsymbol{I})$
 
 \FOR{$t = T,\ldots,1$}
     \STATE $\sigma'_t \gets \kappa \cdot \left(\frac{\sigma_t^2}{\sigma_1^2}\right)$
     \STATE $\boldsymbol{x}_t^0 \gets \boldsymbol{x}_t$
 
     \FOR{$m = 1,\ldots,M$}
-        \STATE $\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{0},\boldsymbol{I})$
+        \STATE $\boldsymbol{\epsilon}^{m-1} \sim \mathcal{N}(\boldsymbol{\epsilon}^{m-1} \mid \boldsymbol{0},\boldsymbol{I})$
         \STATE $\boldsymbol{x}_t^m \gets \boldsymbol{x}_t^{m-1} + \frac{\sigma'_t}{2} \boldsymbol{s}_{\boldsymbol{\theta}} \left(\boldsymbol{x}_t^{m-1},\sigma_t\right) + \sqrt{\sigma'_t}\boldsymbol{\epsilon}^{m-1}$
     \ENDFOR
 
@@ -54,15 +54,15 @@ where $\sigma'_t = \kappa \cdot (\sigma_t^2 / \sigma_1^2)$ is the step size corr
 
 ## Ancestral Sampling
 
-The Ancestral Sampling method was proposed in [Denoising Diffusion Probabilistic Models (DDPMs)](../theoretical_foundation/ddpm.qmd) [@dm:ddpm] as its sampling algorithm. Let the noise network be $\boldsymbol{\epsilon}_{\boldsymbol{\theta}} (\boldsymbol x_t, t): \mathbb R^{n \times 1} \to \mathbb R^n$, $T \in \mathbb N$ be the number of reverse diffusion steps, and $\boldsymbol{x}_T \in \mathbb R^n$ be noise sampled from $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$. Additionally, let the diffusion SDE from DDPM be defined as:
+The Ancestral Sampling method was proposed in [Denoising Diffusion Probabilistic Models (DDPMs)](../theoretical_foundation/ddpm.qmd) [@dm:ddpm] as its sampling algorithm. Let the noise network be $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}: \mathbb R^{n \times 1} \to \mathbb R^n$, $T \in \mathbb N$ be the number of reverse diffusion steps, and $\boldsymbol{x}_T \in \mathbb R^n$ be noise sampled from $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{x}_T \mid \boldsymbol{0}, \boldsymbol{I})$. Additionally, let the diffusion SDE from DDPM be defined as:
 $$
 d\boldsymbol{x} = -\frac{1}{2}\beta(t) \boldsymbol{x} dt + \sqrt{\beta(t)}d\boldsymbol{w},
 $$ {#eq-4}
-where $\beta(t): \mathbb R \to \mathbb R_{>0}$ is a parameter from the noise schedule. Then, Ancestral Sampling iteratively follows:
+where $\beta: \mathbb R \to \mathbb R_{>0}$ is a parameter from the noise schedule. Then, Ancestral Sampling iteratively follows:
 $$
 \boldsymbol{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(\boldsymbol{x}_t - \frac{\beta_t}{\sqrt{1-\overline{\alpha}_t}} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)\right) + \sigma_t\boldsymbol{\epsilon},
 $$ {#eq-5}
-where the noise $\boldsymbol \epsilon \in \mathbb R^n$ is sampled as $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ for $t > 1$, $\alpha_t = 1-\beta_t$, $\overline{\alpha}_t = \prod_{s=1}^{t}\alpha_s$, and $\sigma_t^2 = \frac{1-\overline{\alpha}_{t-1}}{1-\overline{\alpha}_t}\beta_t$. At the final step when $t = 1$, $\boldsymbol{\epsilon} = \boldsymbol{0}$ was set to output the deterministic mean, as adding noise at the very end would degrade the final image. The algorithm is presented in @alg:ancestral_sampling.
+where the noise $\boldsymbol \epsilon \in \mathbb R^n$ is sampled as $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol \epsilon \mid \boldsymbol{0}, \boldsymbol{I})$ for $t > 1$, $\alpha_t = 1-\beta_t$, $\overline{\alpha}_t = \prod_{s=1}^{t}\alpha_s$, and $\sigma_t^2 = \frac{1-\overline{\alpha}_{t-1}}{1-\overline{\alpha}_t}\beta_t$. At the final step when $t = 1$, $\boldsymbol{\epsilon} = \boldsymbol{0}$ was set to output the deterministic mean, as adding noise at the very end would degrade the final image. The algorithm is presented in @alg:ancestral_sampling.
 
 ```pseudocode
 #| label: alg:ancestral_sampling
@@ -78,13 +78,13 @@ where the noise $\boldsymbol \epsilon \in \mathbb R^n$ is sampled as $\boldsymbo
 \STATE $\overline{\alpha}_t \gets \prod_{s=1}^{t}\alpha_s$ for $t=1,\ldots,T$
 \STATE $\sigma_t^2 \gets \frac{1-\overline{\alpha}_{t-1}} {1-\overline{\alpha}_t}\beta_t, \ \ \forall t\in \{1,\ldots,T\}$
 
-\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0},\boldsymbol{I})$
+\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol x_T \mid \boldsymbol{0},\boldsymbol{I})$
 
 \FOR{$t=T,\ldots,1$}
     \STATE $\boldsymbol{\mu}_t \gets \frac{1}{\sqrt{\alpha_t}} \left(\boldsymbol{x}_t - \frac{\beta_t}{\sqrt{1-\overline{\alpha}_t}} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t,t) \right)$
 
     \IF{$t > 1$}
-        \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0},\boldsymbol{I})$
+        \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol \epsilon \mid \boldsymbol{0},\boldsymbol{I})$
     \ELSE
         \STATE $\boldsymbol{\epsilon} \gets \boldsymbol{0}$
     \ENDIF
@@ -111,15 +111,15 @@ The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previ
 \begin{algorithmic}
 \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise levels $\{\sigma_t\}_{t=0}^{T}$, corrector step sizes $\{\kappa_t\}_{t=1}^{T}$, number of corrector steps $M$
 
-\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \sigma_T^2\boldsymbol{I})$
+\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol x_T \mid \boldsymbol{0}, \sigma_T^2\boldsymbol{I})$
 
 \FOR{$t = T,\ldots,1$}
-    \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+    \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol \epsilon \mid \boldsymbol{0}, \boldsymbol{I})$
     \STATE $\boldsymbol{x}_{t-1}' \gets \boldsymbol{x}_t + (\sigma_t^2 - \sigma_{t-1}^2) \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, \sigma_t) + \sqrt{\sigma_t^2 - \sigma_{t-1}^2} \boldsymbol{\epsilon}$
 
     \STATE $\boldsymbol{x}_{t-1}^0 \gets \boldsymbol{x}_{t-1}'$
     \FOR{$m = 1,\ldots,M$}
-        \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+        \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol \epsilon \mid \boldsymbol{0}, \boldsymbol{I})$
         \STATE $\boldsymbol{x}_{t-1}^m \gets \boldsymbol{x}_{t-1}^{m-1} + \frac{\kappa_{t-1}}{2} \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1}^{m-1}, \sigma_{t-1}) + \sqrt{\kappa_{t-1}} \boldsymbol{\epsilon}$
     \ENDFOR
     
@@ -130,6 +130,7 @@ The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previ
 \end{algorithmic}
 \end{algorithm}
 ```
+
 ```pseudocode
 #| label: alg:pc_ddpm
 #| html-indent-size: "1.2em"
@@ -141,11 +142,11 @@ The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previ
 \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, noise schedule $\{\beta_t\}_{t=1}^{T}$, corrector step sizes $\{\kappa_t\}_{t=1}^{T}$, number of corrector steps $M$
 
 \STATE $\alpha_t \gets 1-\beta_t$ for $t=1,\ldots,T$
-\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol x_T \mid \boldsymbol{0}, \boldsymbol{I})$
 
 \FOR{$t = T,\ldots,1$}
     \IF{$t > 1$}
-        \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+        \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol \epsilon \mid \boldsymbol{0}, \boldsymbol{I})$
     \ELSE
         \STATE $\boldsymbol{\epsilon} \gets \boldsymbol{0}$
     \ENDIF
@@ -154,7 +155,7 @@ The [SDEs](../theoretical_foundation/sde.qmd) formulation also generalized previ
 
     \STATE $\boldsymbol{x}_{t-1}^0 \gets \boldsymbol{x}_{t-1}'$
     \FOR{$m = 1,\ldots,M$}
-        \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+        \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol \epsilon \mid \boldsymbol{0}, \boldsymbol{I})$
         \STATE $\boldsymbol{x}_{t-1}^m \gets \boldsymbol{x}_{t-1}^{m-1} + \frac{\kappa_{t-1}}{2} \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1}^{m-1}, t-1) + \sqrt{\kappa_{t-1}} \boldsymbol{\epsilon}$
     \ENDFOR
     

@@ -34,12 +34,12 @@ $$
 $$ {#eq-5}
 where:
 $$
-\mathcal L(\boldsymbol \theta) = \lambda_{\boldsymbol{X}}(t) \left\| \boldsymbol{s}_{\boldsymbol{\theta}} - \nabla_{\boldsymbol{X}_t} \log q_{0t}(\boldsymbol{X}_t \mid \boldsymbol{X}_0) \right\|_2^2,
+\mathcal L(\boldsymbol \theta) = \lambda_{\boldsymbol{X}}(t) \left\| \boldsymbol{s}_{\boldsymbol{\theta}}(\boldsymbol{X}_t, \boldsymbol{A}_t, t) - \nabla_{\boldsymbol{X}_t} \log q_{0t}(\boldsymbol{X}_t \mid \boldsymbol{X}_0) \right\|_2^2,
 $$ {#eq-6}
 $$
-\mathcal L(\boldsymbol \phi) = \lambda_{\boldsymbol{A}}(t) \left\| \boldsymbol{s}_{\boldsymbol{\phi}} - \nabla_{\boldsymbol{A}_t} \log q_{0t}(\boldsymbol{A}_t \mid \boldsymbol{A}_0) \right\|_2^2,
+\mathcal L(\boldsymbol \phi) = \lambda_{\boldsymbol{A}}(t) \left\| \boldsymbol{s}_{\boldsymbol{\phi}}(\boldsymbol{X}_t, \boldsymbol{A}_t, t) - \nabla_{\boldsymbol{A}_t} \log q_{0t}(\boldsymbol{A}_t \mid \boldsymbol{A}_0) \right\|_2^2,
 $$ {#eq-7}
-$q_{0t}$ represents the perturbation kernel of the forward SDEs and $\lambda_{\boldsymbol{X}}(t) : \mathbb R \to \mathbb R$ and $\lambda_{\boldsymbol{A}}(t) : \mathbb R \to \mathbb R$ are positive weighting functions.
+and $q_{0t}$ represents the perturbation kernel of the forward SDEs, with $\lambda_{\boldsymbol{X}} : \mathbb R \to \mathbb R$ and $\lambda_{\boldsymbol{A}} : \mathbb R \to \mathbb R$ being positive weighting functions. Here, $t\sim \mathcal U(0, T)$, $\boldsymbol G_0 \sim p_0(\boldsymbol G)$ and $\boldsymbol G_t \sim p_t(\boldsymbol{G})$.
 
 In order to sample from the model, a two-step procedure was employed. First, the size of the graph was sampled from the empirical distribution of graph sizes in the training data. Given $N$, algorithms based on [Predictor-Corrector (PC)](../samplers/sde_samplers.qmd) were developed to sample from the system of revere time SDEs.
 

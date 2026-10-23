@@ -1,0 +1,2 @@
+- improve .ipynbs from diffusion
+- add figures to diffusion

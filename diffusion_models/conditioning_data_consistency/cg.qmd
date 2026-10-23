@@ -1,0 +1,32 @@
+---
+title: "3.1.1. Classifier Guidance"
+bibliography: ../../references.bib
+---
+
+Classifier Guidance (CG) [@dm:cg] was the first approach of incorporating data labels $\boldsymbol y \in \mathbb R^m$ into the diffusion sampling process. The idea was to train a separate classifier network in order to complement the score function learned from an unconditional model.
+
+Suppose an unconditional Diffusion Model (DM) learned the marginal data score $\nabla_{\boldsymbol{x}_t} \log p_t : \mathbb R^{n\times 1} \to \mathbb R^n$. The goal of conditional sampling is to sample from $p(\boldsymbol x \mid \boldsymbol y)$, which involves estimating the intractable $p_t(\boldsymbol x_t \mid \boldsymbol y)$. According to Bayes' theorem, the conditional density is given by:
+$$
+p_t(\boldsymbol{x}_t \mid y) = \frac{p_t(\boldsymbol{x}_t) p_t(y \mid \boldsymbol{x}_t)}{p_t(y)}.
+$$ {#eq-1}
+Taking the logarithm and then the gradient with respect to $\boldsymbol{x}_t$$:
+$$
+\nabla_{\boldsymbol{x}_t} \log p_t(\boldsymbol{x}_t \mid y) = \nabla_{\boldsymbol{x}_t} \log p_t(\boldsymbol{x}_t) + \nabla_{\boldsymbol{x}_t} \log p_t(y \mid \boldsymbol{x}_t).
+$$ {#eq-2}
+Therefore, the conditional score can be expressed as the unconditional score plus the gradient of the log-likelihood term.
+
+To estimate the log-likelihood gradient $\nabla_{\boldsymbol{x}_t} \log p_t(\boldsymbol{y} \mid \boldsymbol{x}_t)$, standard classifiers trained on clean image distributions $p(\boldsymbol{x}_0)$ cannot be used directly, as the term depends on noisy versions of the data. To solve this, CG introduced a time-dependent classifier $p_{\boldsymbol{\phi}} : \mathbb R^{n \times 1} \to \mathbb R^m$ parameterized by $\boldsymbol{\phi}$. This network was trained on noisy representations $\boldsymbol{x}_t$ across all diffusion time steps $t \in [0, T]$. 
+
+After the training, evaluating the direct log-likelihood gradient $\nabla_{\boldsymbol{x}_t} \log p_{\boldsymbol{\phi}}(\boldsymbol{y} \mid \boldsymbol{x}_t, t)$ might produce weak conditioning for the unconditional model. To increase the conditioning effect, CG introduced a hyperparameter $\gamma \ge 1$, named as the guidance scale.Conceptually, $\gamma$ altered the conditional density:
+$$
+p_t(\boldsymbol{x}_t \mid \boldsymbol{y}, \gamma) \propto p_t(\boldsymbol{x}_t) \left[ p_{\boldsymbol{\phi}}(\boldsymbol{y} \mid \boldsymbol{x}_t, t) \right]^\gamma.
+$$ {#eq-3}
+Therefore, taking the score of this distribution yielded:
+$$
+\nabla_{\boldsymbol{x}_t} \log p_t(\boldsymbol{x}_t \mid \boldsymbol{y}, \gamma) = \nabla_{\boldsymbol{x}_t} \log p_t(\boldsymbol{x}_t) + \gamma \nabla_{\boldsymbol{x}_t} \log p_{\boldsymbol{\phi}}(\boldsymbol{y} \mid \boldsymbol{x}_t, t).
+$$ {#eq-4}
+When $\gamma = 1$, the standard conditional score from Bayes' rule is recovered. On the other hand, when $\gamma > 1$, the score function assigns higher weights to the classifier, trading sample diversity for better alignment with the class characteristics.
+
+### Code
+
+<!-- {{< embed conditioning_data_consistency_assets/cg.ipynb >}}  -->

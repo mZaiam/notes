@@ -85,6 +85,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../diffusion_models/conditioning_data_consistency/psld.html" rel="next">
 <link href="../../diffusion_models/samplers/ode_samplers.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -361,6 +362,18 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/rf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.2.1. Rectified Flow (RF)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/theoretical_foundation/fm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1.2.2. Flow Matching (FM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/samplers/sde_samplers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1. Samplers based on Stochastic Differential Equations (SDEs)</span></a>
   </div>
@@ -375,6 +388,18 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -415,16 +440,22 @@ window.Quarto = {
 </header>
 
 
-<p>Diffusion Posterior Sampling (DPS) <span class="citation" data-cites="dm:dps">(<a href="#ref-dm:dps" role="doc-biblioref">Chung et al. 2023</a>)</span> is a method for sampling from the posterior distribution in an inverse problem. To estimate the intractable likelihood term <span class="math inline">\(p_t(\boldsymbol{y} \mid \boldsymbol{x}_t)\)</span>, with <span class="math inline">\(\boldsymbol x \in \mathbb R^n\)</span> and <span class="math inline">\(\boldsymbol y \in \mathbb R^m\)</span> DPS first factored the distribution by marginalizing over the clean data <span class="math inline">\(\boldsymbol{x}_0\)</span>: <span id="eq-1"><span class="math display">\[
+<p>Diffusion Posterior Sampling (DPS) <span class="citation" data-cites="dm:dps">(<a href="#ref-dm:dps" role="doc-biblioref">Chung et al. 2023</a>)</span> is a method for sampling from the posterior distribution in an inverse problem. To estimate the intractable likelihood term <span class="math inline">\(p_t(\boldsymbol{y} \mid \boldsymbol{x}_t)\)</span>, with <span class="math inline">\(\boldsymbol x \in \mathbb R^n\)</span> and <span class="math inline">\(\boldsymbol y \in \mathbb R^m\)</span>, DPS first factored the distribution by marginalizing over the clean data <span class="math inline">\(\boldsymbol{x}_0\)</span>: <span id="eq-1"><span class="math display">\[
 p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) = \int p(\boldsymbol{y} \mid \boldsymbol{x}_0) p_t(\boldsymbol{x}_0 \mid \boldsymbol{x}_t) d\boldsymbol{x}_0 = \mathbb{E}_{\boldsymbol{x}_0 \sim p_t(\boldsymbol{x}_0 \mid \boldsymbol{x}_t)} \left[ p(\boldsymbol{y} \mid \boldsymbol{x}_0) \right].
 \tag{1}\]</span></span> This indicates that the likelihood of observing <span class="math inline">\(\boldsymbol{y}\)</span> given a noisy image <span class="math inline">\(\boldsymbol{x}_t\)</span> is the expected value of the clean data likelihood, weighted by the posterior <span class="math inline">\(p_t(\boldsymbol{x}_0 \mid \boldsymbol{x}_t)\)</span>. Because evaluating this expectation directly is intractable in practice, DPS proposed approximating it using the likelihood of the expected clean image: <span id="eq-2"><span class="math display">\[
-p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) \simeq p(\boldsymbol{y} \mid \boldsymbol{\hat{x}}_0),
+\nabla_{\boldsymbol x_t} p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) \simeq \nabla_{\boldsymbol x_t} p_t(\boldsymbol{y} \mid \boldsymbol{\hat{x}}_0),
 \tag{2}\]</span></span> where <span class="math inline">\(\boldsymbol{\hat{x}}_0 \in \mathbb R^n\)</span> is the posterior mean estimator computed via Tweedie’s formula: <span id="eq-3"><span class="math display">\[
-\boldsymbol{\hat{x}}_0 = \mathbb{E}[\boldsymbol{x}_0 \mid \boldsymbol{x}_t] = \frac{1}{\sqrt{\overline{\alpha}_t}} \left( \boldsymbol{x}_t + (1 - \overline{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{x}_t, t) \right),
-\tag{3}\]</span></span> where <span class="math inline">\(\overline{\alpha} \in \mathbb R\)</span> is a parameter from the noise schedule.</p>
-<p>Geometrically, while the score function <span class="math inline">\(\boldsymbol{s}_{\boldsymbol{\theta}} \in \mathbb R^n\)</span> points in the direction orthogonal to the data manifold, the gradient of the likelihood term points in the tangent direction of the manifold. The specific form of the likelihood depends on the distribution of the measurement noise <span class="math inline">\(\boldsymbol{\epsilon}\)</span>, but it can be written in general as: <span id="eq-4"><span class="math display">\[
+\boldsymbol{\hat{x}}_0 = \mathbb{E}[\boldsymbol{x}_0 \mid \boldsymbol{x}_t].
+\tag{3}\]</span></span></p>
+<p>Geometrically, the score function <span class="math inline">\(\boldsymbol{s}_{\boldsymbol{\theta}} : \mathbb R^n \to \mathbb R^n\)</span> points in the direction orthogonal to the data manifold, pulling the sample toward the prior. Therefore, the model only addresses the direction which is normal to the data manifold, not being able to distinguish candidates to the solution along the manifold. In this context, Manifold Constrained Gradient (MCG) <span class="citation" data-cites="dm:mcg">(<a href="#ref-dm:mcg" role="doc-biblioref">Chung et al. 2022</a>)</span> showed that the likelihood term points in the direction tangent to the data manifold, correcting the trajectory of the score model during the reverse diffusion process. Furthermore, by MCG, the DPS approximation does not leave the data manifold.</p>
+<p>The specific form of the likelihood depends on the distribution of the measurement noise <span class="math inline">\(\boldsymbol{\epsilon} \in \mathbb R^m\)</span>, but it can be written in general as: <span id="eq-4"><span class="math display">\[
 \nabla_{\boldsymbol{x}_t} \log p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) \simeq - \rho \nabla_{\boldsymbol{x}_t} \left\| \boldsymbol{y} - \mathcal{A}(\boldsymbol{\hat{x}}_0) \right\|,
-\tag{4}\]</span></span> where <span class="math inline">\(\|\cdot, \cdot\| : \mathbb R^{m\times m} \to \mathbb R_{\ge 0}\)</span> is a norm and <span class="math inline">\(\rho \in \mathbb R\)</span> is a step size.</p>
+\tag{4}\]</span></span> where <span class="math inline">\(\mathcal{A} : \mathbb R^n \to \mathbb R^m\)</span> is the forward operator of the inverse problem, <span class="math inline">\(\| \cdot \| : \mathbb R^{m} \to \mathbb R_{\ge 0}\)</span> is an appropriate norm matching the noise distribution and <span class="math inline">\(\rho \in \mathbb R\)</span> is a tunable step size. <a href="#alg:dps" class="quarto-xref">Algorithm 1</a> presents the overall DPS algorithm.</p>
+<div id="alg:dps" class="pseudocode-container quarto-float" data-no-end="false" data-indent-lines="false" data-caption-prefix="Algorithm" data-line-number="true" data-pseudocode-number="1" data-comment-delimiter="//" data-line-number-punc=":" data-indent-size="1.2em">
+<div class="pseudocode">
+\begin{algorithm} \caption{DPS algorithm.} \begin{algorithmic} \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, measurement $\boldsymbol{y}$, forward operator $\mathcal{A}$, DPS step size $\rho$, noise schedule $\{t\}_{t=1}^{T}$, generic sampler $\text{Sampler}$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \FOR{$t = T, \dots, 1$} \STATE $\boldsymbol{\hat{x}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{x}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{x}_t, t) \right)$ \STATE $\boldsymbol{g}_{\text{DPS}} \gets \nabla_{\boldsymbol{x}_t} \left\| \boldsymbol{y} - \mathcal{A}(\boldsymbol{\hat{x}}_0) \right\|$ \STATE $\boldsymbol{x}_{t-1} \gets \text{Sampler}(\boldsymbol{x}_t, \boldsymbol{s}_{\boldsymbol{\theta}}, t) - \rho \boldsymbol{g}_{\text{DPS}}$ \ENDFOR \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
 <section id="code" class="level3">
 <h3 class="anchored" data-anchor-id="code">Code</h3>
 <div class="quarto-embed-nb-cell">
@@ -523,6 +554,9 @@ p_t(\boldsymbol{y} \mid \boldsymbol{x}_t) \simeq p(\boldsymbol{y} \mid \boldsymb
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-dm:dps" class="csl-entry" role="listitem">
 Chung, Hyungjin, Jeongsol Kim, Michael T McCann, Marc L Klasky, and Jong Chul Ye. 2023. <span>“Diffusion Posterior Sampling for General Noisy Inverse Problems.”</span> In <em>International Conference on Learning Representations</em>.
+</div>
+<div id="ref-dm:mcg" class="csl-entry" role="listitem">
+Chung, Hyungjin, Byeongsu Sim, Dohoon Ryu, and Jong Chul Ye. 2022. <span>“Improving Diffusion Models for Inverse Problems Using Manifold Constraints.”</span> <em>Advances in Neural Information Processing Systems</em> 35: 25683–96.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -932,6 +966,9 @@ Chung, Hyungjin, Jeongsol Kim, Michael T McCann, Marc L Klasky, and Jong Chul Ye
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="pagination-link" aria-label="3.2.2. Posterior Sampling with Latent Diffusion (PSLD)">
+        <span class="nav-page-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

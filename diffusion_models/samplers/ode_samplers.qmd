@@ -7,7 +7,7 @@ Another approach to sampling using Diffusion Models (DMs) is to use the Probabil
 $$
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt,
 $$ {#eq-1}
-where $\boldsymbol{f}(\boldsymbol{x}, t) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient, $g(t): \mathbb R\to \mathbb R$ is the diffusion coefficient and $\nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x}) : \mathbb R^{n \times 1} \to \mathbb R^n$ is the score function. As mentioned in the [Stochastic Differential Equations (SDEs)](../theoretical_foundation/sde.qmd) formulation, the Probability Flow ODE is a deterministic process that shares the same marginal distributions as the forward SDE. This allows for sampling from the data distribution by solving an ODE instead of simulating a stochastic process, while also making the process deterministic. 
+where $\boldsymbol{f} : \mathbb R^{n \times 1} \to \mathbb R^n$ is the drift coefficient, $g: \mathbb R\to \mathbb R$ is the diffusion coefficient and $\nabla_{\boldsymbol{x}} \log p_t : \mathbb R^{n \times 1} \to \mathbb R^n$ is the score function. As mentioned in the [Stochastic Differential Equations (SDEs)](../theoretical_foundation/sde.qmd) formulation, the Probability Flow ODE is a deterministic process that shares the same marginal distributions as the forward SDE. This allows for sampling from the data distribution by solving an ODE instead of simulating a stochastic process, while also making the process deterministic. 
 
 As mentioned in [Flow Matching (FM)](../theoretical_foundation/fm.qmd), flow models are directly related to the Probability Flow ODE, with that, ODE samplers can also be used to sample from flow models. On the other hand, although diffusion is a specific case of FM, it presents curved probability paths, which requires more specific samplers for few-step generation.
 
@@ -25,7 +25,7 @@ One of the most basic samplers for ODEs are the Euler and Heun numerical integra
 \begin{algorithmic}
 \REQUIRE Velocity field $\boldsymbol{v}_{\boldsymbol{\theta}}$, time steps $\{t_i\}_{i=0}^{N}$ with $t_0=0$ and $t_N=1$
 
-\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol x_0 \mid \boldsymbol{0}, \boldsymbol{I})$
 
 \FOR{$i = 0,\ldots,N-1$}
     \STATE $\Delta t \gets t_{i+1} - t_i$
@@ -47,7 +47,7 @@ One of the most basic samplers for ODEs are the Euler and Heun numerical integra
 \begin{algorithmic}
 \REQUIRE Velocity field $\boldsymbol{v}_{\boldsymbol{\theta}}$, time steps $\{t_i\}_{i=0}^{N}$ with $t_0=0$ and $t_N=1$
 
-\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol x_0 \mid \boldsymbol{0}, \boldsymbol{I})$
 
 \FOR{$i = 0,\ldots,N-1$}
     \STATE $\Delta t \gets t_{i+1} - t_i$
@@ -74,7 +74,7 @@ where $\beta(t): \mathbb R \to \mathbb R$ is the noise schedule. DDIM introduced
 $$
 \boldsymbol{x}_{t-1} = \sqrt{\alpha_{t-1}}\left(\frac{\boldsymbol{x}_t - \sqrt{1 - \alpha_t}\boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)}{\sqrt{\alpha_t}}\right) + \sqrt{1 - \alpha_{t-1} - \sigma_t^2} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) + \sigma_t\boldsymbol{\epsilon},
 $$ {#eq-3}
-where $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ is a Gaussian noise vector. When $\sigma_t = 0$, the DDIM inference scheme becomes deterministic, while non-zero values control the stochasticity of the sampling process. The DDIM sampler is presented in @alg:ddim_sampler.
+where $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{\epsilon} \mid \boldsymbol{0}, \boldsymbol{I})$ is a Gaussian noise vector. When $\sigma_t = 0$, the DDIM inference scheme becomes deterministic, while non-zero values control the stochasticity of the sampling process. The DDIM sampler is presented in @alg:ddim_sampler.
 
 ```pseudocode
 #| label: alg:ddim_sampler
@@ -86,14 +86,14 @@ where $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ i
 \begin{algorithmic}
 \REQUIRE Noise network $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}$, number of diffusion steps $T$, variance schedule $\{\alpha_t\}_{t=0}^{T}$, noise schedule $\{\sigma_t\}_{t=0}^{T}$
 
-\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+\STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol x_T \mid \boldsymbol{0}, \boldsymbol{I})$
 
 \FOR{$t = T,\ldots,1$}
     \STATE $\boldsymbol{x}_{t - 1}' \gets \sqrt{\alpha_{t-1}}\left(\frac{\boldsymbol{x}_t - \sqrt{1 - \alpha_t}\boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)}{\sqrt{\alpha_t}}\right)$
 
     \STATE $\boldsymbol{x}_{t - 1}'' \gets \boldsymbol{x}_{t - 1}' + \sqrt{1 - \alpha_{t-1} - \sigma_t^2} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)$
 
-    \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$
+    \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{\epsilon} \mid \boldsymbol{0}, \boldsymbol{I})$
     \STATE $\boldsymbol{x}_{t - 1} \gets \boldsymbol{x}_{t - 1}'' + \sigma_t\boldsymbol{\epsilon}$
 \ENDFOR
 
@@ -108,13 +108,13 @@ The Stochastic Churn sampler was introduced in [Elucidated Diffusion Models (EDM
 
 Let $\boldsymbol{D}_{\boldsymbol{\theta}}: \mathbb R^{n \times 1} \to \mathbb R^n$ be the trained denoiser network, and let $\{t_i\}_{i=0}^{T}$ denote a decreasing noise schedule, with $t_0 > t_1 > \cdots > t_T$. The idea of the Stochastic Churn sampler is to first increase the noise level from $t_i$ to $\hat{t}_i$ according to:
 $$
-\hat{t}_i = (1+\gamma_i)t_i,
+\hat{t}_i = (1 + \gamma_i) t_i,
 $$ {#eq-4}
 and then perturb the current sample according to:
 $$
 \boldsymbol{\hat{x}}_i = \boldsymbol{x}_i + \sqrt{\hat{t}_i^2-t_i^2}\boldsymbol{\epsilon}_i,
 $$ {#eq-5}
-where $\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{0}, \sigma_{\text{Std}}^2\boldsymbol{I})$. Thus, the current sample is moved to a higher noise level before the deterministic denoising step. The sampler then applies Heun's method to integrate the denoising ODE from $\hat{t}_i$ to $t_{i+1}$. In particular, the first evaluation defines the direction:
+where $\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{\epsilon}_i \mid \boldsymbol{0}, \sigma_{\text{Std}}^2\boldsymbol{I})$. Thus, the current sample is moved to a higher noise level before the deterministic denoising step. The sampler then applies Heun's method to integrate the denoising ODE from $\hat{t}_i$ to $t_{i+1}$. In particular, the first evaluation defines the direction:
 $$
 \boldsymbol{d}_i = \frac{\boldsymbol{\hat{x}}_i - \boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{\hat{x}}_i,\hat{t}_i)}{\hat{t}_i},
 $$ {#eq-5}
@@ -132,10 +132,10 @@ The stochastic perturbation allows the sampler to explore different denoising tr
 \begin{algorithmic}
 \REQUIRE Denoiser network $\boldsymbol{D}_{\boldsymbol{\theta}}$, noise schedule $\{t_i\}_{i=0}^{T}$, churn schedule $\{\gamma_i\}_{i=0}^{T-1}$, noise standard-deviation $\sigma_{\text{Std}}$
 
-\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, t_0^2 \boldsymbol{I})$
+\STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol x_0 \mid \boldsymbol{0}, t_0^2 \boldsymbol{I})$
 
 \FOR{$i = 0,\ldots,T-1$}
-    \STATE Sample $\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{0}, \sigma_{\text{Std}}^2 \boldsymbol{I})$
+    \STATE Sample $\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{\epsilon}_i \mid \boldsymbol{0}, \sigma_{\text{Std}}^2 \boldsymbol{I})$
     \STATE $\hat{t}_i \gets (1+\gamma_i)t_i$
     \STATE $\boldsymbol{\hat{x}}_i \gets
     \boldsymbol{x}_i +
@@ -158,6 +158,6 @@ The stochastic perturbation allows the sampler to explore different denoising tr
 \end{algorithm}
 ```
 
-## Diffusion Probabilistic Models Solver (DPM-Solver)
+### Code
 
-## Unified Predictor-Corrector (UniPC)
+{{< embed samplers_assets/ode_samplers.ipynb >}}
