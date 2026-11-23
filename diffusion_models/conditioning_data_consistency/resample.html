@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3.2.3. ReSample</title>
+<title>4.2.3. ReSample</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -185,7 +185,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/conditioning_data_consistency/resample.html">3.2.3. ReSample</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/conditioning_data_consistency/resample.html">4.2.3. ReSample</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -385,20 +385,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/cg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1.1. Classifier Guidance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+ <span class="menu-text">4.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+ <span class="menu-text">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">3.2.3. ReSample</span></a>
+ <span class="menu-text">4.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -420,9 +426,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/conditioning_data_consistency/resample.html">3.2.3. ReSample</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../diffusion_models/index.html">Diffusion Models (DM) and Flow Matching (FM)</a></li><li class="breadcrumb-item"><a href="../../diffusion_models/conditioning_data_consistency/resample.html">4.2.3. ReSample</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">3.2.3. ReSample</h1>
+<h1 class="title">4.2.3. ReSample</h1>
 </div>
 
 
@@ -441,7 +447,7 @@ window.Quarto = {
 
 <p>After the introduction of <a href="../../diffusion_models/conditioning_data_consistency/psld.html">Posterior Sampling with Latent Diffusion (PSLD)</a>, it was noted that under noisy measurements, the method could underperform. In this context, ReSample <span class="citation" data-cites="dm:resample">(<a href="#ref-dm:resample" role="doc-biblioref">Song et al. 2024</a>)</span> proposed to incorporate hard data consistency steps during some of the iterations of the inference process of a Latent Diffusion Model (LDM), instead of approximating the likelihood term under some assumptions.</p>
 <p>Let <span class="math inline">\(\boldsymbol x \in \mathbb R^n\)</span> be the data space, <span class="math inline">\(\boldsymbol y \in \mathbb R^m\)</span> be the measurement space, and <span class="math inline">\(\boldsymbol z \in \mathbb R^d\)</span> be the latent space. The data and latent spaces are connected via a Variational Autoencoder (VAE), such that the encoder <span class="math inline">\(\mathcal E: \mathbb R^n \to \mathbb R^d\)</span> maps data into latents and the decoder <span class="math inline">\(\mathcal D: \mathbb R^d \to \mathbb R^n\)</span> performs the opposite mapping. ReSample proposed to solve the following sub-problem: <span id="eq-1"><span class="math display">\[
-\boldsymbol{\tilde{z}}_0 = \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \|\boldsymbol y - \mathcal A(\mathcal D(\boldsymbol z)) \|_2^2,
+\boldsymbol{\tilde{z}}_0 = \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \|\boldsymbol y - \mathcal A(\mathcal D(\boldsymbol z)) \|,
 \tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{\tilde{z}}_0\)</span> is the sample consistent with the measurements and <span class="math inline">\(\mathcal{A} : \mathbb R^n \to \mathbb R^m\)</span> is the forward operator of the inverse problem. Because the decoder <span class="math inline">\(\mathcal{D}\)</span> is a non-linear mapping, solving this sub-problem directly is unstable. That is, starting from a random guess <span class="math inline">\(\boldsymbol z \in \mathbb R^d\)</span> leads to solutions that might be unrealistic. ReSample addresses this by initializing with the current Tweedie’s estimate <span class="math inline">\(\boldsymbol{\hat{z}}_0 = \mathbb E[\boldsymbol z_0 \mid \boldsymbol z_t]\)</span>, and then performing <span class="math inline">\(K\)</span> steps of gradient descent to find <span class="math inline">\(\boldsymbol{\tilde{z}}_0\)</span>.</p>
 <p>Once this measurement-consistent sample is found, it must be mapped back onto the noisy data manifold, given that this image does not follow the variance pattern from the diffusion process. Re-noising <span class="math inline">\(\boldsymbol{\tilde{z}}_0\)</span> via forward diffusion introduces high variance, potentially pushing the trajectory out of the data manifold. To adjust this additional variance, ReSample introduced a stochastic resampling step, that was modeled by a Gaussian distribution conditioned on the denoised sample <span class="math inline">\(\boldsymbol{z}_{t-1}^{\prime}\)</span>. The stochastic resampling distribution was given by: <span id="eq-2"><span class="math display">\[
 p(\boldsymbol{z}_{t-1} \mid \boldsymbol{z}_{t-1}^{\prime}, \boldsymbol{\tilde{z}}_0, \boldsymbol{y}) = \mathcal{N} \left( \frac{\sigma_{t-1}^2 \sqrt{\bar{\alpha}_{t-1}} \boldsymbol{\tilde{z}}_0 + (1 - \bar{\alpha}_{t-1}) \boldsymbol{z}_{t-1}^{\prime}}{\sigma_{t-1}^2 + (1 - \bar{\alpha}_{t-1})}, \frac{\sigma_{t-1}^2 (1 - \bar{\alpha}_{t-1})}{\sigma_{t-1}^2 + (1 - \bar{\alpha}_{t-1})} \boldsymbol{I} \right),
@@ -449,9 +455,9 @@ p(\boldsymbol{z}_{t-1} \mid \boldsymbol{z}_{t-1}^{\prime}, \boldsymbol{\tilde{z}
 \sigma_t^2 = \zeta \left(\frac{1 - \overline{\alpha}_t}{\overline{\alpha}_t}\right)\left(1 - \frac{\overline{\alpha}_t}{\overline{\alpha}_{t - 1}}\right).
 \tag{3}\]</span></span> Here, <span class="math inline">\(\zeta \in \mathbb R_{\ge 0}\)</span> controls the trade-off between prior consistency, where <span class="math inline">\(\zeta \to 0\)</span> recovers unconditional sampling. Conversely, as <span class="math inline">\(\zeta \to \infty\)</span>, the distribution approaches stochastic encoding of the optimized latent.</p>
 <p>Finally, it was noted that the sub-problem did not need to be applied at every time step <span class="math inline">\(t\)</span>. For <span class="math inline">\(t\approx T\)</span>, the optimization problem does not yield reasonable results, because the data points are still very noisy. Therefore, ReSample only applies the hard data consistency at the latter time steps, approximately every <span class="math inline">\(10\)</span> iterations, or more generally, in a set <span class="math inline">\(C\)</span> of iterations. <a href="#alg:resample" class="quarto-xref">Algorithm 1</a> presents the ReSample algorithm.</p>
-<div id="alg:resample" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-line-number="true" data-indent-lines="false" data-no-end="false" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number-punc=":">
+<div id="alg:resample" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="1" data-indent-lines="false" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm">
 <div class="pseudocode">
-\begin{algorithm} \caption{ReSample algorithm.} \begin{algorithmic} \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, VAE decoder $\mathcal{D}$, measurement $\boldsymbol{y}$, forward operator $\mathcal{A}$, ReSample hyperparameter $\zeta$, noise schedule $\{t\}_{t=1}^{T}$, generic sampler $\text{Sampler}$, resampling schedule $C$ \STATE $\boldsymbol{z}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \FOR{$t = T, \dots, 1$} \STATE $\boldsymbol{z}_{t-1}^{\prime} \gets \text{Sampler}(\boldsymbol{z}_t, \boldsymbol{s}_{\boldsymbol{\theta}}, t)$ \IF{$t \in C$} \STATE $\boldsymbol{\hat{z}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{z}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{z}_t, t) \right)$ \STATE $\boldsymbol{\tilde{z}}_0 \gets \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \| \boldsymbol y - \mathcal A(\mathcal D(\boldsymbol{z})) \|_2^2$ \STATE $\sigma_{t-1}^2 \gets \zeta \left(\frac{1 - \overline{\alpha}_{t-1}}{\overline{\alpha}_{t-1}}\right)\left(1 - \frac{\overline{\alpha}_{t-1}}{\overline{\alpha}_t}\right)$ \STATE $\boldsymbol{\mu} \gets \frac{\sigma_{t-1}^2\sqrt{\overline{\alpha}_{t-1}}\boldsymbol{\tilde{z}}_0 + (1-\overline{\alpha}_{t-1})\boldsymbol{z}_{t-1}^{\prime}}{\sigma_{t-1}^2 + (1-\overline{\alpha}_{t-1})}$ \STATE $\boldsymbol{\Sigma} \gets \frac{\sigma_{t-1}^2(1-\overline{\alpha}_{t-1})}{\sigma_{t-1}^2 + (1-\overline{\alpha}_{t-1})} \boldsymbol{I}$ \STATE $\boldsymbol{z}_{t-1} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ \ELSE \STATE $\boldsymbol{z}_{t-1} \gets \boldsymbol{z}_{t-1}^{\prime}$ \ENDIF \ENDFOR \RETURN $\mathcal{D}(\boldsymbol{z}_0)$ \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{ReSample algorithm.} \begin{algorithmic} \REQUIRE Score network $\boldsymbol{s}_{\boldsymbol{\theta}}$, VAE decoder $\mathcal{D}$, measurement $\boldsymbol{y}$, forward operator $\mathcal{A}$, ReSample hyperparameter $\zeta$, noise schedule $\{t\}_{t=1}^{T}$, generic sampler $\text{Sampler}$, resampling schedule $C$ \STATE $\boldsymbol{z}_T \sim \mathcal{N}(\boldsymbol z_T \mid \boldsymbol{0}, \boldsymbol{I})$ \FOR{$t = T, \dots, 1$} \STATE $\boldsymbol{z}_{t-1}^{\prime} \gets \text{Sampler}(\boldsymbol{z}_t, \boldsymbol{s}_{\boldsymbol{\theta}}, t)$ \IF{$t \in C$} \STATE $\boldsymbol{\hat{z}}_0 \gets \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \boldsymbol{z}_t + (1 - \bar{\alpha}_t) \boldsymbol{s}_{\boldsymbol{\theta}} (\boldsymbol{z}_t, t) \right)$ \STATE $\boldsymbol{\tilde{z}}_0 \gets \underset{\boldsymbol z}{\arg\min} \frac{1}{2} \| \boldsymbol y - \mathcal A(\mathcal D(\boldsymbol{z})) \|$ \STATE $\sigma_{t-1}^2 \gets \zeta \left(\frac{1 - \overline{\alpha}_{t-1}}{\overline{\alpha}_{t-1}}\right)\left(1 - \frac{\overline{\alpha}_{t-1}}{\overline{\alpha}_t}\right)$ \STATE $\boldsymbol{\mu} \gets \frac{\sigma_{t-1}^2\sqrt{\overline{\alpha}_{t-1}}\boldsymbol{\tilde{z}}_0 + (1-\overline{\alpha}_{t-1})\boldsymbol{z}_{t-1}^{\prime}}{\sigma_{t-1}^2 + (1-\overline{\alpha}_{t-1})}$ \STATE $\boldsymbol{\Sigma} \gets \frac{\sigma_{t-1}^2(1-\overline{\alpha}_{t-1})}{\sigma_{t-1}^2 + (1-\overline{\alpha}_{t-1})} \boldsymbol{I}$ \STATE $\boldsymbol{z}_{t-1} \sim \mathcal{N}(\boldsymbol z_{t - 1} \mid \boldsymbol{\mu}, \boldsymbol{\Sigma})$ \ELSE \STATE $\boldsymbol{z}_{t-1} \gets \boldsymbol{z}_{t-1}^{\prime}$ \ENDIF \ENDFOR \RETURN $\mathcal{D}(\boldsymbol{z}_0)$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
 <section id="code" class="level3">
@@ -1004,8 +1010,8 @@ Song, Bowen, Soo Min Kwon, Zecheng Zhang, Xinyu Hu, Qing Qu, and Liyue Shen. 202
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="pagination-link" aria-label="3.2.2. Posterior Sampling with Latent Diffusion (PSLD)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span>
+      <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="pagination-link" aria-label="4.2.2. Posterior Sampling with Latent Diffusion (PSLD)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

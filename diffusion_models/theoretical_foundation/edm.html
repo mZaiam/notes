@@ -386,20 +386,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/cg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1.1. Classifier Guidance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+ <span class="menu-text">4.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+ <span class="menu-text">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.3. ReSample</span></a>
+ <span class="menu-text">4.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -441,11 +447,11 @@ window.Quarto = {
 
 
 <p>After the <a href="../../diffusion_models/theoretical_foundation/sde.html">Stochastic Differential Equations (SDEs)</a> general framework for Diffusion Models (DMs), Elucidated Diffusion Models (EDMs) <span class="citation" data-cites="dm:edm">(<a href="#ref-dm:edm" role="doc-biblioref">Karras et al. 2022</a>)</span> focused on simplifying the diffusion framework, decoupling the choices of parametrization such as noise schedules and other important hyperparameters that were jointly defined in previous approaches.</p>
-<p>Given the data distribution <span class="math inline">\(p_0(\boldsymbol x)\)</span>, with <span class="math inline">\(\boldsymbol x \in \mathbb R\)</span>, and its standard deviation <span class="math inline">\(\sigma_0 \in \mathbb R\)</span>, let <span class="math inline">\(p(\boldsymbol x,  \sigma)\)</span> denote a modified data distribution with noise scale <span class="math inline">\(\sigma \in \mathbb R\)</span>. Using the general Probability Flow ODE equation, EDM formulates diffusion with <span class="math inline">\(\boldsymbol{f}(\boldsymbol x, t) = \boldsymbol 0\)</span> and <span class="math inline">\(g(t)^2 = 2 \frac{d\sigma(t)}{dt} \sigma(t)\)</span>, that is: <span id="eq-1"><span class="math display">\[
-d\boldsymbol{x} = - \frac{d\sigma(t)}{dt} \sigma(t) \nabla_{\boldsymbol x} \log p(\boldsymbol x, \sigma(t)) dt,
-\tag{1}\]</span></span> where <span class="math inline">\(\sigma(t) : \mathbb R \to \mathbb R\)</span> is a noise scale. Running forward in time goes away from the data, while the opposite goes towards the data distribution. These choices imply that the diffusion process has no drift coefficient, therefore, the Markov chain only adds noise throughout the iterations.</p>
+<p>Given the data distribution <span class="math inline">\(p_0(\boldsymbol x_0)\)</span>, with <span class="math inline">\(\boldsymbol x \in \mathbb R\)</span>, and its standard deviation <span class="math inline">\(\sigma_0 \in \mathbb R\)</span>, let <span class="math inline">\(p_t(\boldsymbol x,  \sigma(t))\)</span> denote a modified data distribution with noise scale <span class="math inline">\(\sigma: \mathbb R \to \mathbb R\)</span>. Using the general Probability Flow ODE equation, EDM formulates diffusion with <span class="math inline">\(\boldsymbol{f}(\boldsymbol x, t) = \boldsymbol 0\)</span> and <span class="math inline">\(g(t)^2 = 2 \frac{d\sigma(t)}{dt} \sigma(t)\)</span>, that is: <span id="eq-1"><span class="math display">\[
+d\boldsymbol{x} = - \frac{d\sigma(t)}{dt} \sigma(t) \nabla_{\boldsymbol x} \log p_t(\boldsymbol x, \sigma(t)) dt,
+\tag{1}\]</span></span> Running forward in time goes away from the data, while the opposite goes towards the data distribution. These choices imply that the diffusion process has no drift coefficient, therefore, the Markov chain only adds noise throughout the iterations.</p>
 <p>Given a trained denoiser <span class="math inline">\(\boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{x}, \sigma(t)) : \mathbb R^{n \times 1} \to \mathbb R^n\)</span>, parametrized by <span class="math inline">\(\boldsymbol{\theta}\)</span>, that minimizes the expected <span class="math inline">\(\ell_2\)</span> error to the clean data, the score function can be expressed in terms of the optimal denoiser <span class="math inline">\(\boldsymbol{D} : \mathbb R^{n \times 1} \to \mathbb R^n\)</span>: <span id="eq-2"><span class="math display">\[
-\nabla_{\boldsymbol x} \log p(\boldsymbol x, \sigma(t)) = \frac{\boldsymbol{D}(\boldsymbol{x}, \sigma(t)) - \boldsymbol{x}}{\sigma(t)^2}.
+\nabla_{\boldsymbol x} \log p_t(\boldsymbol x, \sigma(t)) = \frac{\boldsymbol{D}(\boldsymbol{x}, \sigma(t)) - \boldsymbol{x}}{\sigma(t)^2}.
 \tag{2}\]</span></span> Substituting the denoiser into the Probability Flow ODE yields: <span id="eq-3"><span class="math display">\[
 d\boldsymbol{x} = -\frac{d\sigma(t)}{dt} \frac{\boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{x}, \sigma(t)) - \boldsymbol{x}}{\sigma(t)} dt.
 \tag{3}\]</span></span> In particular, EDM employed <span class="math inline">\(\sigma(t) = t\)</span>, simplifying the ODE to: <span id="eq-4"><span class="math display">\[
@@ -453,7 +459,7 @@ d\boldsymbol{x} = \frac{\boldsymbol{x} - \boldsymbol{D}_{\boldsymbol{\theta}}(\b
 \tag{4}\]</span></span> This simplified the concept of time and noise, as both of these quantities represented the severity of data corruption.</p>
 <p>To ensure training stability, EDM introduces a pre-conditioning framework that makes the neural network inputs scaled dynamically based on <span class="math inline">\(\sigma\)</span> to maintain a zero mean and unit variance. This ensures the neural network architecture does not need to be adapted to a specific noise schedule. Finally, the model is trained by minimizing: <span id="eq-5"><span class="math display">\[
 \mathcal{L}(\boldsymbol{\theta}) = \mathbb{E}_{\boldsymbol{x}, \boldsymbol{\epsilon}, \sigma} \left[ \lambda(\sigma) \left\| \boldsymbol{D}_{\boldsymbol{\theta}} (\boldsymbol{x} + \boldsymbol{\epsilon}, \sigma) - \boldsymbol{x} \right\|_2^2 \right],
-\tag{5}\]</span></span> where the noise <span class="math inline">\(\boldsymbol{\epsilon} \in \mathbb R^n\)</span> is sampled from <span class="math inline">\(\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \sigma^2 \boldsymbol{I})\)</span>. The weighting function <span class="math inline">\(\lambda(\sigma) : \mathbb R \to \mathbb R\)</span> is defined as: <span id="eq-6"><span class="math display">\[
+\tag{5}\]</span></span> where <span class="math inline">\(\sigma \sim \mathcal U(0, T)\)</span>, <span class="math inline">\(\boldsymbol x_0 \sim p_0(\boldsymbol x)\)</span> and <span class="math inline">\(\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol \epsilon \mid \boldsymbol{0}, \sigma^2 \boldsymbol{I})\)</span>. The weighting function <span class="math inline">\(\lambda(\sigma) : \mathbb R \to \mathbb R\)</span> is defined as: <span id="eq-6"><span class="math display">\[
 \lambda(\sigma) = \frac{\sigma^2 + \sigma_0^2}{\sigma^2\cdot \sigma_0^2}.
 \tag{6}\]</span></span> Overall, EDM simplified the design choices of implementing DMs, including the noise schedules, network pre-conditioning, among other practical aspects.</p>
 <p>For sampling, EDM proposed a <a href="../../diffusion_models/samplers/ode_samplers.html">Stochastic Churn Sampler</a> by using the Probability Flow ODE.</p>

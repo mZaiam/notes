@@ -386,20 +386,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/cg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1.1. Classifier Guidance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+ <span class="menu-text">4.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+ <span class="menu-text">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.3. ReSample</span></a>
+ <span class="menu-text">4.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -453,7 +459,7 @@ q(\boldsymbol x_{t-1} \mid \boldsymbol x_t, \boldsymbol x_0) = \frac{q(\boldsymb
 \tag{4}\]</span></span></p>
 <p>To optimize the network, D3PM minimized the Variational Lower Bound (VLB) adapted for discrete spaces. The training objective is to minimize the expected Kullback-Leibler (KL) divergence between the true discrete posterior and the parameterized reverse step: <span id="eq-5"><span class="math display">\[
 \mathcal{L}(\boldsymbol \theta) = \mathbb{E}_{t, \boldsymbol{x}_0, \boldsymbol{x}_t} \left[ D_{\text{KL}} \left( q(\boldsymbol{x}_{t-1} \mid \boldsymbol{x}_t, \boldsymbol{x}_0) \parallel p_{\boldsymbol{\theta}}(\boldsymbol{x}_{t-1} \mid \boldsymbol{x}_t) \right) - \lambda\log p_{\boldsymbol{\theta}}(\boldsymbol{x}_0 \mid \boldsymbol{x}_t) \right],
-\tag{5}\]</span></span> where <span class="math inline">\(\lambda \in \mathbb R_{\ge 0}\)</span> is a weighting parameter for the cross-entropy between the original data and the predicted output of the network.</p>
+\tag{5}\]</span></span> where <span class="math inline">\(t\sim \mathcal U(0, T)\)</span>, <span class="math inline">\(\boldsymbol x_0 \sim p(\boldsymbol x_0)\)</span>, <span class="math inline">\(\boldsymbol x_t \sim q(\boldsymbol{x}_t \mid \boldsymbol{x}_0)\)</span> and <span class="math inline">\(\lambda \in \mathbb R_{\ge 0}\)</span> is a weighting parameter for the cross-entropy between the original data and the predicted output of the network.</p>
 <section id="code" class="level3">
 <h3 class="anchored" data-anchor-id="code">Code</h3>
 <div class="quarto-embed-nb-cell">

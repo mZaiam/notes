@@ -386,20 +386,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/cg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1.1. Classifier Guidance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+ <span class="menu-text">4.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+ <span class="menu-text">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.3. ReSample</span></a>
+ <span class="menu-text">4.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -441,18 +447,18 @@ window.Quarto = {
 
 
 <p>Flow Matching (FM) <span class="citation" data-cites="dm:fm">(<a href="#ref-dm:fm" role="doc-biblioref">Lipman et al. 2022</a>)</span> was a concurrent work to <a href="../../diffusion_models/theoretical_foundation/rf.html">Rectified Flow (RF)</a> that also employed Ordinary Differential Equations (ODEs) to model generative processes. While RF started from a geometric intuition of drawing straight lines between distributions, FM established a broader mathematical framework for the training of Continuous Normalizing Flows (CNFs).</p>
-<p>FM used the following ODE to define a probability density path that smoothly transforms a prior distribution <span class="math inline">\(p_0\)</span> into a target data distribution <span class="math inline">\(p_1\)</span>: <span id="eq-1"><span class="math display">\[
+<p>FM used the following ODE to define a probability density path that smoothly transforms a prior distribution <span class="math inline">\(p_0\)</span> into a target data distribution <span class="math inline">\(p_1(\boldsymbol x)\)</span>: <span id="eq-1"><span class="math display">\[
 d\boldsymbol{x} = \boldsymbol{u}(\boldsymbol{x}, t) dt,
-\tag{1}\]</span></span> with the time index <span class="math inline">\(t \in [0, 1]\)</span>, where <span class="math inline">\(\boldsymbol{u}: \mathbb R^{n\times 1} \to \mathbb R^n\)</span> is the time-dependent marginal vector field driving the transformation. To generate data, a neural network <span class="math inline">\(\boldsymbol{v}_{\boldsymbol{\theta}} \mathbb R^{n\times 1} \to \mathbb R^n\)</span> is trained to approximate this vector field. The ideal training objective, known as the Flow Matching objective, minimized the difference between the network and the vector field: <span id="eq-2"><span class="math display">\[
+\tag{1}\]</span></span> with the time index <span class="math inline">\(t \in [0, 1]\)</span>, where <span class="math inline">\(\boldsymbol{u}: \mathbb R^{n\times 1} \to \mathbb R^n\)</span> is the time-dependent marginal vector field driving the transformation. To generate data, a neural network <span class="math inline">\(\boldsymbol{v}_{\boldsymbol{\theta}} : \mathbb R^{n\times 1} \to \mathbb R^n\)</span> is trained to approximate this vector field. The ideal training objective, known as the Flow Matching objective, minimized the difference between the network and the vector field: <span id="eq-2"><span class="math display">\[
 \mathcal{L}_{\text{FM}}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}} \left[ \left\| \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}, t) - \boldsymbol{u}(\boldsymbol{x}, t) \right\|^2 \right],
-\tag{2}\]</span></span> with <span class="math inline">\(t \in [0,1]\)</span> and <span class="math inline">\(\boldsymbol x \sim p_t\)</span>. However, this objective is intractable because the marginal vector field <span class="math inline">\(\boldsymbol{u}(\boldsymbol{x}, t)\)</span> and the marginal probability path <span class="math inline">\(p_t(\boldsymbol{x})\)</span> are unknown and cannot be computed directly.</p>
-<p>To overcome this limitation, FM introduced Conditional Flow Matching (CFM). By conditioning the probability path on a single data sample <span class="math inline">\(\boldsymbol{x}_1 \sim p_1\)</span>, the conditional vector field <span class="math inline">\(\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1)\)</span> becomes tractable. The CFM objective is defined as: <span id="eq-3"><span class="math display">\[
+\tag{2}\]</span></span> with <span class="math inline">\(t \in [0,1]\)</span> and <span class="math inline">\(\boldsymbol x \sim p_t(\boldsymbol x)\)</span>. However, this objective is intractable because the marginal vector field <span class="math inline">\(\boldsymbol{u}(\boldsymbol{x}, t)\)</span> and the marginal probability path <span class="math inline">\(p_t(\boldsymbol{x})\)</span> are unknown and cannot be computed directly.</p>
+<p>To overcome this limitation, FM introduced Conditional Flow Matching (CFM). By conditioning the probability path on a single data sample <span class="math inline">\(\boldsymbol{x}_1 \sim p_1(\boldsymbol x)\)</span>, the conditional vector field <span class="math inline">\(\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1)\)</span> becomes tractable. The CFM objective is defined as: <span id="eq-3"><span class="math display">\[
 \mathcal{L}_{\text{CFM}}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}_1, \boldsymbol{x}} \left[ \left\| \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}, t) - \boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) \right\|^2 \right],
-\tag{3}\]</span></span> where <span class="math inline">\(t \in [0,1]\)</span>, <span class="math inline">\(\boldsymbol x_1 \sim p_1\)</span> and <span class="math inline">\(\boldsymbol x \sim p_t(\boldsymbol x \mid \boldsymbol x_1)\)</span>. FM further proved that if <span class="math inline">\(p_t(\boldsymbol x) &gt; 0\)</span> for all <span class="math inline">\(\boldsymbol x \in \mathbb R^n\)</span> and <span class="math inline">\(t \in [0, 1]\)</span>, it is true that <span class="math inline">\(\nabla_{\boldsymbol \theta} \mathcal L_{\text{FM}} = \nabla_{\boldsymbol \theta} \mathcal L_{\text{CFM}}\)</span>. Therefore, CFM not only is a tractable objective function, but also presented the same gradients as the original FM loss function, up to a constant that does not depend on <span class="math inline">\(\boldsymbol \theta\)</span>.</p>
-<p>In practice, CFM is usually employed using a Gaussian distribution as <span class="math inline">\(p_0\)</span>, and the dataset of interest as <span class="math inline">\(p_1\)</span>. That leads to a closed formula for the probability paths: <span id="eq-4"><span class="math display">\[
+\tag{3}\]</span></span> where <span class="math inline">\(t \in [0,1]\)</span>, <span class="math inline">\(\boldsymbol x_1 \sim p_1(\boldsymbol x)\)</span> and <span class="math inline">\(\boldsymbol x \sim p_t(\boldsymbol x \mid \boldsymbol x_1)\)</span>. FM further proved that if <span class="math inline">\(p_t(\boldsymbol x) &gt; 0\)</span> for all <span class="math inline">\(\boldsymbol x \in \mathbb R^n\)</span> and <span class="math inline">\(t \in [0, 1]\)</span>, it is true that <span class="math inline">\(\nabla_{\boldsymbol \theta} \mathcal L_{\text{FM}} = \nabla_{\boldsymbol \theta} \mathcal L_{\text{CFM}}\)</span>. Therefore, CFM not only is a tractable objective function, but also presented the same gradients as the original FM loss function, up to a constant that does not depend on <span class="math inline">\(\boldsymbol \theta\)</span>.</p>
+<p>In practice, CFM is usually employed using a Gaussian distribution as <span class="math inline">\(p_0(\boldsymbol x)\)</span>, and the dataset of interest as <span class="math inline">\(p_1(\boldsymbol x)\)</span>. That leads to a closed formula for the probability paths: <span id="eq-4"><span class="math display">\[
 p_t(\boldsymbol{x} \mid \boldsymbol{x}_1) = \mathcal{N}(\boldsymbol{x} \mid \boldsymbol\mu(\boldsymbol{x}_1, t), \boldsymbol\sigma(\boldsymbol{x}_1, t)^2 \boldsymbol{I}),
 \tag{4}\]</span></span> with <span class="math inline">\(\boldsymbol \mu, \boldsymbol \sigma : \mathbb R^{n\times 1} \to \mathbb R^n\)</span> being the mean and standard deviation. Its corresponding vector field is given by: <span id="eq-5"><span class="math display">\[
-\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) = \boldsymbol\mu\prime(\boldsymbol{x}_1, t) + \frac{\boldsymbol\sigma\prime(\boldsymbol{x}_1, t)}{\boldsymbol\sigma(\boldsymbol{x}_1, t)} (\boldsymbol{x} - \boldsymbol\mu(\boldsymbol{x}_1, t)).
+\boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) = \boldsymbol\mu^\prime(\boldsymbol{x}_1, t) + \frac{\boldsymbol\sigma^\prime(\boldsymbol{x}_1, t)}{\boldsymbol\sigma(\boldsymbol{x}_1, t)} (\boldsymbol{x} - \boldsymbol\mu(\boldsymbol{x}_1, t)).
 \tag{5}\]</span></span> If this path is defined with <span class="math inline">\(\boldsymbol\mu(\boldsymbol{x}_1, t) = t\boldsymbol{x}_1\)</span> and <span class="math inline">\(\boldsymbol\sigma(\boldsymbol{x}_1, t) = 1 - t\)</span>, the vector field simplifies to: <span id="eq-6"><span class="math display">\[
 \boldsymbol{u}(\boldsymbol{x}, t \mid \boldsymbol{x}_1) = \frac{\boldsymbol{x}_1 - \boldsymbol{x}}{1 - t}.
 \tag{6}\]</span></span> When evaluated along the interpolated path <span class="math inline">\(\boldsymbol{x}_t = t\boldsymbol{x}_1 + (1 - t)\boldsymbol{x}_0\)</span>, this target yields exactly <span class="math inline">\(\boldsymbol{x}_1 - \boldsymbol{x}_0\)</span>. Under these specific conditions, the CFM objective reduces directly to the <a href="../../diffusion_models/theoretical_foundation/rf.html">Rectified Flow</a> objective, showing that RF is a particular case of the FM framework. In fact, this linear interpolant choice is the Optimal Transport (OT) between the two distributions, which makes the model move in a straight trajectory wih constant speed.</p>
@@ -494,32 +500,55 @@ p_t(\boldsymbol{x} \mid \boldsymbol{x}_1) = \mathcal{N}(\boldsymbol{x} \mid \bol
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.net(inp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Training the FM model.</p>
+<div id="cell-8" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> FM()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span><span class="fl">1e-3</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>epochs <span class="op">=</span> <span class="dv">3000</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> torch.randint(<span class="dv">0</span>, n_samples, (batch_size,))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    batch_x0 <span class="op">=</span> x0[idx]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    batch_x1 <span class="op">=</span> x1[idx]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> torch.rand(batch_size, <span class="dv">1</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    xt <span class="op">=</span> t <span class="op">*</span> batch_x1 <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> t) <span class="op">*</span> batch_x0</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    target_v <span class="op">=</span> batch_x1 <span class="op">-</span> batch_x0</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    pred_v <span class="op">=</span> model(xt, t)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> torch.nn.functional.mse_loss(pred_v, target_v)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    optimizer.zero_grad()</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    optimizer.step()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>Generating samples from the prior.</p>
 <div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:676}}" data-outputid="9e313f89-b9d8-42f6-90de-3dade5061332" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> <span class="dv">50</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> steps</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>test_x <span class="op">=</span> torch.randn(<span class="dv">150</span>, <span class="dv">2</span>) <span class="op">+</span> torch.tensor([<span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="fl">3.0</span>])</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>trajectories <span class="op">=</span> [test_x.clone()]</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(steps):</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> torch.ones(<span class="dv">150</span>, <span class="dv">1</span>) <span class="op">*</span> (i <span class="op">*</span> dt)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> model(test_x, t)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        test_x <span class="op">=</span> test_x <span class="op">+</span> v <span class="op">*</span> dt</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        trajectories.append(test_x.clone())</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>trajectories <span class="op">=</span> torch.stack(trajectories)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(x0[:, <span class="dv">0</span>].numpy(), x0[:, <span class="dv">1</span>].numpy(), c<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">p_0</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(x1[:, <span class="dv">0</span>].numpy(), x1[:, <span class="dv">1</span>].numpy(), c<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">p_1</span><span class="dv">$</span><span class="vs">"</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">150</span>):</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    plt.plot(trajectories[:, i, <span class="dv">0</span>].numpy(), trajectories[:, i, <span class="dv">1</span>].numpy(), color<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> steps</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>test_x <span class="op">=</span> torch.randn(<span class="dv">150</span>, <span class="dv">2</span>) <span class="op">+</span> torch.tensor([<span class="op">-</span><span class="fl">3.0</span>, <span class="op">-</span><span class="fl">3.0</span>])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>trajectories <span class="op">=</span> [test_x.clone()]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(steps):</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> torch.ones(<span class="dv">150</span>, <span class="dv">1</span>) <span class="op">*</span> (i <span class="op">*</span> dt)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> model(test_x, t)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        test_x <span class="op">=</span> test_x <span class="op">+</span> v <span class="op">*</span> dt</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        trajectories.append(test_x.clone())</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>trajectories <span class="op">=</span> torch.stack(trajectories)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(x0[:, <span class="dv">0</span>].numpy(), x0[:, <span class="dv">1</span>].numpy(), c<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">p_0</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(x1[:, <span class="dv">0</span>].numpy(), x1[:, <span class="dv">1</span>].numpy(), c<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="vs">r"</span><span class="dv">$</span><span class="vs">p_1</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">150</span>):</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    plt.plot(trajectories[:, i, <span class="dv">0</span>].numpy(), trajectories[:, i, <span class="dv">1</span>].numpy(), color<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">

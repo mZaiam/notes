@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -50,7 +85,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../diffusion_models/conditioning_data_consistency/dps.html" rel="next">
+<link href="../../diffusion_models/conditioning_data_consistency/cg.html" rel="next">
 <link href="../../diffusion_models/samplers/sde_samplers.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -351,20 +386,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/cg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1.1. Classifier Guidance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+ <span class="menu-text">4.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+ <span class="menu-text">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.3. ReSample</span></a>
+ <span class="menu-text">4.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -381,11 +422,12 @@ window.Quarto = {
   <ul>
   <li><a href="#euler-and-heun-samplers" id="toc-euler-and-heun-samplers" class="nav-link active" data-scroll-target="#euler-and-heun-samplers">Euler and Heun Samplers</a></li>
   <li><a href="#denoising-diffusion-implicit-models-ddims" id="toc-denoising-diffusion-implicit-models-ddims" class="nav-link" data-scroll-target="#denoising-diffusion-implicit-models-ddims">Denoising Diffusion Implicit Models (DDIMs)</a></li>
-  <li><a href="#stochastic-churn-sampler" id="toc-stochastic-churn-sampler" class="nav-link" data-scroll-target="#stochastic-churn-sampler">Stochastic Churn Sampler</a></li>
-  <li><a href="#diffusion-probabilistic-models-solver-dpm-solver" id="toc-diffusion-probabilistic-models-solver-dpm-solver" class="nav-link" data-scroll-target="#diffusion-probabilistic-models-solver-dpm-solver">Diffusion Probabilistic Models Solver (DPM-Solver)</a></li>
-  <li><a href="#unified-predictor-corrector-unipc" id="toc-unified-predictor-corrector-unipc" class="nav-link" data-scroll-target="#unified-predictor-corrector-unipc">Unified Predictor-Corrector (UniPC)</a></li>
+  <li><a href="#stochastic-churn-sampler" id="toc-stochastic-churn-sampler" class="nav-link" data-scroll-target="#stochastic-churn-sampler">Stochastic Churn Sampler</a>
+  <ul class="collapse">
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code">Code</a></li>
+  </ul></li>
   </ul>
-</nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="samplers_assets/ode_samplers-preview.html"><i class="bi bi-journal-code"></i>ode_samplers.ipynb</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -411,19 +453,19 @@ window.Quarto = {
 
 <p>Another approach to sampling using Diffusion Models (DMs) is to use the Probability Flow Ordinary Differential Equation (ODE), given by: <span id="eq-1"><span class="math display">\[
 d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt,
-\tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{f}(\boldsymbol{x}, t) : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> is the drift coefficient, <span class="math inline">\(g(t): \mathbb R\to \mathbb R\)</span> is the diffusion coefficient and <span class="math inline">\(\nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x}) : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> is the score function. As mentioned in the <a href="../../diffusion_models/theoretical_foundation/sde.html">Stochastic Differential Equations (SDEs)</a> formulation, the Probability Flow ODE is a deterministic process that shares the same marginal distributions as the forward SDE. This allows for sampling from the data distribution by solving an ODE instead of simulating a stochastic process, while also making the process deterministic.</p>
+\tag{1}\]</span></span> where <span class="math inline">\(\boldsymbol{f} : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> is the drift coefficient, <span class="math inline">\(g: \mathbb R\to \mathbb R\)</span> is the diffusion coefficient and <span class="math inline">\(\nabla_{\boldsymbol{x}} \log p_t : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> is the score function. As mentioned in the <a href="../../diffusion_models/theoretical_foundation/sde.html">Stochastic Differential Equations (SDEs)</a> formulation, the Probability Flow ODE is a deterministic process that shares the same marginal distributions as the forward SDE. This allows for sampling from the data distribution by solving an ODE instead of simulating a stochastic process, while also making the process deterministic.</p>
 <p>As mentioned in <a href="../../diffusion_models/theoretical_foundation/fm.html">Flow Matching (FM)</a>, flow models are directly related to the Probability Flow ODE, with that, ODE samplers can also be used to sample from flow models. On the other hand, although diffusion is a specific case of FM, it presents curved probability paths, which requires more specific samplers for few-step generation.</p>
 <section id="euler-and-heun-samplers" class="level2">
 <h2 class="anchored" data-anchor-id="euler-and-heun-samplers">Euler and Heun Samplers</h2>
 <p>One of the most basic samplers for ODEs are the Euler and Heun numerical integration methods. The reason is that generation is simply the integration of the learned velocity field <span class="math inline">\(\boldsymbol{v}_{\boldsymbol{\theta}} : \mathbb R^{n\times 1} \to \mathbb R^n\)</span> over <span class="math inline">\(t \in [0, 1]\)</span> in flow models, and the Probability Flow ODE in diffusion. For that, classical numerical integration methods such as Euler and Heun can be employed to sample from these learned priors. <a href="#alg:euler" class="quarto-xref">Algorithm 1</a> and <a href="#alg:heun" class="quarto-xref">Algorithm 2</a> presents these algorithms.</p>
-<div id="alg:euler" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-comment-delimiter="//" data-indent-lines="false" data-caption-prefix="Algorithm" data-line-number="true" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em">
+<div id="alg:euler" class="pseudocode-container quarto-float" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number="true" data-indent-lines="false">
 <div class="pseudocode">
-\begin{algorithm} \caption{Euler Sampler} \begin{algorithmic} \REQUIRE Velocity field $\boldsymbol{v}_{\boldsymbol{\theta}}$, time steps $\{t_i\}_{i=0}^{N}$ with $t_0=0$ and $t_N=1$ \STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \FOR{$i = 0,\ldots,N-1$} \STATE $\Delta t \gets t_{i+1} - t_i$ \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{x}_i + \Delta t \cdot \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}_i, t_i)$ \ENDFOR \RETURN $\boldsymbol{x}_N$ \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Euler Sampler} \begin{algorithmic} \REQUIRE Velocity field $\boldsymbol{v}_{\boldsymbol{\theta}}$, time steps $\{t_i\}_{i=0}^{N}$ with $t_0=0$ and $t_N=1$ \STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol x_0 \mid \boldsymbol{0}, \boldsymbol{I})$ \FOR{$i = 0,\ldots,N-1$} \STATE $\Delta t \gets t_{i+1} - t_i$ \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{x}_i + \Delta t \cdot \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}_i, t_i)$ \ENDFOR \RETURN $\boldsymbol{x}_N$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
-<div id="alg:heun" class="pseudocode-container quarto-float" data-pseudocode-number="2" data-comment-delimiter="//" data-indent-lines="false" data-caption-prefix="Algorithm" data-line-number="true" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em">
+<div id="alg:heun" class="pseudocode-container quarto-float" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="2" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number="true" data-indent-lines="false">
 <div class="pseudocode">
-\begin{algorithm} \caption{Heun Sampler} \begin{algorithmic} \REQUIRE Velocity field $\boldsymbol{v}_{\boldsymbol{\theta}}$, time steps $\{t_i\}_{i=0}^{N}$ with $t_0=0$ and $t_N=1$ \STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \FOR{$i = 0,\ldots,N-1$} \STATE $\Delta t \gets t_{i+1} - t_i$ \STATE $\boldsymbol{k}_1 \gets \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}_i, t_i)$ \STATE $\boldsymbol{\tilde{x}}_{i+1} \gets \boldsymbol{x}_i + \Delta t \cdot \boldsymbol{k}_1$ \STATE $\boldsymbol{k}_2 \gets \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{\tilde{x}}_{i+1}, t_{i+1})$ \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{x}_i + \frac{\Delta t}{2} (\boldsymbol{k}_1 + \boldsymbol{k}_2)$ \ENDFOR \RETURN $\boldsymbol{x}_N$ \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Heun Sampler} \begin{algorithmic} \REQUIRE Velocity field $\boldsymbol{v}_{\boldsymbol{\theta}}$, time steps $\{t_i\}_{i=0}^{N}$ with $t_0=0$ and $t_N=1$ \STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol x_0 \mid \boldsymbol{0}, \boldsymbol{I})$ \FOR{$i = 0,\ldots,N-1$} \STATE $\Delta t \gets t_{i+1} - t_i$ \STATE $\boldsymbol{k}_1 \gets \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}_i, t_i)$ \STATE $\boldsymbol{\tilde{x}}_{i+1} \gets \boldsymbol{x}_i + \Delta t \cdot \boldsymbol{k}_1$ \STATE $\boldsymbol{k}_2 \gets \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{\tilde{x}}_{i+1}, t_{i+1})$ \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{x}_i + \frac{\Delta t}{2} (\boldsymbol{k}_1 + \boldsymbol{k}_2)$ \ENDFOR \RETURN $\boldsymbol{x}_N$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
 </section>
@@ -434,10 +476,10 @@ d\boldsymbol{x} = \left[\boldsymbol{f}(\boldsymbol{x}, t) - \frac{1}{2}g(t)^2 \n
 d\boldsymbol{x} = \left[-\frac{1}{2} \beta(t) \boldsymbol{x} - \frac{1}{2}\beta(t) \nabla_{\boldsymbol{x}} \log p_t(\boldsymbol{x})\right] dt,
 \tag{2}\]</span></span> where <span class="math inline">\(\beta(t): \mathbb R \to \mathbb R\)</span> is the noise schedule. DDIM introduced a non-Markovian inference distribution <span class="math inline">\(q_{\boldsymbol{\sigma}}(\boldsymbol{x}_{t-1} \mid \boldsymbol{x}_t, \boldsymbol{x}_0)\)</span> that matched the DDPM posterior <span class="math inline">\(q(\boldsymbol{x}_{t-1} \mid \boldsymbol{x}_t, \boldsymbol{x}_0)\)</span>. Here, <span class="math inline">\(\boldsymbol{\sigma} \in \mathbb R^T\)</span> represents the noise level. Therefore, the DDIM sampling procedure could be interpreted as solving the Probability Flow ODE, with its inference scheme being given by: <span id="eq-3"><span class="math display">\[
 \boldsymbol{x}_{t-1} = \sqrt{\alpha_{t-1}}\left(\frac{\boldsymbol{x}_t - \sqrt{1 - \alpha_t}\boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)}{\sqrt{\alpha_t}}\right) + \sqrt{1 - \alpha_{t-1} - \sigma_t^2} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t) + \sigma_t\boldsymbol{\epsilon},
-\tag{3}\]</span></span> where <span class="math inline">\(\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})\)</span> is a Gaussian noise vector. When <span class="math inline">\(\sigma_t = 0\)</span>, the DDIM inference scheme becomes deterministic, while non-zero values control the stochasticity of the sampling process. The DDIM sampler is presented in <a href="#alg:ddim_sampler" class="quarto-xref">Algorithm 3</a>.</p>
-<div id="alg:ddim_sampler" class="pseudocode-container quarto-float" data-pseudocode-number="3" data-comment-delimiter="//" data-indent-lines="false" data-caption-prefix="Algorithm" data-line-number="true" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em">
+\tag{3}\]</span></span> where <span class="math inline">\(\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{\epsilon} \mid \boldsymbol{0}, \boldsymbol{I})\)</span> is a Gaussian noise vector. When <span class="math inline">\(\sigma_t = 0\)</span>, the DDIM inference scheme becomes deterministic, while non-zero values control the stochasticity of the sampling process. The DDIM sampler is presented in <a href="#alg:ddim_sampler" class="quarto-xref">Algorithm 3</a>.</p>
+<div id="alg:ddim_sampler" class="pseudocode-container quarto-float" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="3" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number="true" data-indent-lines="false">
 <div class="pseudocode">
-\begin{algorithm} \caption{Denoising Diffusion Implicit Models Sampler} \begin{algorithmic} \REQUIRE Noise network $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}$, number of diffusion steps $T$, variance schedule $\{\alpha_t\}_{t=0}^{T}$, noise schedule $\{\sigma_t\}_{t=0}^{T}$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \FOR{$t = T,\ldots,1$} \STATE $\boldsymbol{x}_{t - 1}' \gets \sqrt{\alpha_{t-1}}\left(\frac{\boldsymbol{x}_t - \sqrt{1 - \alpha_t}\boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)}{\sqrt{\alpha_t}}\right)$ \STATE $\boldsymbol{x}_{t - 1}'' \gets \boldsymbol{x}_{t - 1}' + \sqrt{1 - \alpha_{t-1} - \sigma_t^2} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)$ \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \boldsymbol{I})$ \STATE $\boldsymbol{x}_{t - 1} \gets \boldsymbol{x}_{t - 1}'' + \sigma_t\boldsymbol{\epsilon}$ \ENDFOR \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Denoising Diffusion Implicit Models Sampler} \begin{algorithmic} \REQUIRE Noise network $\boldsymbol{\epsilon}_{\boldsymbol{\theta}}$, number of diffusion steps $T$, variance schedule $\{\alpha_t\}_{t=0}^{T}$, noise schedule $\{\sigma_t\}_{t=0}^{T}$ \STATE $\boldsymbol{x}_T \sim \mathcal{N}(\boldsymbol x_T \mid \boldsymbol{0}, \boldsymbol{I})$ \FOR{$t = T,\ldots,1$} \STATE $\boldsymbol{x}_{t - 1}' \gets \sqrt{\alpha_{t-1}}\left(\frac{\boldsymbol{x}_t - \sqrt{1 - \alpha_t}\boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)}{\sqrt{\alpha_t}}\right)$ \STATE $\boldsymbol{x}_{t - 1}'' \gets \boldsymbol{x}_{t - 1}' + \sqrt{1 - \alpha_{t-1} - \sigma_t^2} \boldsymbol{\epsilon}_{\boldsymbol{\theta}}(\boldsymbol{x}_t, t)$ \STATE $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{\epsilon} \mid \boldsymbol{0}, \boldsymbol{I})$ \STATE $\boldsymbol{x}_{t - 1} \gets \boldsymbol{x}_{t - 1}'' + \sigma_t\boldsymbol{\epsilon}$ \ENDFOR \RETURN $\boldsymbol{x}_0$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
 </section>
@@ -445,30 +487,134 @@ d\boldsymbol{x} = \left[-\frac{1}{2} \beta(t) \boldsymbol{x} - \frac{1}{2}\beta(
 <h2 class="anchored" data-anchor-id="stochastic-churn-sampler">Stochastic Churn Sampler</h2>
 <p>The Stochastic Churn sampler was introduced in <a href="../../diffusion_models/theoretical_foundation/edm.html">Elucidated Diffusion Models (EDMs)</a> <span class="citation" data-cites="dm:edm">(<a href="#ref-dm:edm" role="doc-biblioref">Karras et al. 2022</a>)</span> as a stochastic extension of the deterministic Heun solver. EDM controlled the stochasticity through a hyperparameter <span class="math inline">\(\gamma_i \in \mathbb{R}_{\geq 0}\)</span> that governed the amount of noise added to <span class="math inline">\(\boldsymbol{x}_i\)</span> before the predictor step.</p>
 <p>Let <span class="math inline">\(\boldsymbol{D}_{\boldsymbol{\theta}}: \mathbb R^{n \times 1} \to \mathbb R^n\)</span> be the trained denoiser network, and let <span class="math inline">\(\{t_i\}_{i=0}^{T}\)</span> denote a decreasing noise schedule, with <span class="math inline">\(t_0 &gt; t_1 &gt; \cdots &gt; t_T\)</span>. The idea of the Stochastic Churn sampler is to first increase the noise level from <span class="math inline">\(t_i\)</span> to <span class="math inline">\(\hat{t}_i\)</span> according to: <span id="eq-4"><span class="math display">\[
-\hat{t}_i = (1+\gamma_i)t_i,
+\hat{t}_i = (1 + \gamma_i) t_i,
 \tag{4}\]</span></span> and then perturb the current sample according to: <span id="eq-5"><span class="math display">\[
 \boldsymbol{\hat{x}}_i = \boldsymbol{x}_i + \sqrt{\hat{t}_i^2-t_i^2}\boldsymbol{\epsilon}_i,
-\tag{5}\]</span></span> where <span class="math inline">\(\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{0}, \sigma_{\text{Std}}^2\boldsymbol{I})\)</span>. Thus, the current sample is moved to a higher noise level before the deterministic denoising step. The sampler then applies Heun’s method to integrate the denoising ODE from <span class="math inline">\(\hat{t}_i\)</span> to <span class="math inline">\(t_{i+1}\)</span>. In particular, the first evaluation defines the direction: <span id="eq-5"><span class="math display">\[
+\tag{5}\]</span></span> where <span class="math inline">\(\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{\epsilon}_i \mid \boldsymbol{0}, \sigma_{\text{Std}}^2\boldsymbol{I})\)</span>. Thus, the current sample is moved to a higher noise level before the deterministic denoising step. The sampler then applies Heun’s method to integrate the denoising ODE from <span class="math inline">\(\hat{t}_i\)</span> to <span class="math inline">\(t_{i+1}\)</span>. In particular, the first evaluation defines the direction: <span id="eq-5"><span class="math display">\[
 \boldsymbol{d}_i = \frac{\boldsymbol{\hat{x}}_i - \boldsymbol{D}_{\boldsymbol{\theta}}(\boldsymbol{\hat{x}}_i,\hat{t}_i)}{\hat{t}_i},
 \tag{6}\]</span></span> which is used to obtain a first-order prediction at <span class="math inline">\(t_{i+1}\)</span>. A second evaluation of the denoiser is then used to correct this prediction through the average of the two directions.</p>
 <p>The stochastic perturbation allows the sampler to explore different denoising trajectories instead of following a single deterministic trajectory. With <span class="math inline">\(\gamma_i = 0\)</span>, the stochastic perturbation does not occur, recovering the deterministic Heun solver. Larger values of <span class="math inline">\(\gamma_i\)</span> increase the temporary noise level and consequently introduce greater stochasticity into the generated trajectory. The full algorithm is presented in <a href="#alg:edm_churn" class="quarto-xref">Algorithm 4</a>.</p>
-<div id="alg:edm_churn" class="pseudocode-container quarto-float" data-pseudocode-number="4" data-comment-delimiter="//" data-indent-lines="false" data-caption-prefix="Algorithm" data-line-number="true" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em">
+<div id="alg:edm_churn" class="pseudocode-container quarto-float" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="4" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number="true" data-indent-lines="false">
 <div class="pseudocode">
-\begin{algorithm} \caption{Stochastic Churn Sampler} \begin{algorithmic} \REQUIRE Denoiser network $\boldsymbol{D}_{\boldsymbol{\theta}}$, noise schedule $\{t_i\}_{i=0}^{T}$, churn schedule $\{\gamma_i\}_{i=0}^{T-1}$, noise standard-deviation $\sigma_{\text{Std}}$ \STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol{0}, t_0^2 \boldsymbol{I})$ \FOR{$i = 0,\ldots,T-1$} \STATE Sample $\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{0}, \sigma_{\text{Std}}^2 \boldsymbol{I})$ \STATE $\hat{t}_i \gets (1+\gamma_i)t_i$ \STATE $\boldsymbol{\hat{x}}_i \gets \boldsymbol{x}_i + \sqrt{\hat{t}_i^2-t_i^2}\boldsymbol{\epsilon}_i$ \STATE $\boldsymbol{d}_i \gets \left(\boldsymbol{\hat{x}}_i - \boldsymbol{D}_{\boldsymbol{\theta}} (\boldsymbol{\hat{x}}_i,\hat{t}_i) \right)/\hat{t}_i$ \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{\hat{x}}_i + (t_{i+1}-\hat{t}_i)\boldsymbol{d}_i$ \IF{$t_{i+1} \neq 0$} \STATE $\boldsymbol{d}_i' \gets \left(\boldsymbol{x}_{i+1} - \boldsymbol{D}_{\boldsymbol{\theta}} (\boldsymbol{x}_{i+1},t_{i+1})\right)/t_{i+1}$ \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{\hat{x}}_i + (t_{i+1}-\hat{t}_i) \left(\frac{\boldsymbol{d}_i+\boldsymbol{d}_i'}{2}\right)$ \ENDIF \ENDFOR \RETURN $\boldsymbol{x}_T$ \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Stochastic Churn Sampler} \begin{algorithmic} \REQUIRE Denoiser network $\boldsymbol{D}_{\boldsymbol{\theta}}$, noise schedule $\{t_i\}_{i=0}^{T}$, churn schedule $\{\gamma_i\}_{i=0}^{T-1}$, noise standard-deviation $\sigma_{\text{Std}}$ \STATE $\boldsymbol{x}_0 \sim \mathcal{N}(\boldsymbol x_0 \mid \boldsymbol{0}, t_0^2 \boldsymbol{I})$ \FOR{$i = 0,\ldots,T-1$} \STATE Sample $\boldsymbol{\epsilon}_i \sim \mathcal{N}(\boldsymbol{\epsilon}_i \mid \boldsymbol{0}, \sigma_{\text{Std}}^2 \boldsymbol{I})$ \STATE $\hat{t}_i \gets (1+\gamma_i)t_i$ \STATE $\boldsymbol{\hat{x}}_i \gets \boldsymbol{x}_i + \sqrt{\hat{t}_i^2-t_i^2}\boldsymbol{\epsilon}_i$ \STATE $\boldsymbol{d}_i \gets \left(\boldsymbol{\hat{x}}_i - \boldsymbol{D}_{\boldsymbol{\theta}} (\boldsymbol{\hat{x}}_i,\hat{t}_i) \right)/\hat{t}_i$ \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{\hat{x}}_i + (t_{i+1}-\hat{t}_i)\boldsymbol{d}_i$ \IF{$t_{i+1} \neq 0$} \STATE $\boldsymbol{d}_i' \gets \left(\boldsymbol{x}_{i+1} - \boldsymbol{D}_{\boldsymbol{\theta}} (\boldsymbol{x}_{i+1},t_{i+1})\right)/t_{i+1}$ \STATE $\boldsymbol{x}_{i+1} \gets \boldsymbol{\hat{x}}_i + (t_{i+1}-\hat{t}_i) \left(\frac{\boldsymbol{d}_i+\boldsymbol{d}_i'}{2}\right)$ \ENDIF \ENDFOR \RETURN $\boldsymbol{x}_T$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
+<section id="code" class="level3">
+<h3 class="anchored" data-anchor-id="code">Code</h3>
+<div class="quarto-embed-nb-cell">
+<p>Importing the packages.</p>
+<div id="cell-2" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusers <span class="im">import</span> (</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    UNet2DModel,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    DDIMScheduler,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    EulerDiscreteScheduler,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    HeunDiscreteScheduler,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(<span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Loading a pre-trained model.</p>
+<div id="cell-4" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model_id <span class="op">=</span> <span class="st">"1aurent/ddpm-mnist"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> UNet2DModel.from_pretrained(model_id).to(device)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">eval</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Creating helper functions.</p>
+<div id="cell-6" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_samples(samples, title, num_images<span class="op">=</span><span class="dv">8</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    samples <span class="op">=</span> (samples.clamp(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    samples <span class="op">=</span> samples.cpu().permute(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>).numpy()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, num_images, figsize<span class="op">=</span>(num_images <span class="op">*</span> <span class="fl">1.8</span>, <span class="dv">2</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(title, fontsize<span class="op">=</span><span class="dv">14</span>, y<span class="op">=</span><span class="fl">1.05</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_images):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        axes[i].imshow(samples[i, :, :, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        axes[i].axis(<span class="st">"off"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="at">@torch.no_grad</span>()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_with_scheduler(model, scheduler, num_steps<span class="op">=</span><span class="dv">50</span>, num_samples<span class="op">=</span><span class="dv">8</span>, step_kwargs<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> step_kwargs <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        step_kwargs <span class="op">=</span> {}</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    scheduler.set_timesteps(num_steps)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    shape <span class="op">=</span> (num_samples, <span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> torch.randn(shape, device<span class="op">=</span>device)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">hasattr</span>(scheduler, <span class="st">"init_noise_sigma"</span>):</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x <span class="op">*</span> scheduler.init_noise_sigma</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> scheduler.timesteps:</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        model_input <span class="op">=</span> scheduler.scale_model_input(x, t)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        noise_pred <span class="op">=</span> model(model_input, t).sample</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> scheduler.step(noise_pred, t, x, <span class="op">**</span>step_kwargs).prev_sample</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Using ODE samplers to generate samples using <span class="math inline">\(50\)</span> steps.</p>
+<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;colab&quot;,&quot;value&quot;:{&quot;base_uri&quot;:&quot;https://localhost:8080/&quot;,&quot;height&quot;:814}}" data-outputid="a3e61a99-6c28-4eb7-a37f-3035f408711a" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ddim_scheduler <span class="op">=</span> DDIMScheduler.from_pretrained(model_id)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>samples_ddim <span class="op">=</span> generate_with_scheduler(model, ddim_scheduler, num_steps<span class="op">=</span><span class="dv">50</span>, step_kwargs<span class="op">=</span>{<span class="st">"eta"</span>: <span class="fl">0.0</span>})</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plot_samples(samples_ddim, <span class="st">"DDIM"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>euler_scheduler <span class="op">=</span> EulerDiscreteScheduler.from_pretrained(model_id)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>samples_euler <span class="op">=</span> generate_with_scheduler(model, euler_scheduler, num_steps<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plot_samples(samples_euler, <span class="st">"Euler"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>heun_scheduler <span class="op">=</span> HeunDiscreteScheduler.from_pretrained(model_id)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>samples_heun <span class="op">=</span> generate_with_scheduler(model, heun_scheduler, num_steps<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plot_samples(samples_heun, <span class="st">"Heun"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>churn_scheduler <span class="op">=</span> EulerDiscreteScheduler.from_pretrained(model_id)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>samples_churn <span class="op">=</span> generate_with_scheduler(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    model,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    churn_scheduler,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    num_steps<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    step_kwargs<span class="op">=</span>{<span class="st">"s_churn"</span>: <span class="fl">0.2</span>, <span class="st">"s_tmin"</span>: <span class="fl">0.0</span>, <span class="st">"s_tmax"</span>: <span class="bu">float</span>(<span class="st">"inf"</span>), <span class="st">"s_noise"</span>: <span class="fl">1.0</span>}</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plot_samples(samples_churn, <span class="st">"Stochastic Churn"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ode_samplers_files/figure-html/samplers_assets-ode_samplers-cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ode_samplers_files/figure-html/samplers_assets-ode_samplers-cell-6-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ode_samplers_files/figure-html/samplers_assets-ode_samplers-cell-6-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ode_samplers_files/figure-html/samplers_assets-ode_samplers-cell-6-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-1" href="samplers_assets/ode_samplers-preview.html#cell-0">Source: ode_samplers.ipynb</a></div>
+
+
+
 </section>
-<section id="diffusion-probabilistic-models-solver-dpm-solver" class="level2">
-<h2 class="anchored" data-anchor-id="diffusion-probabilistic-models-solver-dpm-solver">Diffusion Probabilistic Models Solver (DPM-Solver)</h2>
-</section>
-<section id="unified-predictor-corrector-unipc" class="level2">
-
-
-
-
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Unified Predictor-Corrector (UniPC)</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-dm:edm" class="csl-entry" role="listitem">
 Karras, Tero, Miika Aittala, Timo Aila, and Samuli Laine. 2022. <span>“Elucidating the Design Space of Diffusion-Based Generative Models.”</span> <em>Advances in Neural Information Processing Systems</em> 35: 26565–77.
 </div>
@@ -886,8 +1032,8 @@ Song, Yang, Jascha Sohl-Dickstein, Diederik P Kingma, Abhishek Kumar, Stefano Er
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="pagination-link" aria-label="3.2.1. Diffusion Posterior Sampling (DPS)">
-        <span class="nav-page-text">3.2.1. Diffusion Posterior Sampling (DPS)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../diffusion_models/conditioning_data_consistency/cg.html" class="pagination-link" aria-label="3.1.1. Classifier Guidance">
+        <span class="nav-page-text">3.1.1. Classifier Guidance</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

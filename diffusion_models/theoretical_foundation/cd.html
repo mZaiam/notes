@@ -386,20 +386,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../diffusion_models/conditioning_data_consistency/cg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1.1. Classifier Guidance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+ <span class="menu-text">4.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+ <span class="menu-text">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.3. ReSample</span></a>
+ <span class="menu-text">4.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -441,11 +447,11 @@ window.Quarto = {
 
 
 <p>Another diffusion paradigm is the Cold-Diffusion (CD) <span class="citation" data-cites="dm:cd">(<a href="#ref-dm:cd" role="doc-biblioref">Bansal et al. 2023</a>)</span> generalization. Although previous formulations specifically employed noise addition as the degradation scheme, CD showed that more general degradation operators could be used to train Diffusion Models (DMs).</p>
-<p>Let <span class="math inline">\(\boldsymbol x_0 \in \mathbb R^n\)</span> be a data point sampled from <span class="math inline">\(\boldsymbol x_0\sim p_0\)</span> and let <span class="math inline">\(\boldsymbol x_t = \boldsymbol D (\boldsymbol x_0, t)\)</span> be the degradation of <span class="math inline">\(\boldsymbol x_0\)</span> by the degradation operator <span class="math inline">\(\boldsymbol D : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> at scale <span class="math inline">\(t\)</span>. Then, let <span class="math inline">\(\boldsymbol R_{\boldsymbol \theta} : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> be the restoration operator that satisfies: <span id="eq-1"><span class="math display">\[
+<p>Let <span class="math inline">\(\boldsymbol x_0 \in \mathbb R^n\)</span> be a data point sampled from <span class="math inline">\(\boldsymbol x_0\sim p_0 (\boldsymbol x)\)</span> and let <span class="math inline">\(\boldsymbol x_t = \boldsymbol D (\boldsymbol x_0, t)\)</span> be the degradation of <span class="math inline">\(\boldsymbol x_0\)</span> by the degradation operator <span class="math inline">\(\boldsymbol D : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> at scale <span class="math inline">\(t\)</span>. Then, let <span class="math inline">\(\boldsymbol R_{\boldsymbol \theta} : \mathbb R^{n \times 1} \to \mathbb R^n\)</span> be the restoration operator that satisfies: <span id="eq-1"><span class="math display">\[
 \boldsymbol R_{\boldsymbol \theta} \left(\boldsymbol D (\boldsymbol x_0, t), t\right) \approx \boldsymbol x_0.
 \tag{1}\]</span></span> That is, the restoration operator is a neural network parametrized by <span class="math inline">\(\boldsymbol \theta\)</span>. This network can be trained minimizing the following objective: <span id="eq-2"><span class="math display">\[
 \mathcal L(\boldsymbol \theta) = \mathbb E_{\boldsymbol x_0, t} \left\| \boldsymbol R_{\boldsymbol \theta} \left( \boldsymbol D(\boldsymbol x_0, t), t \right) - \boldsymbol x_0 \right\|,
-\tag{2}\]</span></span> where <span class="math inline">\(\boldsymbol x_0 \sim p_0\)</span> and <span class="math inline">\(t\)</span> is sampled from a degradation scale interval.</p>
+\tag{2}\]</span></span> where <span class="math inline">\(\boldsymbol x_0 \sim p_0(\boldsymbol x)\)</span> and <span class="math inline">\(t\)</span> is sampled from a degradation scale interval.</p>
 <p>The CD formulation is particularly interesting for inverse problems, as the degradation and restoration operators can be directly employed during the DM training.</p>
 <section id="code" class="level3">
 <h3 class="anchored" data-anchor-id="code">Code</h3>

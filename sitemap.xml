@@ -6,19 +6,19 @@
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/fm.html</loc>
-    <lastmod>2026-10-19T21:53:00.235Z</lastmod>
+    <lastmod>2026-11-06T17:56:43.359Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/smld.html</loc>
-    <lastmod>2026-09-23T23:07:20.918Z</lastmod>
+    <lastmod>2026-10-20T13:46:50.849Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/gdss.html</loc>
-    <lastmod>2026-10-19T22:57:08.267Z</lastmod>
+    <lastmod>2026-10-28T21:27:35.860Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/d3pm.html</loc>
-    <lastmod>2026-09-23T23:06:56.214Z</lastmod>
+    <lastmod>2026-10-19T23:54:48.099Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/theoretical_foundation_assets/rf.html</loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/theoretical_foundation_assets/smld.html</loc>
-    <lastmod>2026-09-14T20:06:42.776Z</lastmod>
+    <lastmod>2026-10-23T20:18:54.354Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/theoretical_foundation_assets/gdss.html</loc>
@@ -41,12 +41,16 @@
     <lastmod>2026-08-17T19:42:20.326Z</lastmod>
   </url>
   <url>
-    <loc>https://mZaiam.github.io/notes/diffusion_models/samplers/samplers_assets/sde_samplers.html</loc>
-    <lastmod>2026-09-07T18:57:06.279Z</lastmod>
+    <loc>https://mZaiam.github.io/notes/diffusion_models/samplers/samplers_assets/ode_samplers.html</loc>
+    <lastmod>2026-10-20T13:21:00.768Z</lastmod>
   </url>
   <url>
-    <loc>https://mZaiam.github.io/notes/diffusion_models/samplers/sde_samplers.html</loc>
-    <lastmod>2026-09-30T18:29:26.805Z</lastmod>
+    <loc>https://mZaiam.github.io/notes/diffusion_models/samplers/ode_samplers.html</loc>
+    <lastmod>2026-10-20T13:34:02.562Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/diffusion_models/conditioning_data_consistency/cg.html</loc>
+    <lastmod>2026-10-20T14:35:39.726Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/conditioning_data_consistency/conditioning_data_consistency_assets/psld.html</loc>
@@ -58,167 +62,171 @@
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/conditioning_data_consistency/dps.html</loc>
-    <lastmod>2026-10-15T12:11:33.280Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/probabilistic_models.html</loc>
-    <lastmod>2026-09-07T15:39:26.396Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/tree_models.html</loc>
-    <lastmod>2026-09-07T15:39:20.304Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/rf.html</loc>
-    <lastmod>2026-04-26T23:43:48.017Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/knn.html</loc>
-    <lastmod>2026-04-25T19:28:33.898Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/linear_regression.html</loc>
-    <lastmod>2026-04-24T16:43:26.288Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/logistic_regression.html</loc>
-    <lastmod>2026-04-24T16:46:48.861Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/gbm.html</loc>
-    <lastmod>2026-04-26T23:39:13.308Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/gp.html</loc>
-    <lastmod>2026-04-27T19:46:00.822Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pre_processing.html</loc>
-    <lastmod>2026-09-07T15:37:20.885Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/model_explanation.html</loc>
-    <lastmod>2026-09-07T15:38:33.567Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/clustering_metrics.html</loc>
-    <lastmod>2026-05-20T19:26:05.356Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/model_selection.html</loc>
-    <lastmod>2026-04-19T21:41:53.110Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/normalization.html</loc>
-    <lastmod>2026-04-10T20:46:47.561Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/classification_metrics.html</loc>
-    <lastmod>2026-04-23T23:54:59.460Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/unsupervised_methods_assets/outlier.html</loc>
-    <lastmod>2026-05-13T20:38:46.987Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/unsupervised_methods_assets/clustering.html</loc>
-    <lastmod>2026-05-13T19:20:30.200Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/outlier.html</loc>
-    <lastmod>2026-09-07T15:39:49.943Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/deep_learning/index.html</loc>
-    <lastmod>2026-09-07T15:32:43.604Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/deep_learning/nn/theoretical_foundation.html</loc>
-    <lastmod>2026-09-07T15:45:55.511Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/deep_learning/gnn/theoretical_foundation.html</loc>
-    <lastmod>2026-09-02T23:21:08.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/deep_learning/nn/nn_assets/mlp.html</loc>
-    <lastmod>2026-04-05T22:33:58.188Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/clustering.html</loc>
-    <lastmod>2026-09-07T15:39:57.227Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/dimensionality_reduction.html</loc>
-    <lastmod>2026-09-07T15:39:41.111Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/unsupervised_methods_assets/dimensionality_reduction.html</loc>
-    <lastmod>2026-05-13T00:01:25.333Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/model_evaluation.html</loc>
-    <lastmod>2026-09-07T15:37:12.032Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/model_explanation.html</loc>
-    <lastmod>2026-05-20T20:01:06.587Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/encoding.html</loc>
-    <lastmod>2026-04-11T14:39:04.887Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/vif.html</loc>
-    <lastmod>2026-04-11T16:31:06.647Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/regression_metrics.html</loc>
-    <lastmod>2026-04-23T23:47:50.975Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/model_selection.html</loc>
-    <lastmod>2026-09-07T15:38:25.334Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/svm.html</loc>
-    <lastmod>2026-04-25T20:01:42.015Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/sr.html</loc>
-    <lastmod>2026-04-27T19:41:24.744Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/glm.html</loc>
-    <lastmod>2026-04-24T16:50:12.454Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/dt.html</loc>
-    <lastmod>2026-04-26T23:41:29.201Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/nb.html</loc>
-    <lastmod>2026-04-27T18:35:36.164Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/ebm.html</loc>
-    <lastmod>2026-04-24T17:05:32.709Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/linear_models.html</loc>
-    <lastmod>2026-09-07T15:39:03.761Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/distance_models.html</loc>
-    <lastmod>2026-09-07T15:39:12.440Z</lastmod>
+    <lastmod>2026-10-20T13:54:07.735Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/machine_learning/index.html</loc>
     <lastmod>2026-09-07T15:36:48.092Z</lastmod>
   </url>
   <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/distance_models.html</loc>
+    <lastmod>2026-09-07T15:39:12.440Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/linear_models.html</loc>
+    <lastmod>2026-09-07T15:39:03.761Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/ebm.html</loc>
+    <lastmod>2026-04-24T17:05:32.709Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/nb.html</loc>
+    <lastmod>2026-04-27T18:35:36.164Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/dt.html</loc>
+    <lastmod>2026-04-26T23:41:29.201Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/glm.html</loc>
+    <lastmod>2026-04-24T16:50:12.454Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/sr.html</loc>
+    <lastmod>2026-04-27T19:41:24.744Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/svm.html</loc>
+    <lastmod>2026-04-25T20:01:42.015Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/model_selection.html</loc>
+    <lastmod>2026-09-07T15:38:25.334Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/regression_metrics.html</loc>
+    <lastmod>2026-04-23T23:47:50.975Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/vif.html</loc>
+    <lastmod>2026-04-11T16:31:06.647Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/encoding.html</loc>
+    <lastmod>2026-04-11T14:39:04.887Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/model_explanation.html</loc>
+    <lastmod>2026-05-20T20:01:06.587Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/model_evaluation.html</loc>
+    <lastmod>2026-09-07T15:37:12.032Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/unsupervised_methods_assets/dimensionality_reduction.html</loc>
+    <lastmod>2026-05-13T00:01:25.333Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/dimensionality_reduction.html</loc>
+    <lastmod>2026-09-07T15:39:41.111Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/clustering.html</loc>
+    <lastmod>2026-09-07T15:39:57.227Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/deep_learning/nn/nn_assets/mlp.html</loc>
+    <lastmod>2026-04-05T22:33:58.188Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/deep_learning/gnn/theoretical_foundation.html</loc>
+    <lastmod>2026-09-02T23:21:08.134Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/deep_learning/nn/theoretical_foundation.html</loc>
+    <lastmod>2026-09-07T15:45:55.511Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/deep_learning/index.html</loc>
+    <lastmod>2026-09-07T15:32:43.604Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/outlier.html</loc>
+    <lastmod>2026-09-07T15:39:49.943Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/unsupervised_methods_assets/clustering.html</loc>
+    <lastmod>2026-05-13T19:20:30.200Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/unsupervised_methods/unsupervised_methods_assets/outlier.html</loc>
+    <lastmod>2026-05-13T20:38:46.987Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/classification_metrics.html</loc>
+    <lastmod>2026-04-23T23:54:59.460Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/normalization.html</loc>
+    <lastmod>2026-04-10T20:46:47.561Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/model_selection.html</loc>
+    <lastmod>2026-04-19T21:41:53.110Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pipeline_assets/clustering_metrics.html</loc>
+    <lastmod>2026-05-20T19:26:05.356Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/model_explanation.html</loc>
+    <lastmod>2026-09-07T15:38:33.567Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/pipeline/pre_processing.html</loc>
+    <lastmod>2026-09-07T15:37:20.885Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/gp.html</loc>
+    <lastmod>2026-04-27T19:46:00.822Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/gbm.html</loc>
+    <lastmod>2026-04-26T23:39:13.308Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/logistic_regression.html</loc>
+    <lastmod>2026-04-24T16:46:48.861Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/linear_regression.html</loc>
+    <lastmod>2026-04-24T16:43:26.288Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/knn.html</loc>
+    <lastmod>2026-04-25T19:28:33.898Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/supervised_methods_assets/rf.html</loc>
+    <lastmod>2026-04-26T23:43:48.017Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/tree_models.html</loc>
+    <lastmod>2026-09-07T15:39:20.304Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/machine_learning/supervised_methods/probabilistic_models.html</loc>
+    <lastmod>2026-09-07T15:39:26.396Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/synchrotron/intro.html</loc>
+    <lastmod>2026-10-23T19:34:29.705Z</lastmod>
+  </url>
+  <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/conditioning_data_consistency/psld.html</loc>
-    <lastmod>2026-10-15T12:24:59.257Z</lastmod>
+    <lastmod>2026-10-20T13:54:13.117Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/conditioning_data_consistency/conditioning_data_consistency_assets/resample.html</loc>
@@ -226,19 +234,23 @@
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/conditioning_data_consistency/resample.html</loc>
-    <lastmod>2026-10-13T21:43:07.835Z</lastmod>
+    <lastmod>2026-10-20T13:54:17.421Z</lastmod>
   </url>
   <url>
-    <loc>https://mZaiam.github.io/notes/diffusion_models/samplers/ode_samplers.html</loc>
-    <lastmod>2026-10-19T14:17:57.787Z</lastmod>
+    <loc>https://mZaiam.github.io/notes/diffusion_models/samplers/sde_samplers.html</loc>
+    <lastmod>2026-10-20T13:30:47.164Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mZaiam.github.io/notes/diffusion_models/samplers/samplers_assets/sde_samplers.html</loc>
+    <lastmod>2026-09-07T18:57:06.279Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/index.html</loc>
-    <lastmod>2026-10-19T13:22:26.894Z</lastmod>
+    <lastmod>2026-10-20T13:53:56.295Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/theoretical_foundation_assets/fm.html</loc>
-    <lastmod>2026-10-19T13:54:40.568Z</lastmod>
+    <lastmod>2026-10-20T13:21:18.625Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/theoretical_foundation_assets/cd.html</loc>
@@ -250,26 +262,26 @@
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/theoretical_foundation_assets/ddpm.html</loc>
-    <lastmod>2026-09-14T20:06:21.690Z</lastmod>
+    <lastmod>2026-10-26T20:34:26.660Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/sde.html</loc>
-    <lastmod>2026-10-19T21:36:30.767Z</lastmod>
+    <lastmod>2026-10-19T23:48:02.364Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/cd.html</loc>
-    <lastmod>2026-09-23T23:06:52.364Z</lastmod>
+    <lastmod>2026-10-19T23:53:13.771Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/edm.html</loc>
-    <lastmod>2026-09-23T23:07:06.952Z</lastmod>
+    <lastmod>2026-10-19T23:52:25.888Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/rf.html</loc>
-    <lastmod>2026-10-19T14:15:05.553Z</lastmod>
+    <lastmod>2026-11-06T17:53:32.283Z</lastmod>
   </url>
   <url>
     <loc>https://mZaiam.github.io/notes/diffusion_models/theoretical_foundation/ddpm.html</loc>
-    <lastmod>2026-09-23T23:07:01.988Z</lastmod>
+    <lastmod>2026-10-20T13:47:42.261Z</lastmod>
   </url>
 </urlset>

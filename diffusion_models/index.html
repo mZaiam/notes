@@ -301,20 +301,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../diffusion_models/conditioning_data_consistency/cg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3.1.1. Classifier Guidance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../diffusion_models/conditioning_data_consistency/dps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.1. Diffusion Posterior Sampling (DPS)</span></a>
+ <span class="menu-text">4.2.1. Diffusion Posterior Sampling (DPS)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../diffusion_models/conditioning_data_consistency/psld.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
+ <span class="menu-text">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../diffusion_models/conditioning_data_consistency/resample.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.2.3. ReSample</span></a>
+ <span class="menu-text">4.2.3. ReSample</span></a>
   </div>
 </li>
       </ul>
@@ -351,13 +357,17 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#samplers-based-on-stochastic-differential-equations-sdes" id="toc-samplers-based-on-stochastic-differential-equations-sdes" class="nav-link" data-scroll-target="#samplers-based-on-stochastic-differential-equations-sdes">2.1. Samplers based on Stochastic Differential Equations (SDEs)</a></li>
   <li><a href="#samplers-based-on-ordinary-differential-equations-odes" id="toc-samplers-based-on-ordinary-differential-equations-odes" class="nav-link" data-scroll-target="#samplers-based-on-ordinary-differential-equations-odes">2.2. Samplers based on Ordinary Differential Equations (ODEs)</a></li>
-  <li><a href="#conditioning-and-data-consistency" id="toc-conditioning-and-data-consistency" class="nav-link" data-scroll-target="#conditioning-and-data-consistency">3. Conditioning and Data Consistency</a></li>
-  <li><a href="#conditioning" id="toc-conditioning" class="nav-link" data-scroll-target="#conditioning">3.1. Conditioning</a></li>
-  <li><a href="#data-consistency" id="toc-data-consistency" class="nav-link" data-scroll-target="#data-consistency">3.2. Data Consistency</a>
+  <li><a href="#architectures" id="toc-architectures" class="nav-link" data-scroll-target="#architectures">3. Architectures</a></li>
+  <li><a href="#conditioning-and-data-consistency" id="toc-conditioning-and-data-consistency" class="nav-link" data-scroll-target="#conditioning-and-data-consistency">4. Conditioning and Data Consistency</a></li>
+  <li><a href="#conditioning" id="toc-conditioning" class="nav-link" data-scroll-target="#conditioning">4.1. Conditioning</a>
   <ul class="collapse">
-  <li><a href="#diffusion-posterior-sampling-dps" id="toc-diffusion-posterior-sampling-dps" class="nav-link" data-scroll-target="#diffusion-posterior-sampling-dps">3.2.1. Diffusion Posterior Sampling (DPS)</a></li>
-  <li><a href="#posterior-sampling-with-latent-diffusion-psld" id="toc-posterior-sampling-with-latent-diffusion-psld" class="nav-link" data-scroll-target="#posterior-sampling-with-latent-diffusion-psld">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</a></li>
-  <li><a href="#resample" id="toc-resample" class="nav-link" data-scroll-target="#resample">3.2.3. ReSample</a></li>
+  <li><a href="#classifier-guidance-cg" id="toc-classifier-guidance-cg" class="nav-link" data-scroll-target="#classifier-guidance-cg">4.1.1. Classifier Guidance (CG)</a></li>
+  </ul></li>
+  <li><a href="#data-consistency" id="toc-data-consistency" class="nav-link" data-scroll-target="#data-consistency">4.2. Data Consistency</a>
+  <ul class="collapse">
+  <li><a href="#diffusion-posterior-sampling-dps" id="toc-diffusion-posterior-sampling-dps" class="nav-link" data-scroll-target="#diffusion-posterior-sampling-dps">4.2.1. Diffusion Posterior Sampling (DPS)</a></li>
+  <li><a href="#posterior-sampling-with-latent-diffusion-psld" id="toc-posterior-sampling-with-latent-diffusion-psld" class="nav-link" data-scroll-target="#posterior-sampling-with-latent-diffusion-psld">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</a></li>
+  <li><a href="#resample" id="toc-resample" class="nav-link" data-scroll-target="#resample">4.2.3. ReSample</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -433,23 +443,29 @@ ul.task-list li input[type="checkbox"] {
 <section id="samplers-based-on-ordinary-differential-equations-odes" class="level3">
 <h3 class="anchored" data-anchor-id="samplers-based-on-ordinary-differential-equations-odes"><a href="../diffusion_models/samplers/ode_samplers.html">2.2. Samplers based on Ordinary Differential Equations (ODEs)</a></h3>
 </section>
+<section id="architectures" class="level2">
+<h2 class="anchored" data-anchor-id="architectures">3. Architectures</h2>
+</section>
 <section id="conditioning-and-data-consistency" class="level2">
-<h2 class="anchored" data-anchor-id="conditioning-and-data-consistency">3. Conditioning and Data Consistency</h2>
+<h2 class="anchored" data-anchor-id="conditioning-and-data-consistency">4. Conditioning and Data Consistency</h2>
 <p>Methods for conditional generation and data consistency in inverse problems.</p>
 </section>
 <section id="conditioning" class="level2">
-<h2 class="anchored" data-anchor-id="conditioning">3.1. Conditioning</h2>
+<h2 class="anchored" data-anchor-id="conditioning">4.1. Conditioning</h2>
+<section id="classifier-guidance-cg" class="level3">
+<h3 class="anchored" data-anchor-id="classifier-guidance-cg"><a href="../diffusion_models/conditioning_data_consistency/cg.html">4.1.1. Classifier Guidance (CG)</a></h3>
+</section>
 </section>
 <section id="data-consistency" class="level2">
-<h2 class="anchored" data-anchor-id="data-consistency">3.2. Data Consistency</h2>
+<h2 class="anchored" data-anchor-id="data-consistency">4.2. Data Consistency</h2>
 <section id="diffusion-posterior-sampling-dps" class="level3">
-<h3 class="anchored" data-anchor-id="diffusion-posterior-sampling-dps"><a href="../diffusion_models/conditioning_data_consistency/dps.html">3.2.1. Diffusion Posterior Sampling (DPS)</a></h3>
+<h3 class="anchored" data-anchor-id="diffusion-posterior-sampling-dps"><a href="../diffusion_models/conditioning_data_consistency/dps.html">4.2.1. Diffusion Posterior Sampling (DPS)</a></h3>
 </section>
 <section id="posterior-sampling-with-latent-diffusion-psld" class="level3">
-<h3 class="anchored" data-anchor-id="posterior-sampling-with-latent-diffusion-psld"><a href="../diffusion_models/conditioning_data_consistency/psld.html">3.2.2. Posterior Sampling with Latent Diffusion (PSLD)</a></h3>
+<h3 class="anchored" data-anchor-id="posterior-sampling-with-latent-diffusion-psld"><a href="../diffusion_models/conditioning_data_consistency/psld.html">4.2.2. Posterior Sampling with Latent Diffusion (PSLD)</a></h3>
 </section>
 <section id="resample" class="level3">
-<h3 class="anchored" data-anchor-id="resample"><a href="../diffusion_models/conditioning_data_consistency/resample.html">3.2.3. ReSample</a></h3>
+<h3 class="anchored" data-anchor-id="resample"><a href="../diffusion_models/conditioning_data_consistency/resample.html">4.2.3. ReSample</a></h3>
 
 
 </section>
