@@ -9,7 +9,7 @@ FM used the following ODE to define a probability density path that smoothly tra
 $$
 d\boldsymbol{x} = \boldsymbol{u}(\boldsymbol{x}, t) dt,
 $$ {#eq-1}
-with the time index $t \in [0, 1]$, where $\boldsymbol{u}: \mathbb R^{n\times 1} \to \mathbb R^n$ is the time-dependent marginal vector field driving the transformation. To generate data, a neural network $\boldsymbol{v}_{\boldsymbol{\theta}} \mathbb R^{n\times 1} \to \mathbb R^n$ is trained to approximate this vector field. The ideal training objective, known as the Flow Matching objective, minimized the difference between the network and the vector field:
+with the time index $t \in [0, 1]$, where $\boldsymbol{u}: \mathbb R^{n\times 1} \to \mathbb R^n$ is the time-dependent marginal vector field driving the transformation. To generate data, a neural network $\boldsymbol{v}_{\boldsymbol{\theta}} : \mathbb R^{n\times 1} \to \mathbb R^n$ is trained to approximate this vector field. The ideal training objective, known as the Flow Matching objective, minimized the difference between the network and the vector field:
 $$
 \mathcal{L}_{\text{FM}}(\boldsymbol{\theta}) = \mathbb{E}_{t, \boldsymbol{x}} \left[ \left\| \boldsymbol{v}_{\boldsymbol{\theta}}(\boldsymbol{x}, t) - \boldsymbol{u}(\boldsymbol{x}, t) \right\|^2 \right],
 $$ {#eq-2}

@@ -5,22 +5,21 @@ bibliography: ../../references.bib
 
 Following the [Stochastic Differential Equations (SDEs)](sde.qmd) connection with generative diffusion, Graph Diffusion via the System of SDEs (GDSS) [@dm:gdss] extended this approach to graph generation. The idea was to couple the diffusion of the adjacency and node features, creating a system of SDEs.
 
-Let $\boldsymbol G = (\boldsymbol X, \boldsymbol A) \in \mathbb R^{N\times d} \times \mathbb R^{N\times N}$ be a graph composed of a weighted adjacency matrix $\boldsymbol A$ and $N$ node features $\boldsymbol X$ of dimension $d$. To jointly diffuse the nodes and edges, the diffusion process is formulated by building a trajectory $\{\boldsymbol G_t = (\boldsymbol X_t, \boldsymbol A_t)\}_{t\in [0, T]}$, where $T$ is the end of the diffusion process. As previously established, this is modelled by the following SDE:
+Let $\boldsymbol G = (\boldsymbol X, \boldsymbol A) \in \mathbb R^{N\times d} \times \mathbb R^{N\times N}$ be a graph composed of a weighted adjacency matrix $\boldsymbol A$ and $N$ node features $\boldsymbol X$ of dimension $d$. To jointly diffuse the nodes and edges, the diffusion process is formulated by building a trajectory $\{\boldsymbol G_t = (\boldsymbol X_t, \boldsymbol A_t)\}_{t\in [0, T]}$, where $T$ is the end of the diffusion process. For that, each component of the graph is corrupted independently, following: 
 $$
-d\boldsymbol G = \boldsymbol f(\boldsymbol G, t) dt + g(t) \boldsymbol w,
+\begin{cases}
+d\boldsymbol{X} = \boldsymbol{f}_{\boldsymbol{X}}(\boldsymbol{X}, t) dt + g_{\boldsymbol{X}}(t)  d\boldsymbol{w}_{\boldsymbol{X}} \\
+d\boldsymbol{A} = \boldsymbol{f}_{\boldsymbol{A}}(\boldsymbol{A}, t) dt + g_{\boldsymbol{A}}(t)  d\boldsymbol{w}_{\boldsymbol{A}}
+\end{cases},
 $$ {#eq-1}
-where $\boldsymbol{w} \in \mathcal G$ is the Wiener process, $\boldsymbol{f} : \mathcal G \times \mathbb R \to \mathbb R^\mathcal{G}$ is the drift coefficient and $g : \mathbb R \to \mathbb R$ is the diffusion coefficient, with $\mathcal G$ being the space where the graph is embedded. Given the forward process, the reverse time SDE is given by:
-$$
-d\boldsymbol G = \left[\boldsymbol f(\boldsymbol G, t) - g(t)^2 \nabla_{\boldsymbol G} \log p_t(\boldsymbol G) \right] dt + g(t) \boldsymbol{\overline{w}},
-$$ {#eq-2}
-where $\boldsymbol{\overline w} \in \mathcal G$ is the Wiener process running from $T$ to $0$. Therefore, the goal is to approximate the score function in order to sample from the initial data distribution. The problem is that this function is expensive to compute, as the graph space is very high-dimensional. To overcome this issue, a system of reverse time SDEs was proposed, following:
+where $\boldsymbol f(\boldsymbol G, t) = (\boldsymbol f_{\boldsymbol X} (\boldsymbol X), \boldsymbol f_{\boldsymbol A} (\boldsymbol A))$ are the drift components, $g_{\boldsymbol X}$ and $g_{\boldsymbol A}$ are the diffusion coefficients, and $\boldsymbol{\overline{w}_{\boldsymbol X}}$ and $\boldsymbol{\overline{w}_{\boldsymbol A}}$ are the respective Wiener processes running backwards in time. That enabled each component to have its own corruption parameters. Although the forward processes are independent, the reverse process is jointly coupled, due to the direct relation between nodes and links. The problem is that the joint score function belongs to a heterogeneous space, composed of the space of nodes and the space of the links. To overcome this issue, a system of reverse time SDEs was proposed, following:
 $$
 \begin{cases}
 d\boldsymbol X = \left[\boldsymbol f_{\boldsymbol X}(\boldsymbol X, t) - g_{\boldsymbol X}(t)^2 \nabla_{\boldsymbol X} \log p_t(\boldsymbol X, \boldsymbol A) \right] dt + g_{\boldsymbol X}(t) \boldsymbol{\overline{w}_{\boldsymbol X}} \\
 d\boldsymbol A = \left[\boldsymbol f_{\boldsymbol A}(\boldsymbol A, t) - g_{\boldsymbol A}(t)^2 \nabla_{\boldsymbol A} \log p_t(\boldsymbol X, \boldsymbol A) \right] dt + g_{\boldsymbol A}(t) \boldsymbol{\overline{w}_{\boldsymbol A}}
 \end{cases},
-$$ {#eq-3}
-where $\boldsymbol f(\boldsymbol G, t) = (\boldsymbol f_{\boldsymbol X} (\boldsymbol X), \boldsymbol f_{\boldsymbol A} (\boldsymbol A))$ are the drift components, $g_{\boldsymbol X}$ and $g_{\boldsymbol A}$ are the diffusion coefficients, and $\boldsymbol{\overline{w}_{\boldsymbol X}}$ and $\boldsymbol{\overline{w}_{\boldsymbol A}}$ are the respective Wiener processes running backwards in time. With that, each graph component was diffused separately, while their reverse time SDEs were coupled by the joint score function of the data distribution.
+$$ {#eq-2}
+With that, each graph component was diffused separately, while their reverse time SDEs were coupled by the joint score function of the data distribution.
 
 To approximate these partial score functions, GDSS employed Graph Neural Networks (GNNs) parameterized by $\boldsymbol{\theta}$ and $\boldsymbol \phi$. The GNNs received the noisy graph tuple $(\boldsymbol{X}_t, \boldsymbol{A}_t)$ at time $t$, respectively approximating one of the partial score functions:
 $$
